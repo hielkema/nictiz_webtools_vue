@@ -1,0 +1,5 @@
+# Project specific
+volumes/
+.vscode
+**/__pycache__
+node/node_modules
