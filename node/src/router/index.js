@@ -42,6 +42,26 @@ const routes = [
     component: () => import('../views/Mapping/TaskManager.vue')
   },
   {
+    path: '/mapping/Projects',
+    name: 'Mapping projecten',
+    component: () => import('../views/Mapping/Projects.vue')
+  },
+  {
+    path: '/mapping/Projects/:projectid',
+    name: 'Mapping taken',
+    component: () => import('../views/Mapping/Projects.vue')
+  },
+  {
+    path: '/mapping/Projects/:projectid/Task/',
+    name: 'Mapping taak',
+    component: () => import('../views/Mapping/TaskEditor.vue')
+  },
+  {
+    path: '/mapping/Projects/:projectid/Task/:taskid',
+    name: 'Mapping taak',
+    component: () => import('../views/Mapping/TaskEditor.vue')
+  },
+  {
     path: '/demo/Snomed-DT',
     name: 'DT Snomed integratie',
     component: () => import('../views/DHD/DemoIntegratie.vue')

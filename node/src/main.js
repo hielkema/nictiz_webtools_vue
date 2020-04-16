@@ -7,6 +7,8 @@ import * as d3 from "../node_modules/d3"
 import vuetify from './plugins/vuetify';
 import VueCookies from '../node_modules/vue-cookies'
 import VueApexCharts from 'vue-apexcharts'
+import _ from 'lodash'
+
 // import { alert } from './store/alert.module'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
@@ -86,6 +88,7 @@ new Vue({
   store,
   d3,
   VueCookies,
+  _,
   vuetify,
   axios,
   render: h => h(App)

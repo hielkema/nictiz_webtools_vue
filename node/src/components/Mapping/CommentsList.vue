@@ -1,0 +1,85 @@
+<template>
+    <div>
+        <v-container 
+            v-if="user.groups.includes('mapping | access')"
+            tile>
+            <v-card>
+                <v-toolbar
+                color="cyan"
+                dark
+                :loading="loading"
+                dense>
+                    <v-toolbar-title>Commentaren [verberg/toon events]</v-toolbar-title>
+                </v-toolbar>
+                <v-list three-line
+                    style="max-height:400px; max-width:100%"
+                    class="overflow-y-auto overflow-x-auto">
+                    <template v-for="item in comments">
+                        <v-list-item
+                        v-if="item.type == 'status_change'"
+                            dense
+                            class="yellow lighten-4"
+                            :key="item.id">
+                            <v-list-item-content class="yellow lighten-5">
+                                <v-list-item-title><v-icon>mdi-label-multiple-outline</v-icon> Statuswijziging (door {{item.action_user.name}})</v-list-item-title>
+                                <v-list-item-subtitle v-html="item.created"></v-list-item-subtitle>
+                                {{item.text}}
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-list-item
+                            v-else-if="item.type == 'comment'"
+                            dense
+                            class="white"
+                            :key="item.id">
+                            <v-list-item-content>
+                                <v-list-item-title><v-icon>mdi-comment-text-outline</v-icon> Commentaar (door {{item.action_user.name}})</v-list-item-title>
+                                <v-list-item-subtitle v-html="item.created"></v-list-item-subtitle>
+                                {{item.text}}
+                                <v-btn v-if="item.user.id == user.id" color="red lighten-3" @click="deleteComment(item.id)" small>Verwijderen</v-btn>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-list-item
+                            v-else-if="item.type == 'user_change'"
+                            dense
+                            class="yellow lighten-4"
+                            :key="item.id">
+                            <v-list-item-content class="yellow lighten-5">
+                                <v-list-item-title><v-icon>mdi-account-arrow-right</v-icon> Toewijzing (door {{item.action_user.name}})</v-list-item-title>
+                                <v-list-item-subtitle v-html="item.created"></v-list-item-subtitle>
+                                {{item.text}}
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider :key="item.timestamp"></v-divider>
+                    </template>
+                </v-list>
+            </v-card>
+        </v-container>
+    </div>
+</template>
+<script>
+export default {
+    data() {
+        return {
+        }
+    },
+    methods: {
+        deleteComment(id){
+            this.$store.dispatch('MappingTasks/deleteComment', id)
+        }
+    },
+    computed: {
+        comments(){
+            return this.$store.state.MappingTasks.selectedTaskComments
+        },
+        loading(){
+            return this.$store.state.MappingTasks.loading.comments
+        },
+        user(){
+            return this.$store.state.userData
+        }
+    },
+    created() {
+    }
+}
+</script>
+

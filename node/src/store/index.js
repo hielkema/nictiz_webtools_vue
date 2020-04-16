@@ -9,8 +9,11 @@ import TermspaceProgress from './modules/Terminologie/TermspaceProgress'
 
 // Mapping tools
 import MappingComments from './modules/Terminologie/MappingComments'
+import MappingProjects from './modules/Mapping/ProjectsConnection'
+import MappingTasks from './modules/Mapping/TasksConnection'
 import RcAuditConnection from './modules/Mapping/RcAuditConnection'
 import TaskManager from './modules/Mapping/TaskManagerConnection'
+import MappingAudits from './modules/Mapping/AuditsConnection'
 
 // DHD - SNOMED integration modules
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
@@ -38,8 +41,11 @@ export default new Vuex.Store({
   modules: {
       Epd,
       TermspaceComments,
+      MappingTasks,
       MappingComments,
+      MappingProjects,
       authentication,
+      MappingAudits,
       TermspaceProgress,
       RcAuditConnection,
       IntegratedCodePicker,
