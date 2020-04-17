@@ -20,13 +20,13 @@
                             <v-checkbox v-model="filterOnUser"></v-checkbox>
                         </v-col>
                         <v-col cols=11>
-                            <v-select class="pa-1" :items="users" v-model="filterUser"></v-select>
+                            <v-select class="pa-1" :items="users" v-model="filterUser" label="Filter op gebruiker"></v-select>
                         </v-col>
                         <v-col cols=1>
                             <v-checkbox v-model="filterOnStatus"></v-checkbox>
                         </v-col>
                         <v-col cols=11>
-                            <v-select class="pa-1" :items="statuses" v-model="filterStatus"></v-select>
+                            <v-select class="pa-1" :items="statuses" v-model="filterStatus" label="Filter op status"></v-select>
                         </v-col>
                     </v-row>
                 </v-card-text>
