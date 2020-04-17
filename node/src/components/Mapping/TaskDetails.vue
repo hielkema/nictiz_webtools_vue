@@ -50,6 +50,7 @@ export default {
         }
     },
     created() {
+        this.$store.dispatch('MappingTasks/getMappingTargets',this.selectedTask.id)
         // this.$store.dispatch('MappingTasks/getTasks',this.$route.params.projectid)
     }
 }
