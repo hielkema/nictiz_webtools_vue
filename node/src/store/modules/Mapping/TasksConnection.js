@@ -16,6 +16,7 @@ const state = {
     selectedTaskComments: false,
     mappingTargets: false,
     searchResults: [],
+    searchByComponentResults: [],
     dialogData: {
       'component':{},
     },
@@ -43,6 +44,9 @@ const state = {
     },
     resetDialogData: (state) => {
       state.dialogData = {'component':{}}
+    },
+    setSearchByComponentResults: (state, payload) => {
+      state.searchByComponentResults = payload
     },
   }
 
@@ -154,6 +158,24 @@ const state = {
           }
         )
     }, 500),
+
+    searchByComponent:(context, conceptid) => {
+        context.state.loading.search = true
+        const auth = {
+          headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
+          withCredentials: true
+        }
+        axios
+        .post(context.rootState.baseUrl+'mapping/api/1.0/search_by_component/', {
+          'query' : conceptid,
+        },auth)
+        .then((response) => {
+          context.commit('setSearchByComponentResults',response.data)
+          context.state.loading.search = false
+          return true;
+          }
+        )
+    },    
     postComment:(context, payload) => {
       const auth = {
         headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},

@@ -42,6 +42,11 @@ const routes = [
     component: () => import('../views/Mapping/TaskManager.vue')
   },
   {
+    path: '/mapping/RuleFinder',
+    name: 'Mapping taskfinder',
+    component: () => import('../views/Mapping/RuleFinder.vue')
+  },
+  {
     path: '/mapping/Projects',
     name: 'Mapping projecten',
     component: () => import('../views/Mapping/Projects.vue')

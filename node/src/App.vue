@@ -115,6 +115,13 @@
                 <router-link to="/mapping/TaskManager"><v-list-item-title>Taskmanager</v-list-item-title></router-link>
             </v-list-item-content>
           </v-list-item>
+          <!-- Link 4 in subgroep -->
+          <v-list-item v-if="groups.includes('mapping | access')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/mapping/RuleFinder"><v-list-item-title>Regels zoeken op component</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
         <!-- EIND Groep Mapping tools -->
       </v-list>

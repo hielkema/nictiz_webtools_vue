@@ -77,7 +77,7 @@ export default {
     },
     created(){
         this.$store.dispatch('MappingTasks/getTasks', this.$route.params.projectid)
-        if(this.$route.params.taskid){
+        if(this.$route.params.projectid){
             this.$store.dispatch('MappingProjects/getProjectDetails', this.$route.params.projectid)
             this.$store.dispatch('MappingProjects/getProjectStatuses',this.$route.params.projectid)
             this.$store.dispatch('MappingProjects/getProjectUsers',this.$route.params.projectid)
