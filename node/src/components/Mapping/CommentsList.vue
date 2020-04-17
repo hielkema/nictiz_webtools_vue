@@ -9,14 +9,14 @@
                 dark
                 :loading="loading"
                 dense>
-                    <v-toolbar-title>Commentaren [verberg/toon events]</v-toolbar-title>
+                    <v-toolbar-title>Commentaren <v-btn @click="toggleEvents()" color="black" class="text-align-right" text>Toggle events</v-btn></v-toolbar-title>
                 </v-toolbar>
                 <v-list three-line
                     style="max-height:400px; max-width:100%"
                     class="overflow-y-auto overflow-x-auto">
                     <template v-for="item in comments">
                         <v-list-item
-                        v-if="item.type == 'status_change'"
+                        v-if="item.type == 'status_change' && showEvents == true"
                             dense
                             class="yellow lighten-4"
                             :key="item.id">
@@ -39,7 +39,7 @@
                             </v-list-item-content>
                         </v-list-item>
                         <v-list-item
-                            v-else-if="item.type == 'user_change'"
+                            v-else-if="item.type == 'user_change' && showEvents == true"
                             dense
                             class="yellow lighten-4"
                             :key="item.id">
@@ -60,11 +60,19 @@
 export default {
     data() {
         return {
+            showEvents : false,
         }
     },
     methods: {
         deleteComment(id){
             this.$store.dispatch('MappingTasks/deleteComment', id)
+        },
+        toggleEvents(){
+            if(this.showEvents == true){
+                this.showEvents = false
+            }else{
+                this.showEvents = true
+            }
         }
     },
     computed: {

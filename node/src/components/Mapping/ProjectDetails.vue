@@ -32,6 +32,7 @@ export default {
     },
     methods: {
         openTaskEditor(){
+            this.$store.commit('MappingTasks/clearTaskMemory')
             this.$router.push({ path: `/mapping/Projects/${this.$route.params.projectid}/task/` });
         }
     },

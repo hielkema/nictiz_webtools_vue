@@ -5,6 +5,7 @@
                 <v-col cols=3>
                     <v-row>
                         <v-col cols=12>
+                            <BackToProjects />
                             <TaskList />
                         </v-col>
                     </v-row>
@@ -62,6 +63,7 @@ import CommentsList from '@/components/Mapping/CommentsList';
 import MappingEditor1N from '@/components/Mapping/MappingEditor1N';
 import Statuses from '@/components/Mapping/Statuses';
 import Users from '@/components/Mapping/Users';
+import BackToProjects from '@/components/Mapping/BackToProjects';
 import CommentsForm from '@/components/Mapping/CommentsForm';
 
 export default {
@@ -70,12 +72,14 @@ export default {
         CommentsList,
         CommentsForm,
         TaskDetails,
+        BackToProjects,
         Statuses,
         Users,
         AuditList,
         MappingEditor1N,
     },
     created(){
+        
         this.$store.dispatch('MappingTasks/getTasks', this.$route.params.projectid)
         if(this.$route.params.projectid){
             this.$store.dispatch('MappingProjects/getProjectDetails', this.$route.params.projectid)

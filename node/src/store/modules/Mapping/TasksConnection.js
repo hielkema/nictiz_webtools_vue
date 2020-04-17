@@ -48,6 +48,12 @@ const state = {
     setSearchByComponentResults: (state, payload) => {
       state.searchByComponentResults = payload
     },
+    clearTaskMemory: (state) => {
+      state.tasks = []
+      state.selectedTask = false
+      state.selectedTaskComments = false
+      state.mappingTargets = false
+    },
   }
 
   //// ---- Actions
@@ -107,7 +113,7 @@ const state = {
           return true;
       })
     },
-    saveDialogData:(context, payload) => {
+    saveDialogTarget:(context, payload) => {
       const auth = {
         headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
         withCredentials: true

@@ -16,6 +16,7 @@ const state = {
     },
     setProjectDetails: (state, payload) => {
       state.selectedProject = payload
+      state.rootState.MappingTasks.selectedTask = {}
     },
     setProjectStatuses: (state, payload) => {
       state.statuses = payload

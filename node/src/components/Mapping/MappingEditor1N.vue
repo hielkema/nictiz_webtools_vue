@@ -3,116 +3,91 @@
         <v-container 
             v-if="user.groups.includes('mapping | access')"
             fluid>
-                        <form>
-                            <v-card>
-                                <v-btn class="green" dark @click="submit">Alle wijzigingen opslaan</v-btn>
-                            </v-card>
-                            
-                            <template v-for="item in targets">
-                                <v-card :key="item.id"
-                                    class="my-1">
-                                    <v-toolbar
-                                        color="cyan"
-                                        dark
-                                        dense>
-                                        <v-toolbar-title>{{item.target.component_title}}</v-toolbar-title>
-                                    </v-toolbar>
-                                    <v-list three-line>
-                                        <v-list-item
-                                            :key="item.id"
-                                            dense
-                                            :loading="loading.targets">
-                                            <v-list-item-content v-if="(item.id == 'extra') && (formDisabled == false)">
-                                                    <v-btn color="grey lighten-2" small v-on:click="openDialog(item.id)">Nieuwe mapping toevoegen</v-btn>
-                                            </v-list-item-content>
+            <v-card
+                class="mx-auto"
+                :loading="loading"
+            >
+                <v-toolbar
+                    color="cyan darken-2"
+                    dark
+                    dense>
+                    <v-toolbar-title>Mappings</v-toolbar-title>
+                </v-toolbar>
+            </v-card>
+            
+            <form>
+                <template v-for="item in targets">
+                    <v-card :key="item.id"
+                        class="my-1">
+                        <v-list three-line>
+                            <v-list-item
+                                :key="item.id"
+                                dense
+                                :loading="loading.targets">
+                                <v-list-item-content v-if="(item.id == 'extra') && (formDisabled == false)">
+                                        <v-btn color="grey lighten-2" small v-on:click="openDialog(item.id)">Nieuwe mapping toevoegen</v-btn>
+                                </v-list-item-content>
 
-                                            <span v-else-if="(item.id == 'extra' && formDisabled == true)"></span>
+                                <span v-else-if="(item.id == 'extra' && formDisabled == true)"></span>
 
-                                            <v-list-item-content v-else>
-                                                <v-list-item-subtitle>{{item.target.codesystem.title}} Code {{item.target.component_id}}</v-list-item-subtitle>
-                                                    <v-container>
-                                                        
-                                                        <v-row  no-gutters align="center">
-                                                            <v-col cols="6">
-                                                                <v-btn color="grey lighten-2" small v-on:click="openDialog(item.id)">Details / doel aanpassen</v-btn>
-                                                            </v-col>
-                                                            <v-col cols="6">
-                                                                <v-checkbox
-                                                                    :disabled="formDisabled"
-                                                                    v-model="item.delete"
-                                                                    label="Verwijderen"
-                                                                    dense
-                                                                    ></v-checkbox>
-                                                            </v-col>
-                                                            <v-divider></v-divider>
-                                                        </v-row>
-                                                        <v-row no-gutters>
-                                                            <v-col cols="4" v-if="project.group">
-                                                                <v-text-field
-                                                                    :disabled="formDisabled"
-                                                                    v-model="item.group"
-                                                                    label="Group"
-                                                                    required
-                                                                    ></v-text-field>
-                                                            </v-col>
-                                                            <v-col cols="4" v-if="project.priority">
-                                                                <v-text-field
-                                                                    :disabled="formDisabled"
-                                                                    v-model="item.priority"
-                                                                    label="Priority"
-                                                                    required
-                                                                    ></v-text-field>
-                                                            </v-col>
-                                                            <v-col cols="4" v-if="project.correlation">
-                                                                <v-select :disabled="formDisabled" v-model="item.correlation" :items="project.correlation_options" label="Correlation"></v-select>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row  no-gutters>
-                                                            <v-col cols="12">
-                                                                <v-text-field
-                                                                    :disabled="formDisabled"
-                                                                    v-if="project.rule"
-                                                                    v-model="item.rule"
-                                                                    label="Rule"
-                                                                    required
-                                                                    ></v-text-field>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row  no-gutters>
-                                                            <v-col cols="12">
-                                                                <v-text-field
-                                                                    :disabled="formDisabled"
-                                                                    v-if="project.advice"
-                                                                    v-model="item.advice"
-                                                                    label="Advice"
-                                                                    required
-                                                                    ></v-text-field>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row  no-gutters v-if="project.rulebinding">
-                                                            <v-col cols="12">
-                                                                <v-list-item-title>Bindings:</v-list-item-title>
-                                                                <v-checkbox
-                                                                    :disabled="formDisabled"
-                                                                    v-for="dependency in item.dependency"  
-                                                                    :key="dependency.id"
-                                                                    v-model="dependency.binding"
-                                                                    :label="dependency.source"
-                                                                    ></v-checkbox>
-                                                            </v-col>
-                                                        </v-row>
-                                                    </v-container>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-card>
-                            </template>
-                            <v-card 
-                                class="my-1">
-                                <v-btn full-width class="green" dark @click="submit">Alle wijzigingen opslaan</v-btn>
-                            </v-card>
-                        </form>
-
+                                <v-list-item-content v-else>
+                                        <v-container>
+                                            <v-row  no-gutters align="center">
+                                                <v-col cols=11>
+                                                    <v-simple-table dense>
+                                                        <template v-slot:default>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th width="50">FSN</th>
+                                                                    <td>{{item.target.component_title}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Code</th>
+                                                                    <td>{{item.target.codesystem.title}} - Code: {{item.target.component_id}}</td>
+                                                                </tr>
+                                                                <tr v-if="project.group">
+                                                                    <th>Group</th>
+                                                                    <td>{{item.group}}</td>
+                                                                </tr>
+                                                                <tr v-if="project.priority">
+                                                                    <th>Priority</th>
+                                                                    <td>{{item.priority}}</td>
+                                                                </tr>
+                                                                <tr v-if="project.correlation">
+                                                                    <th>Correlation</th>
+                                                                    <td>{{item.correlation}}</td>
+                                                                </tr>
+                                                                <tr v-if="project.rule">
+                                                                    <th>Rule</th>
+                                                                    <td>{{item.rule}}</td>
+                                                                </tr>
+                                                                <tr v-if="project.advice">
+                                                                    <th>Advice</th>
+                                                                    <td>{{item.advice}}</td>
+                                                                </tr>
+                                                                <tr v-if="project.rulebinding">
+                                                                    <th>Bindings</th>
+                                                                    <td>
+                                                                        <ul v-for="dependency in item.dependency" :key="dependency.id">
+                                                                            <li v-if="dependency.binding == true">{{dependency.source}}</li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </template>
+                                                    </v-simple-table>
+                                                </v-col>
+                                                <v-col cols="1" v-if="formDisabled == false">
+                                                    <v-btn color="grey" v-on:click="openDialog(item.id)" icon><v-icon right>mdi-file-edit</v-icon></v-btn>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-list>
+                    </v-card>
+                </template>
+            </form>
         </v-container>
 
         <!-- Modal for editing target -->
@@ -143,7 +118,7 @@
                             </v-col>
                         </v-row>
                         <v-row>
-                            <v-col cols="5">
+                            <v-col v-if="!targetDialogNewTarget" cols="6">
                                 <div><h2>Bestaande mapping</h2></div>
                                 <v-simple-table dense>
                                     <template v-slot:default>
@@ -154,7 +129,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><th>Component code</th><td>{{dialogData.component.id}}</td></tr>
+                                            <tr><th width="130">Component code</th><td>{{dialogData.component.id}}</td></tr>
                                             <tr><th>Component titel</th><td>{{dialogData.component.title}}</td></tr>
                                             <tr><th>Codesystem</th><td>{{dialogData.codesystem.title}} ({{dialogData.codesystem.version}})</td></tr>
                                             <tr v-for="(value, key) in dialogData.component.extra" :key="key">
@@ -165,15 +140,14 @@
                                     </template>
                                 </v-simple-table>
                             </v-col>
-                            <v-divider vertical></v-divider>
-                            <v-col cols="5">
+                            <v-col v-else cols="5">
                                 <div><h2>Nieuwe mapping</h2></div>
                                 <v-simple-table dense>
                                     <template v-slot:default>
                                         <thead>
                                             <tr>
-                                            <th class="text-left">Variabele</th>
-                                            <th class="text-left">Waarde</th>
+                                                <th width="130" class="text-left">Variabele</th>
+                                                <th class="text-left">Waarde</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -187,6 +161,82 @@
                                         </tbody>
                                     </template>
                                 </v-simple-table>
+                            </v-col>
+
+                            <v-col cols=6 v-if="dialogData.id != 'extra'">
+                                <v-list three-line>
+                                    <v-list-item dense>
+                                        <v-list-item-content>
+                                                <v-container>
+                                                    <v-row no-gutters>
+                                                        <v-col cols="4" v-if="project.group">
+                                                            <v-text-field
+                                                                :disabled="formDisabled"
+                                                                v-model="dialogTarget.group"
+                                                                label="Group"
+                                                                required
+                                                                ></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="4" v-if="project.priority">
+                                                            <v-text-field
+                                                                :disabled="formDisabled"
+                                                                v-model="dialogTarget.priority"
+                                                                label="Priority"
+                                                                required
+                                                                ></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="4" v-if="project.correlation">
+                                                            <v-select :disabled="formDisabled" v-model="dialogTarget.correlation" :items="project.correlation_options" label="Correlation"></v-select>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row  no-gutters>
+                                                        <v-col cols="12">
+                                                            <v-text-field
+                                                                :disabled="formDisabled"
+                                                                v-if="project.rule"
+                                                                v-model="dialogTarget.rule"
+                                                                label="Rule"
+                                                                required
+                                                                ></v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row  no-gutters>
+                                                        <v-col cols="12">
+                                                            <v-text-field
+                                                                :disabled="formDisabled"
+                                                                v-if="project.advice"
+                                                                v-model="dialogTarget.advice"
+                                                                label="Advice"
+                                                                required
+                                                                ></v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row  no-gutters v-if="project.rulebinding">
+                                                        <v-col cols="12">
+                                                            <v-list-item-title>Bindings:</v-list-item-title>
+                                                            <v-checkbox
+                                                                :disabled="formDisabled"
+                                                                v-for="dependency in dialogTarget.dependency"  
+                                                                :key="dependency.id"
+                                                                v-model="dependency.binding"
+                                                                :label="dependency.source"
+                                                                ></v-checkbox>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row  no-gutters align="center">
+                                                        <v-col cols="6">
+                                                            <v-checkbox
+                                                                :disabled="formDisabled"
+                                                                v-model="dialogTarget.delete"
+                                                                label="Verwijderen"
+                                                                dense
+                                                                ></v-checkbox>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-container>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -209,9 +259,10 @@ export default {
         return {
             search: null,
             searchExtra: null,
+            dialogTarget: {},
             targetEditDialog: false,
             targetDialogOldTarget: {},
-            targetDialogNewTarget: {},
+            targetDialogNewTarget: false,
         }
     },
     watch: {
@@ -232,12 +283,17 @@ export default {
         openDialog (mappingid) {
             this.targetEditDialog = true
             this.$store.dispatch('MappingTasks/getDialogData', mappingid)
+            // this.$store.dispatch('MappingTasks/getDialogTarget', mappingid)
+            this.dialogTarget = this.targets.filter(obj => {
+                return obj.id === mappingid
+            })[0]
         },
         saveDialog (newData) {
             this.targetEditDialog = false
             this.targetDialogOldTarget = {}
-            this.targetDialogNewTarget = {}
-            this.$store.dispatch('MappingTasks/saveDialogData', newData)
+            this.targetDialogNewTarget = false
+            this.$store.dispatch('MappingTasks/saveDialogTarget', newData)
+            this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
         }
     },
     computed: {
