@@ -49,6 +49,7 @@ const state = {
           console.log(response.data)
           context.commit('setProjectDetails',response.data)
           context.state.loading = false
+          this.$toast.info('Info toast')
           return true;
       })
     },

@@ -327,7 +327,6 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('MappingProjects/getProjectDetails',this.$route.params.projectid)
     }
 }
 </script>

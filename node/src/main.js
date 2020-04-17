@@ -17,7 +17,6 @@ Vue.use(require('vue-cookies'));
 Vue.use('VeeValidate');
 Vue.component('apexchart', VueApexCharts)
 
-
 // Add an axios interceptor for adding token to requests
 axios.interceptors.request.use(function(config) {
   const storage = JSON.parse(localStorage.getItem('user'))
