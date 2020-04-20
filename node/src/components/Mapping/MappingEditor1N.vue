@@ -77,8 +77,25 @@
                                                         </template>
                                                     </v-simple-table>
                                                 </v-col>
-                                                <v-col cols="1" v-if="formDisabled == false">
-                                                    <v-btn color="grey" v-on:click="openDialog(item.id)" icon><v-icon right>mdi-file-edit</v-icon></v-btn>
+                                                <v-col cols="1">
+                                                    <v-row v-if="formDisabled == false">
+                                                        <v-btn color="grey" v-on:click="openDialog(item.id)" icon><v-icon right>mdi-file-edit</v-icon></v-btn>
+                                                    </v-row>
+                                                    <v-row>
+                                                        <v-tooltip right>
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-btn color="primary" dark v-on="on" text>Details</v-btn>
+                                                        </template>
+                                                        <span>
+                                                            <table>
+                                                                <tr v-for="(value, key) in item.target.extra" :key="key">
+                                                                    <th>{{ key }}</th>
+                                                                    <td>{{ value }}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </span>
+                                                        </v-tooltip>
+                                                    </v-row>
                                                 </v-col>
                                             </v-row>
                                         </v-container>
