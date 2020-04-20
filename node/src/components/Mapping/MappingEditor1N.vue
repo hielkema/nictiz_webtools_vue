@@ -38,7 +38,7 @@
                                                         <template v-slot:default>
                                                             <tbody>
                                                                 <tr>
-                                                                    <th width="50">FSN</th>
+                                                                    <th width="50">Term</th>
                                                                     <td>{{item.target.component_title}}</td>
                                                                 </tr>
                                                                 <tr>
@@ -55,7 +55,12 @@
                                                                 </tr>
                                                                 <tr v-if="project.correlation">
                                                                     <th>Correlation</th>
-                                                                    <td>{{item.correlation}}</td>
+                                                                    <td v-if="item.correlation == '447559001'">Broad to narrow</td>
+                                                                    <td v-if="item.correlation == '447557004'">Exact match</td>
+                                                                    <td v-if="item.correlation == '447558009'">Narrow to broad</td>
+                                                                    <td v-if="item.correlation == '447560006'">Partial overlap</td>
+                                                                    <td v-if="item.correlation == '447556008'">Not mappable</td>
+                                                                    <td v-if="item.correlation == '447561005'">Not specified</td>
                                                                 </tr>
                                                                 <tr v-if="project.rule">
                                                                     <th>Rule</th>
@@ -84,13 +89,16 @@
                                                     <v-row>
                                                         <v-tooltip right>
                                                         <template v-slot:activator="{ on }">
-                                                            <v-btn color="primary" dark v-on="on" text>Details</v-btn>
+                                                            <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
                                                         </template>
                                                         <span>
                                                             <table>
                                                                 <tr v-for="(value, key) in item.target.extra" :key="key">
                                                                     <th>{{ key }}</th>
-                                                                    <td>{{ value }}</td>
+                                                                    <td v-if="key == 'Materialen'">
+                                                                        <li v-for="value in value" :key="value.SCTID">{{value.SCTID}} {{value.FSN}}</li>
+                                                                    </td>
+                                                                    <td v-else>{{ value }}</td>
                                                                 </tr>
                                                             </table>
                                                         </span>
