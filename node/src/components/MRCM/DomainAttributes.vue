@@ -31,7 +31,7 @@ export default {
             return this.$store.state.userData
         },
         results(){
-            return this.$store.state.Snowstorm.results.domainAttributes
+            return this.$store.state.Snowstorm
         }
     },
     mounted() {
