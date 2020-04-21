@@ -69,7 +69,12 @@ const routes = [
   {
     path: '/demo/Snomed-DT',
     name: 'DT Snomed integratie',
-    component: () => import('../views/DHD/DemoIntegratie.vue')
+    component: () => import('../views/Demos/DemoIntegratie.vue')
+  },
+  {
+    path: '/demo/Snomed-MRCM',
+    name: 'Snomed MRCM demo',
+    component: () => import('../views/Demos/SnomedMRCM.vue')
   },
   {
     path: '/about',

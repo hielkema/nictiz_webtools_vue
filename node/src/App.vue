@@ -144,12 +144,11 @@
 
     <v-content>
       <v-container
-        fluid
       >
         <v-row
           no-gutters
         >
-          <v-col>
+          <v-col cols=12>
             <router-view />
           </v-col>
         </v-row>

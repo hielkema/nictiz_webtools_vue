@@ -88,20 +88,20 @@
                                                     </v-row>
                                                     <v-row>
                                                         <v-tooltip right>
-                                                        <template v-slot:activator="{ on }">
-                                                            <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
-                                                        </template>
-                                                        <span>
-                                                            <table>
-                                                                <tr v-for="(value, key) in item.target.extra" :key="key">
-                                                                    <th>{{ key }}</th>
-                                                                    <td v-if="key == 'Materialen'">
-                                                                        <li v-for="value in value" :key="value.SCTID">{{value.SCTID}} {{value.FSN}}</li>
-                                                                    </td>
-                                                                    <td v-else>{{ value }}</td>
-                                                                </tr>
-                                                            </table>
-                                                        </span>
+                                                            <template v-slot:activator="{ on }">
+                                                                <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
+                                                            </template>
+                                                            <span>
+                                                                <table>
+                                                                    <tr v-for="(value, key) in item.target.extra" :key="key">
+                                                                        <th>{{ key }}</th>
+                                                                        <td v-if="key == 'Materialen'">
+                                                                            <li v-for="value in value" :key="value.SCTID">{{value.SCTID}} {{value.FSN}}</li>
+                                                                        </td>
+                                                                        <td v-else>{{ value }}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </span>
                                                         </v-tooltip>
                                                     </v-row>
                                                 </v-col>
