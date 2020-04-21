@@ -18,6 +18,9 @@ import MappingAudits from './modules/Mapping/AuditsConnection'
 // DHD - SNOMED integration modules
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
 
+// Snowstorm integration
+import Snowstorm from './modules/DHD/Snowstorm'
+
 // Framework modules
 import { authentication } from './authentication.module';
 import { alert } from './alert.module';
@@ -31,7 +34,7 @@ Vue.use(axios)
 export default new Vuex.Store({
   state: {
     baseUrl: 'https://termservice.test-nictiz.nl/',
-    // baseUrl: 'http://localhost/',
+    // baseUrl: 'http://localhost:8000/',
     userData: {
       'id': null,
       'groups' : [],
@@ -41,6 +44,7 @@ export default new Vuex.Store({
   modules: {
       Epd,
       TermspaceComments,
+      Snowstorm,
       MappingTasks,
       MappingComments,
       MappingProjects,
