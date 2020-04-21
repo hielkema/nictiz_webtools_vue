@@ -6,6 +6,9 @@ import axios from 'axios'
 const state = {
     results: {
       'domainAttributes': {},
+      'lookupFsn' : {
+          'fsn': { 'term' : ''}
+      },
     },
     loading: {
         'domainAttributes': false
@@ -17,6 +20,9 @@ const state = {
     setResultsDomainAttributes: (state, payload) => {
       state.results.domainAttributes = payload
       state.loading.domainAttributes = false
+    },
+    setResultsLookupFSN: (state, payload) => {
+      state.results.lookupFsn = payload
     },
   }
 
@@ -30,6 +36,16 @@ const state = {
       .then((response) => {
         // alert('Respons getResults: '+response.data)
         context.commit('setResultsDomainAttributes',response.data)
+        return true;
+      })
+    },
+    // Get results
+    lookupFSN: (context, term) => {
+      axios
+      .get('http://62.138.184.153:9090/MAIN%2FSNOMEDCT-NL/concepts/'+term)
+      .then((response) => {
+        // alert('Respons getResults: '+response.data)
+        context.commit('setResultsLookupFSN',response.data)
         return true;
       })
     },

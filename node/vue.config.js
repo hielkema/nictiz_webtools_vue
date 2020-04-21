@@ -6,6 +6,6 @@ module.exports = {
     disableHostCheck: true
   },
   devServer: {
-    proxy: 'https://termservice.test-nictiz.nl/',
+    proxy: 'https://snowstorm.test-nictiz.nl/',
   }
 }

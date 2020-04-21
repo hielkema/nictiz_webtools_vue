@@ -11,5 +11,6 @@ services:
       - 'node_modules:/usr/src/app/node_modules'
     environment: 
       - CHOKIDAR_USEPOLLING=true
+      - CORS_DEBUG=1
     ports:
       - '9123:8080'
