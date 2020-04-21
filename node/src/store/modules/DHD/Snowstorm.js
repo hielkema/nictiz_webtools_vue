@@ -40,9 +40,9 @@ const state = {
       })
     },
     // Get results
-    lookupFSN: (context, term) => {
+    lookupConcept: (context, term) => {
       axios
-      .get('http://62.138.184.153:9090/MAIN%2FSNOMEDCT-NL/concepts/'+term)
+      .get('https://snowstorm.test-nictiz.nl/MAIN%2FSNOMEDCT-NL/concepts/'+term)
       .then((response) => {
         // alert('Respons getResults: '+response.data)
         context.commit('setResultsLookupFSN',response.data)

@@ -62,7 +62,7 @@ export default {
             this.$store.dispatch('Snowstorm/domainAttributes', this.searchString)
         },
         lookup (term) {
-            this.$store.dispatch('Snowstorm/lookupFSN', term)
+            this.$store.dispatch('Snowstorm/lookupConcept', term)
         }
     },
     computed: {
