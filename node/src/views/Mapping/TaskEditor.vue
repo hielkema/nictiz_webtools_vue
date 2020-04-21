@@ -2,6 +2,13 @@
     <div id="app">
         <v-container no-gutters>
             <v-row>
+                <v-cols cols=12>
+                    <v-card>
+                        <v-card-title>{{selectedProject.title}}</v-card-title>
+                    </v-card>
+                </v-cols>
+            </v-row>
+            <v-row>
                 <v-col cols=3>
                     <v-row>
                         <v-col cols=12>
@@ -97,7 +104,7 @@ export default {
             return this.$store.state.MappingTasks.selectedTask
         },
         selectedProject(){
-            return this.$store.state.MappingTasks.selectedProject
+            return this.$store.state.MappingProjects.selectedProject
         }
     }
 }
