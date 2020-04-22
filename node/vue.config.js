@@ -7,5 +7,8 @@ module.exports = {
   },
   devServer: {
     proxy: 'https://snowstorm.test-nictiz.nl/',
+  },
+  build: {
+    assetsPublicPath: '/test',
   }
 }
