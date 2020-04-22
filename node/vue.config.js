@@ -6,9 +6,7 @@ module.exports = {
     disableHostCheck: true
   },
   devServer: {
-    proxy: 'https://snowstorm.test-nictiz.nl/',
+    proxy: 'https://termservice.test-nictiz.nl/',
   },
-  build: {
-    assetsPublicPath: '/test',
-  }
+  publicPath: '/node',
 }
