@@ -19,8 +19,8 @@
                             <tr><th>Codesystem</th><td>{{selectedTask.component.codesystem.title}} ({{selectedTask.component.codesystem.version}})</td></tr>
                             <tr><th>Taak ID</th><td>{{selectedTask.id}}</td></tr>
                             <tr v-for="(value, key) in selectedTask.component.extra" :key="key">
-                                <th>{{ key }}</th>
-                                <td>{{ value }}</td>
+                                <th v-if="value != false">{{ key }}</th>
+                                <td v-if="value != false">{{ value }}</td>
                             </tr>
                         </tbody>
                     </template>
