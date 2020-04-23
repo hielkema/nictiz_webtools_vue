@@ -5,7 +5,7 @@
             color="cyan darken-2"
             dark>
                 <v-toolbar-title>
-                    <v-btn @click="back()" text>Terug naar projecten</v-btn>
+                    <v-btn @click="back()" text>Terug naar projecten</v-btn><br>
                     <v-btn @click="refresh()" text>Vernieuwen</v-btn>
                 </v-toolbar-title>
             </v-toolbar>
