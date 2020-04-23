@@ -11,15 +11,15 @@
                             <v-simple-table dense>
                                 <thead>
                                     <tr>
-                                        <th width="200"></th><th>Totaal</th><th>Gebruiker</th>
+                                        <th width="200"></th><th>Gebruiker</th><th>Totaal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th>Open taken in project</th><td>{{projectDetails.open_tasks}}</td><td>{{projectDetails.open_tasks_user}}</td>
+                                        <th>Open taken in project</th><td>{{projectDetails.open_tasks_user}}</td><td>{{projectDetails.open_tasks}}</td>
                                     </tr>
                                     <tr v-for="(value, key) in projectDetails.tasks_per_status" :key="key">
-                                        <th>{{value.status_title}}</th><td>{{value.count_total}}</td><td>{{value.count_user}}</td>
+                                        <th>{{value.status_title}}</th><td>{{value.count_user}}</td><td>{{value.count_total}}</td>
                                     </tr>
                                 </tbody>
                             </v-simple-table>
