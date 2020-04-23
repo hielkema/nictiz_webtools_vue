@@ -137,6 +137,11 @@
                                 multi-sort
                                 dense
                             >
+                                
+                                <template v-slot:item.source.identifier="{ item }">
+                                    
+                                    <v-btn small color="primary lighten-2" v-on="on" v-on:click="$router.push({ path: `/mapping/Projects/${item.project_id}/Task/${item.task_id}` })">{{item.source.identifier}}</v-btn> 
+                                </template>
                                 <template v-slot:item.rules="{ item }">
                                     <!-- <ul v-for="rule in item.rules" v-bind:key="rule.rule_id">
                                         #{{rule.rule_id}} * G{{rule.mapgroup}} P{{rule.mappriority}} -> {{rule.target.title}} [{{rule.mapadvice}}]
