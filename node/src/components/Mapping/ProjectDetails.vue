@@ -9,8 +9,18 @@
                         </v-card-title>   
                         <v-card-text>
                             <v-simple-table dense>
+                                <thead>
+                                    <tr>
+                                        <th width="200"></th><th>Totaal</th><th>Gebruiker</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    <th>Open taken voor huidige gebruiker</th><td>{{projectDetails.open_tasks}}</td>
+                                    <tr>
+                                        <th>Open taken in project</th><td>{{projectDetails.open_tasks}}</td><td>{{projectDetails.open_tasks_user}}</td>
+                                    </tr>
+                                    <tr v-for="(value, key) in projectDetails.tasks_per_status" :key="key">
+                                        <th>{{value.status_title}}</th><td>{{value.count_total}}</td><td>{{value.count_user}}</td>
+                                    </tr>
                                 </tbody>
                             </v-simple-table>
                             <v-card-actions>
