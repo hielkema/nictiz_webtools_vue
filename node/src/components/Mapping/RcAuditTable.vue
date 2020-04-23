@@ -160,13 +160,13 @@
                                 <template v-slot:item.actions="{ item }">
                                     <v-tooltip bottom v-if="user.groups.includes('mapping | audit')">
                                         <template v-slot:activator="{ on }">
-                                            <v-btn small color="green lighten-2" v-on="on" v-on:click="postRuleReview(RcRules.rc.id, item.source.identifier, 'fiat')">Fiat <p v-if="item.num_accepted >0">{{item.num_accepted}}</p></v-btn> 
+                                            <v-btn small color="green lighten-2" v-on="on" v-on:click="postRuleReview(RcRules.rc.id, item.source.identifier, 'fiat', item.task_id)">Fiat <p v-if="item.num_accepted >0">{{item.num_accepted}}</p></v-btn> 
                                         </template>
                                         <span>{{item.accepted_list}}</span>
                                     </v-tooltip>
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
-                                            <v-btn small color="red lighten-2" v-on="on" v-on:click="postRuleReview(RcRules.rc.id, item.source.identifier, 'veto')">Veto <p v-if="item.num_rejected >0">{{item.num_rejected}}</p></v-btn> 
+                                            <v-btn small color="red lighten-2" v-on="on" v-on:click="openDialog(RcRules.rc.id, item.source.identifier, item.task_id)">Veto <p v-if="item.num_rejected >0">{{item.num_rejected}}</p></v-btn> 
                                         </template>
                                         <span>{{item.rejected_list}}</span>
                                     </v-tooltip>
@@ -190,6 +190,30 @@
                 </v-col>
             </v-row>
         </v-container>
+
+        <!-- Modal for editing target -->
+        <v-dialog v-model="rejectCommentDialog" max-width="800px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">Commentaar bij veto</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-text-field
+                                    label="Commentaar"
+                                    required
+                                    v-model="rejectCommentDialogData.comment"></v-text-field>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn small color="red lighten-2" v-on:click="postRuleReview(rejectCommentDialogData.rc_id, rejectCommentDialogData.source_identifier, 'veto', rejectCommentDialogData.task_id)">Veto</v-btn> 
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 <script>
@@ -210,6 +234,13 @@ export default {
             ],
             search: '',
             groupBy: null,
+            rejectCommentDialog: false,
+            rejectCommentDialogData: {
+                'rc_id': '',
+                'source_identifier': '',
+                'task_id': '',
+                'comment': '',
+            },
             filters: {
                 project: [],
                 group: [],
@@ -227,8 +258,16 @@ export default {
         pullRulesFromDev: function(codesystem, component_id) {
             this.$store.dispatch('RcAuditConnection/pullRulesFromDev', {'codesystem':codesystem, 'component_id':component_id})
         },
-        postRuleReview: function(rc_id, component_id, action) {
-            this.$store.dispatch('RcAuditConnection/postRuleReview', {'rc_id':rc_id, 'component_id':component_id, 'action': action})
+        postRuleReview: function(rc_id, component_id, action, task_id) {
+            if(action=='veto'){
+                var payload = {
+                    'comment' : '[Commentaar bij veto in Release Candidate audit]: '+this.rejectCommentDialogData.comment,
+                    'taskId' : task_id,
+                }
+                this.$store.dispatch('MappingTasks/postComment', payload)
+            }
+            this.$store.dispatch('RcAuditConnection/postRuleReview', {'rc_id':rc_id, 'component_id':component_id, 'action': action, 'task_id':task_id})
+            this.rejectCommentDialog = false
         },
         massPullChanges: function() {
             this.$store.dispatch('RcAuditConnection/massPullChanges')
@@ -238,6 +277,14 @@ export default {
         },
         createCacheSelectedRc: function() {
             this.$store.dispatch('RcAuditConnection/createCacheSelectedRc', this.selectedRc)
+        },
+        openDialog(rc_id, source_identifier, task_id) {
+            this.rejectCommentDialog = true
+            this.rejectCommentDialogData = {
+                'rc_id': rc_id,
+                'source_identifier': source_identifier,
+                'task_id': task_id,
+            }
         }
     },
     computed: {

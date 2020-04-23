@@ -34,7 +34,11 @@ export default {
     },
     methods: {
         submitcomment () {
-            this.$store.dispatch('MappingTasks/postComment', this.comment)
+            var payload = {
+                'comment' : this.comment,
+                'taskId' : this.task.id,
+            }
+            this.$store.dispatch('MappingTasks/postComment', payload)
             this.comment = ''
         },
     },

@@ -189,8 +189,8 @@ const state = {
       }
       axios
       .post(context.rootState.baseUrl+'mapping/api/1.0/comments/', {
-        'comment' : payload,
-        'task' : context.state.selectedTask.id,
+        'comment' : payload.comment,
+        'task' : payload.taskId,
       },auth)
       .then(() => {
         context.dispatch('getComments',context.state.selectedTask.id)
