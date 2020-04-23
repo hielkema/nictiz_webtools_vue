@@ -30,6 +30,7 @@ export default {
 
             this.$store.dispatch('MappingAudits/getAudits',this.$route.params.taskid)
             
+            this.$store.dispatch('MappingTasks/getTasks', this.$route.params.projectid)
             this.$store.dispatch('MappingTasks/getTaskDetails', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getComments', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getMappingTargets', this.$route.params.taskid)
