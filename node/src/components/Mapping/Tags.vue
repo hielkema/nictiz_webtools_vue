@@ -13,10 +13,17 @@ export default {
     },
     methods: {
         submitcomment (tag) {
-            this.$store.dispatch('MappingTasks/postComment', '#'+tag)
+            var payload = {
+                'comment' : '#'+tag,
+                'taskId' : this.task.id,
+            }
+            this.$store.dispatch('MappingTasks/postComment', payload)
         },
     },
     computed: {
+        task(){
+            return this.$store.state.MappingTasks.selectedTask
+        },
         tags(){
             return this.$store.state.MappingProjects.selectedProject.tags
         },

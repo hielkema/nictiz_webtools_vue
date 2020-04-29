@@ -204,7 +204,9 @@ const state = {
         withCredentials: true
       }
       axios
-      .delete(context.rootState.baseUrl+'mapping/api/1.0/comments/'+payload+'/', {},auth)
+      .delete(context.rootState.baseUrl+'mapping/api/1.0/comments/'+payload+'/', {
+        'payload':payload,
+      },auth)
       .then(() => {
         context.dispatch('getComments',context.state.selectedTask.id)
         return true;
