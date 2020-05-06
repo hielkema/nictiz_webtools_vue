@@ -37,7 +37,7 @@ const routes = [
     component: () => import('../views/Mapping/RcAudit.vue')
   },
   {
-    path: '/mapping/TaskManager',
+    path: '/mapping/TaskManager/:projectid',
     name: 'Mapping taskmanager',
     component: () => import('../views/Mapping/TaskManager.vue')
   },

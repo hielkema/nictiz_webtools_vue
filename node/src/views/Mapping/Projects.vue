@@ -21,6 +21,9 @@ export default {
         selectedProject(){
             return this.$store.state.MappingProjects.selectedProject
         },
+    },
+    mounted(){
+        this.$store.dispatch('MappingProjects/getProjects')
     }
 }
 </script>

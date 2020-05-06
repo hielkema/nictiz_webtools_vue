@@ -5,7 +5,7 @@
                 <v-col cols=12>
                     <v-card class="pa-1">
                         <v-card-title>
-                            Project {{$route.params.projectid}}: {{projectDetails.title}}
+                            Project {{projectDetails.id}}: {{projectDetails.title}}
                         </v-card-title>   
                         <v-card-text>
                             <v-simple-table dense>
@@ -24,7 +24,9 @@
                                 </tbody>
                             </v-simple-table>
                             <v-card-actions>
-                                <v-btn v-on:click="openTaskEditor()">Ga naar de inbox</v-btn><br>
+                                <v-btn v-on:click="openTaskEditor()">Inbox</v-btn><br>
+                                <v-btn v-if="user.groups.includes('mapping | taskmanager')" v-on:click="openTaskManager()">Taskmanager</v-btn>
+
                             </v-card-actions>
                         </v-card-text>
                     </v-card>
@@ -43,8 +45,12 @@ export default {
     methods: {
         openTaskEditor(){
             this.$store.commit('MappingTasks/clearTaskMemory')
-            this.$router.push({ path: `/mapping/Projects/${this.$route.params.projectid}/task/` });
-        }
+            this.$router.push({ path: `/mapping/Projects/${this.projectDetails.id}/task/` });
+        },
+        openTaskManager(){
+            this.$store.commit('TaskManager/resetTasks')
+            this.$router.push({ path: `/mapping/TaskManager/${this.projectDetails.id}/` });
+        },
     },
     computed: {
         projectDetails(){

@@ -3,6 +3,13 @@
         <v-container v-if="user.groups.includes('mapping | taskmanager')">
             <v-row>
                 <v-col cols=6>
+                    <v-row>
+                        <BackToProjectsSolo/>
+                    </v-row>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols=6>
                     <v-card class="pa-1">
                         <v-card-title>
                             Filters en zoeken
@@ -54,26 +61,44 @@
                             Acties
                         </v-card-title>
                         <v-card-text>
-                                <v-form
-                                    value="true"
-                                    v-model="form">
-                                        <v-text-field
-                                            v-model="formData.name"
-                                            label="Name"
-                                            required
-                                        ></v-text-field>
-                                                <v-btn
-                                                    color="error"
-                                                    class="mr-4">
-                                                    Reset Form
-                                                </v-btn>
-                                                <v-btn
-                                                    color="success"
-                                                    class="mr-4">
-                                                    Validate
-                                                </v-btn>
-                                </v-form>
+                            <v-row dense>
+                                <v-col cols=5>
+                                    <v-checkbox class="pa-1" v-model="action.changeUser" label="Wijzig gebruiker"></v-checkbox>
+                                </v-col>
+                                <v-col cols=6>
+                                    <v-select class="pa-1" :items="users" v-model="value.changeUser" label="Gebruikers"></v-select>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols=5>
+                                    <v-checkbox class="pa-1" v-model="action.changeStatus" label="Wijzig Status"></v-checkbox>
+                                </v-col>
+                                <v-col cols=6>
+                                    <v-select class="pa-1" :items="statuses" v-model="value.changeStatus" label="Status"></v-select>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols=5>
+                                    <v-checkbox class="pa-1" v-model="action.changeProject" label="Wijzig Project"></v-checkbox>
+                                </v-col>
+                                <v-col cols=6>
+                                    <v-select class="pa-1" :items="projects" v-model="value.changeProject" item-text="title" item-value="id" label="Projecten"></v-select>
+                                </v-col>
+                            </v-row>
+                            
+                            <v-alert type="warning" v-if="action.changeProject && value.changeProject && (selectedTasks.length != 0)">Het project wordt bij {{selectedTasks.length}} taken gewijzigd</v-alert>
+                            <v-alert type="info" v-if="action.changeUser && value.changeUser && (selectedTasks.length != 0)">De gebruiker wordt bij {{selectedTasks.length}} taken gewijzigd</v-alert>
+                            <v-alert type="info" v-if="action.changeStatus && value.changeStatus && (selectedTasks.length != 0)">De status wordt bij {{selectedTasks.length}} taken gewijzigd</v-alert>
+
                         </v-card-text>
+                        <v-card-actions>
+                            <v-btn
+                                color="success"
+                                class="mr-4"
+                                @click="submit()">
+                                Validate
+                            </v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
@@ -110,7 +135,12 @@
     </div>
 </template>
 <script>
+import BackToProjectsSolo from '@/components/Mapping/BackToProjectsSolo.vue'
+
 export default {
+    components: {
+        BackToProjectsSolo,
+    },
     data() {
         return {
             headers: [
@@ -126,6 +156,16 @@ export default {
                 { text: 'Source codesystem', value: 'codesystem', align: ' d-none' },
                 { text: 'Gebruikersnaam', value: 'username', align: ' d-none' },
             ],
+            action: {
+                'changeUser': false,
+                'changeStatus': false,
+                'changeProject': false,
+            },
+            value: {
+                'changeUser': false,
+                'changeStatus': false,
+                'changeProject': false,
+            },
             selected: [],
             search: '',
             groupBy: null,
@@ -144,7 +184,16 @@ export default {
     },
     methods: {
         refresh: function() {
-            this.$store.dispatch('TaskManager/getTasks')
+            this.$store.dispatch('TaskManager/getTasks', this.$route.params.projectid)
+        },
+        submit: function() {
+            var payload = {
+                'tasks' : this.selectedTasks,
+                'action' : this.action,
+                'value' : this.value,
+                'projectid': this.$route.params.projectid,
+            }
+            this.$store.dispatch('TaskManager/changeTasks', payload)
         },
         columnValueList(val) {
            return this.$store.state.TaskManager.tasks.map(d => d[val]).sort()
@@ -164,17 +213,37 @@ export default {
                 })
             })
         },
-        groupByList(){
-            const result = this.headers
-            // result.push('Niet groeperen')
-            return result
+        selectedTasks(){
+            return Array.from(this.selected, x => x['id'])
         },
+        // groupByList(){
+        //     const result = this.headers
+        //     // result.push('Niet groeperen')
+        //     return result
+        // },
         user(){
             return this.$store.state.userData
-        }
+        },
+        users(){
+            return this.$store.state.MappingProjects.users
+        },
+        statuses(){
+            return this.$store.state.MappingProjects.statuses
+        },
+        projects(){
+            return this.$store.state.MappingProjects.projects
+        },
     },
     mounted(){
-        this.$store.dispatch('TaskManager/getTasks')
+        this.$store.dispatch('TaskManager/getTasks', this.$route.params.projectid)
+    },
+    created(){
+        if(this.$route.params.projectid){
+            this.$store.dispatch('MappingProjects/getProjectDetails', this.$route.params.projectid)
+            this.$store.dispatch('MappingProjects/getProjectStatuses',this.$route.params.projectid)
+            this.$store.dispatch('MappingProjects/getProjectUsers',this.$route.params.projectid)
+        }
+        this.$store.dispatch('MappingProjects/getProjects')
     }
 }
 </script>
