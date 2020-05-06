@@ -1,20 +1,10 @@
 <template>
     <v-container>
-        <v-card>
+        <v-card
+        :loading="loading">
             <v-card-title>
-                attributeDomain
+                DomainAttributes (Domain.vue)
             </v-card-title>
-            <v-card-text>
-                <v-text-field v-model="searchString" label="Domain"></v-text-field><br>
-                <v-btn @click="search">Zoek</v-btn>
-            </v-card-text>
-        </v-card>
-        
-        <v-card>
-            {{hover}}
-        </v-card>
-
-        <v-card>
             <v-card-text>
                 <v-simple-table>
                     <template v-slot:default>
@@ -33,14 +23,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, key) in results.items" :key="key">
+                            <tr v-for="(item, key) in attributes.items" :key="key">
                             <!-- Loopen over items -->
-                                <td>{{item.fsn.term}}</td>
+                                <td><v-btn @click="setDomain(item.id)">{{item.fsn.term}}</v-btn></td>
                                 <td>({{item.id}})</td>
                                 <td>{{item.attributeDomain.length}}</td>
                                 <td>{{item.attributeDomain[0].active}}</td>
                                 <!-- <td>{{item.attributeDomain[0].effectiveTime}}</td> -->
-                                <td>{{item.attributeDomain[0].domainId}} <v-btn @click="lookup(item.attributeDomain[0].domainId)">Zoek</v-btn></td>
+                                <td>{{item.attributeDomain[0].domainId}}</td>
                                 <td>{{item.attributeDomain[0].attributeCardinality.value}}</td>
                                 <td>{{item.attributeDomain[0].attributeInGroupCardinality.value}}</td>
                                 <!-- <td>{{item.attributeDomain[0].ruleStrength}}</td> -->
@@ -61,23 +51,20 @@ export default {
         }
     },
     methods: {
-        search () {
-            this.$store.dispatch('Snowstorm/domainAttributes', this.searchString)
-        },
-        lookup (term) {
-            this.$store.dispatch('Snowstorm/lookupConcept', term)
+        // lookupValues (id) {
+        //     this.$store.dispatch('MRCM/getAttributeValues', id)
+        // },
+        setDomain(id){
+            this.$store.commit('MRCM/setDomain', id)
         }
     },
     computed: {
-        user(){
-            return this.$store.state.userData
+        attributes(){
+            return this.$store.state.MRCM.results.domainAttributes
         },
-        results(){
-            return this.$store.state.Snowstorm.results.domainAttributes
+        loading(){
+            return this.$store.state.MRCM.loading.domainAttributes
         },
-        hover() {
-            return this.$store.state.Snowstorm.results.lookupFsn.fsn.term
-        }
     },
     mounted() {
     }

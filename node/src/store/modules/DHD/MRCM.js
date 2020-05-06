@@ -5,9 +5,13 @@ import axios from 'axios'
 
 const state = {
     results: {
-      'domainAttributes': {},
-      'attributeValues': {},
-      'lookupFsn' : {
+      'rootConcept': {
+          'value' : 'init'
+      },
+      'domainAttributes': [],
+      'selectedDomain' : null,
+      'attributeValues': [],
+      'lookupConcept' : {
           'fsn': { 'term' : ''}
       },
     },
@@ -27,15 +31,19 @@ const state = {
       state.results.attributeValues = payload
       state.loading.attributeValues = false
     },
-    setResultsLookupFSN: (state, payload) => {
-      state.results.lookupFsn = payload
+    setConceptLookup: (state, payload) => {
+      state.results.lookupConcept = payload
+    },
+    setDomain: (state, payload) => {
+      state.results.selectedDomain = payload
+      state.results.attributeValues = []
     },
   }
 
   //// ---- Actions
   const actions = {
     // Get results
-    domainAttributes: (context, term) => {
+    getDomainAttributes: (context, term) => {
       state.loading.domainAttributes = true
       axios
       .get('https://snowstorm.test-nictiz.nl/mrcm/MAIN%2FSNOMEDCT-NL/domain-attributes?parentIds='+term+'&proximalPrimitiveModeling=false&contentType=NEW_PRECOORDINATED')
@@ -45,8 +53,8 @@ const state = {
         return true;
       })
     },
-    attributeValues: (context, payload) => {
-      state.loading.domainAttributes = true
+    getAttributeValues: (context, payload) => {
+      state.loading.attributeValues = true
       axios
       .get('https://snowstorm.test-nictiz.nl/mrcm/MAIN%2FSNOMEDCT-NL/attribute-values/'+payload.attributeId+'?termPrefix='+payload.termPrefix+'&proximalPrimitiveModeling=false&contentType=NEW_PRECOORDINATED')
       .then((response) => {
@@ -61,7 +69,7 @@ const state = {
       .get('https://snowstorm.test-nictiz.nl/MAIN%2FSNOMEDCT-NL/concepts/'+term)
       .then((response) => {
         // alert('Respons getResults: '+response.data)
-        context.commit('setResultsLookupFSN',response.data)
+        context.commit('setConceptLookup',response.data)
         return true;
       })
     },

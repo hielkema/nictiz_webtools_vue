@@ -15,8 +15,9 @@ import RcAuditConnection from './modules/Mapping/RcAuditConnection'
 import TaskManager from './modules/Mapping/TaskManagerConnection'
 import MappingAudits from './modules/Mapping/AuditsConnection'
 
-// DHD - SNOMED integration modules
+// Demo's
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
+import MRCM from './modules/DHD/MRCM'
 
 // Snowstorm integration
 import Snowstorm from './modules/DHD/Snowstorm'
@@ -33,8 +34,8 @@ Vue.use(axios)
 
 export default new Vuex.Store({
   state: {
-    baseUrl: 'https://termservice.test-nictiz.nl/',
-    // baseUrl: 'http://localhost:8000/',
+    // baseUrl: 'https://termservice.test-nictiz.nl/',
+    baseUrl: 'http://localhost:8000/',
     userData: {
       'id': null,
       'groups' : [],
@@ -45,6 +46,7 @@ export default new Vuex.Store({
       Epd,
       TermspaceComments,
       Snowstorm,
+      MRCM,
       MappingTasks,
       MappingComments,
       MappingProjects,
