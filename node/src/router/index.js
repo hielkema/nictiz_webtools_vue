@@ -62,6 +62,11 @@ const routes = [
     component: () => import('../views/Mapping/TaskEditor.vue')
   },
   {
+    path: '/mapping/CreateTasks/:projectid/',
+    name: 'Aanmaken nieuwe taken',
+    component: () => import('../views/Mapping/CreateTasks.vue')
+  },
+  {
     path: '/mapping/Projects/:projectid/Task/:taskid',
     name: 'Mapping taak',
     component: () => import('../views/Mapping/TaskEditor.vue')

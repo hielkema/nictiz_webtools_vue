@@ -24,8 +24,9 @@
                                 </tbody>
                             </v-simple-table>
                             <v-card-actions>
-                                <v-btn v-on:click="openTaskEditor()">Inbox</v-btn><br>
+                                <v-btn v-on:click="openTaskEditor()">Inbox</v-btn>
                                 <v-btn v-if="user.groups.includes('mapping | taskmanager')" v-on:click="openTaskManager()">Taskmanager</v-btn>
+                                <v-btn v-if="user.groups.includes('mapping | create tasks')" v-on:click="openTaskCreator()">Taken aanmaken</v-btn>
 
                             </v-card-actions>
                         </v-card-text>
@@ -50,6 +51,9 @@ export default {
         openTaskManager(){
             this.$store.commit('TaskManager/resetTasks')
             this.$router.push({ path: `/mapping/TaskManager/${this.projectDetails.id}/` });
+        },
+        openTaskCreator(){
+            this.$router.push({ path: `/mapping/CreateTasks/${this.projectDetails.id}/` });
         },
     },
     computed: {

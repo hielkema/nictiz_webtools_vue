@@ -39,7 +39,7 @@ const state = {
           context.state.loading = false
           return true;
       })
-    },    
+    },  
     getProjectDetails: (context, projectid) => {
       // context.state.RcRules = {}
       context.state.loading = true
