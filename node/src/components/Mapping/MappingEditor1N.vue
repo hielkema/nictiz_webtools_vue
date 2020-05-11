@@ -43,7 +43,8 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Code</th>
-                                                                    <td>{{item.target.codesystem.title}} - Code: {{item.target.component_id}}</td>
+                                                                    <td v-if="item.target.codesystem.title == 'Snomed'">{{item.target.codesystem.title}} - Code: {{item.target.component_id}} <a :href="'https://terminologie.nictiz.nl/terminology/snomed/viewConcept/'+item.target.component_id" target="_blank">Open in browser</a></td>
+                                                                    <td v-else>{{item.target.codesystem.title}} - Code: {{item.target.component_id}}</td>
                                                                 </tr>
                                                                 <tr v-if="project.group">
                                                                     <th>Group</th>
