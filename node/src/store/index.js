@@ -14,6 +14,7 @@ import MappingTasks from './modules/Mapping/TasksConnection'
 import RcAuditConnection from './modules/Mapping/RcAuditConnection'
 import TaskManager from './modules/Mapping/TaskManagerConnection'
 import MappingAudits from './modules/Mapping/AuditsConnection'
+import MappingCodesystems from './modules/Mapping/CodesystemsConnection'
 
 // Demo's
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
@@ -50,6 +51,7 @@ export default new Vuex.Store({
       MappingTasks,
       MappingComments,
       MappingProjects,
+      MappingCodesystems,
       authentication,
       MappingAudits,
       TermspaceProgress,
