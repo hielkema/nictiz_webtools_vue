@@ -82,6 +82,11 @@ const routes = [
     component: () => import('../views/Demos/DemoIntegratie.vue')
   },
   {
+    path: '/demo/Postco',
+    name: 'Snomed postcoordination',
+    component: () => import('../views/Demos/Postco.vue')
+  },
+  {
     path: '/demo/Snomed-MRCM',
     name: 'Snomed MRCM demo',
     component: () => import('../views/Demos/SnomedMRCM.vue')
