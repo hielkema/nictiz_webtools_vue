@@ -6,6 +6,7 @@ import Vue from 'vue'
 const state = {
     templates: [],
     selectedTemplate: {},
+    expression: '',
     postcoComponents: [],
     loading: {
         'templates': false,
@@ -19,6 +20,10 @@ const state = {
     setTemplates: (state, payload) => {
       state.templates = payload
       state.loading.templates = false
+    },
+    setExpression: (state, payload) => {
+      state.expression = payload
+      state.loading.expression = false
     },
     setSelectedTemplate: (state, payload) => {
       state.selectedTemplate = payload
@@ -64,8 +69,7 @@ const state = {
         }
       ,auth)
       .then((response) => {
-        // context.commit('setNewTasks', response.data)
-        alert(response.data)
+        context.commit('setExpression', response.data)
       })
     },
   }

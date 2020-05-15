@@ -12,7 +12,7 @@
 
             
             <v-card>
-                <v-card-text>
+                <v-card-text v-if="selectedTemplate.root_concept">
                     <v-row>
                         <v-col cols=12>
                             Onderdelen postcoordinatie:<br>
@@ -26,7 +26,7 @@
                     <v-row>
                         <v-col cols=12>
                             <v-btn v-on:click="getExpression()">Expression:</v-btn><br>
-                            <!-- {{expression}} -->
+                            {{expression}}
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -76,6 +76,9 @@ export default {
         },
         result(){
             return this.$store.state.Postco.postcoComponents
+        },
+        expression(){
+            return this.$store.state.Postco.expression
         },
     },
     mounted() {
