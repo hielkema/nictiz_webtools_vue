@@ -27,11 +27,11 @@ const state = {
     setValue: (state, payload) => {
       var attribute = payload.attribute
       var value = payload.value
-      var objIndex = state.postcoComponents.findIndex((obj => obj.attribute == attribute))
+      var objIndex = state.postcoComponents.findIndex((obj => obj.attribute.sctid == attribute.sctid))
       state.postcoComponents[objIndex].value = value
     },
     createAttribute: (state, payload) => {
-      state.postcoComponents.push ({attribute: payload.attribute, type: payload.type, value: null})
+      state.postcoComponents.push ({attribute: payload.attribute, type: payload.type, value: {}})
     },
   }
 

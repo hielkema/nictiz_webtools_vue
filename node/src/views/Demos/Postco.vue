@@ -16,10 +16,10 @@
                     <v-row>
                         <v-col cols=12>
                             Onderdelen postcoordinatie:<br>
-                            Root: {{selectedTemplate.root_concept}}<br>
+                            Root:<br><li>{{selectedTemplate.root_concept.sctid}} |{{selectedTemplate.root_concept.fsn}}|</li><br>
                             Attributes:<br>
                             <li v-for="(value,key) in result" :key="key">
-                                {{value.attribute}} => {{value.value}}
+                                {{value.attribute.sctid}} |{{value.attribute.fsn}}| => {{value.value.sctid}} |{{value.value.fsn}}|
                             </li>
                         </v-col>
                     </v-row>
@@ -31,7 +31,6 @@
                     </v-row>
                 </v-card-text>
             </v-card>
-
             <v-card>
                 <v-card-text>
                     <v-row dense v-for="(value, key) in selectedTemplate.attributes" v-bind:key="key">

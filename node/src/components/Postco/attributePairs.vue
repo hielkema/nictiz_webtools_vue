@@ -28,8 +28,14 @@ export default {
         set () {
             var payload = {
                 'key' : this.attributeKey,
-                'attribute' : this.template.attributes[this.attributeKey].sctid,
-                'value' : this.selectedValue.sctid,
+                'attribute' : {
+                    'sctid': this.template.attributes[this.attributeKey].sctid,
+                    'fsn': this.template.attributes[this.attributeKey].fsn,
+                },
+                'value' : {
+                    'sctid': this.selectedValue.sctid,
+                    'fsn' : this.selectedValue.fsn,
+                }
             }
             this.$store.commit('Postco/setValue', payload)
         },
@@ -44,8 +50,11 @@ export default {
     },
     mounted() {
         var attribute = {
-            attribute: this.template.attributes[this.attributeKey].sctid,
-            type: 'attribute',
+            'attribute': {
+                'sctid': this.template.attributes[this.attributeKey].sctid,
+                'fsn': this.template.attributes[this.attributeKey].fsn,
+            },
+            'type': 'attribute',
         }
         this.$store.commit('Postco/createAttribute', attribute)
     }
