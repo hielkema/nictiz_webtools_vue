@@ -23,6 +23,12 @@
                             </li>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <v-col cols=12>
+                            <v-btn v-on:click="getExpression()">Expression:</v-btn><br>
+                            <!-- {{expression}} -->
+                        </v-col>
+                    </v-row>
                 </v-card-text>
             </v-card>
 
@@ -56,6 +62,9 @@ export default {
         update() {
             console.log(this.$store.state.Postco.postcoResult)
             this.$forceUpdate()
+        },
+        getExpression() {
+            this.$store.dispatch('Postco/getExpression')
         }
     },
     components: {

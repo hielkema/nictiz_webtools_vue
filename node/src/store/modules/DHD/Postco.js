@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import { jwtHeader } from '@/helpers';
-// import Vue from 'vue'
+import Vue from 'vue'
 // import router from '@/router/index.js' //or whatever your router.js path is
 
 const state = {
@@ -9,6 +9,7 @@ const state = {
     postcoComponents: [],
     loading: {
         'templates': false,
+        'expression' : false,
         'attributeValues': false,
     }
   }
@@ -45,6 +46,26 @@ const state = {
         // alert('Respons getResults: '+response.data)
         context.commit('setTemplates',response.data)
         return true;
+      })
+    },
+    getExpression: (context) => {
+      state.loading.expression = true
+      const auth = {
+        headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
+        withCredentials: true
+      }
+      var rootConcept = context.state.selectedTemplate.root_concept
+      var postcoComponents = context.state.postcoComponents
+      axios
+      .post(context.rootState.baseUrl+'postco/expression/', 
+        {
+          rootConcept,
+          postcoComponents,
+        }
+      ,auth)
+      .then((response) => {
+        // context.commit('setNewTasks', response.data)
+        alert(response.data)
       })
     },
   }
