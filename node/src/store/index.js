@@ -18,6 +18,7 @@ import MappingCodesystems from './modules/Mapping/CodesystemsConnection'
 
 // Demo's
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
+import Postco from './modules/DHD/Postco'
 import MRCM from './modules/DHD/MRCM'
 
 // Snowstorm integration
@@ -48,6 +49,7 @@ export default new Vuex.Store({
       TermspaceComments,
       Snowstorm,
       MRCM,
+      Postco,
       MappingTasks,
       MappingComments,
       MappingProjects,
