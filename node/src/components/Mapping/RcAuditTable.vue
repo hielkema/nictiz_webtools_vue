@@ -148,7 +148,7 @@
                                     </ul> -->
                                     <table>
                                         <tr>
-                                            <th width=10>Group</th><th width=10>Prio</th><th width=500>Target</th><th width=200>Advice</th><th width=150>Correlation</th>
+                                            <th width=10>Group</th><th width=10>Prio</th><th width=500>Target</th><th width=200>Correlation</th><th width=150>Advice</th>
                                         </tr>
                                         <tr v-for="rule in item.rules" v-bind:key="rule.rule_id">
                                             <td>{{rule.mapgroup}}</td>
