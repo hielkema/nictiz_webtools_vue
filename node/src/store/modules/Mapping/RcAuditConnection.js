@@ -36,6 +36,10 @@ const state = {
           context.state.loading = false
           return true;
       })
+      .catch(function(error){
+        console.log(error)
+        context.state.loading = false
+      })
     },
     getRcs: (context) => {
       axios
