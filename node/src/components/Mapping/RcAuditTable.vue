@@ -163,13 +163,13 @@
                                     </table>
                                 </template>
                                 <template v-slot:item.actions="{ item }">
-                                    <v-tooltip bottom v-if="user.groups.includes('mapping | audit')">
+                                    <v-tooltip bottom v-if="user.groups.includes('mapping | rc_audit')">
                                         <template v-slot:activator="{ on }">
                                             <v-btn small color="green lighten-2" v-on="on" v-on:click="postRuleReview(RcRules.rc.id, item.source.identifier, 'fiat', item.task_id)">Fiat <p v-if="item.num_accepted >0">{{item.num_accepted}}</p></v-btn> 
                                         </template>
                                         <span>{{item.accepted_list}}</span>
                                     </v-tooltip>
-                                    <v-tooltip bottom>
+                                    <v-tooltip bottom v-if="user.groups.includes('mapping | rc_audit')">
                                         <template v-slot:activator="{ on }">
                                             <v-btn small color="red lighten-2" v-on="on" v-on:click="openDialog(RcRules.rc.id, item.source.identifier, item.task_id)">Veto <p v-if="item.num_rejected >0">{{item.num_rejected}}</p></v-btn> 
                                         </template>
