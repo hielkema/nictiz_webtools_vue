@@ -216,6 +216,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn small color="red lighten-2" v-on:click="postRuleReview(rejectCommentDialogData.rc_id, rejectCommentDialogData.source_identifier, 'veto', rejectCommentDialogData.task_id)">Veto</v-btn> 
+                    <v-btn small color="info lighten-2" v-on:click="rejectCommentDialog = false">Annuleer</v-btn> 
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -229,7 +230,7 @@ export default {
                 { text: 'Code', value: 'source.identifier' },
                 { text: 'Source', value: 'source.title' },
                 { text: 'Groep', value: 'group' },
-                { text: 'Status', value: 'status' },
+                // { text: 'Status', value: 'status' },
                 { text: 'Rules', value: 'rules' },
                 { text: 'Actions', value: 'actions' },
                 { text: 'Rejected', value: 'rejected' },
