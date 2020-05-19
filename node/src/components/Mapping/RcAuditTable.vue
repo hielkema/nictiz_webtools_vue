@@ -141,7 +141,30 @@
                                 <template v-slot:item.source.identifier="{ item }">
                                     
                                     <v-btn small color="primary lighten-2" v-on="on" v-on:click="$router.push({ path: `/mapping/Projects/${item.project_id}/Task/${item.task_id}` })">{{item.source.identifier}}</v-btn> 
+                                    
                                 </template>
+
+                                <template v-slot:item.source.title="{ item }">
+                                    <v-tooltip right>
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
+                                        </template>
+                                        <span>
+                                            <table>
+                                                <tr v-for="(value, key) in item.source.extra" :key="key">
+                                                    <th align=left>{{ key }}</th>
+                                                    <td v-if="key == 'Materialen'">
+                                                        <li v-for="value in value" :key="value.SCTID">{{value.SCTID}} {{value.FSN}}</li>
+                                                    </td>
+                                                    <td v-else>{{ value }}</td>
+                                                </tr>
+                                            </table>
+                                        </span>
+                                    </v-tooltip>
+                                    {{item.source.title}} 
+
+                                </template>
+
                                 <template v-slot:item.rules="{ item }">
                                     <!-- <ul v-for="rule in item.rules" v-bind:key="rule.rule_id">
                                         #{{rule.rule_id}} * G{{rule.mapgroup}} P{{rule.mappriority}} -> {{rule.target.title}} [{{rule.mapadvice}}]
@@ -154,8 +177,8 @@
                                             <td>{{rule.mapgroup}}</td>
                                             <td>{{rule.mappriority}}</td>
                                             <td>
-                                                {{rule.target.title}}
-                                                <li v-for="rule in rule.mapspecifies" v-bind:key="rule.id">{{rule.title}}</li>
+                                                {{rule.target.identifier}} - {{rule.target.title}}
+                                                <li v-for="rule in rule.mapspecifies" v-bind:key="rule.id"><!-- {{rule.id}} - -->{{rule.title}}</li>
                                             </td>
                                             <td width=10>{{rule.mapcorrelation}}</td>
                                             <td width=10>{{rule.mapadvice}}</td>
