@@ -58,7 +58,7 @@ const routes = [
   },
   {
     path: '/mapping/Projects/:projectid/Task/',
-    name: 'Mapping taak',
+    name: 'Mapping takenlijst',
     component: () => import('../views/Mapping/TaskEditor.vue')
   },
   {
@@ -70,6 +70,11 @@ const routes = [
     path: '/mapping/projectAudit/:projectid/',
     name: 'Audits per project',
     component: () => import('../views/Mapping/ProjectAudit.vue')
+  },
+  {
+    path: '/mapping/lookup/',
+    name: 'Mapping lookup',
+    component: () => import('../views/Mapping/LookupByIDList.vue')
   },
   {
     path: '/mapping/Projects/:projectid/Task/:taskid',

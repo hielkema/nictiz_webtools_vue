@@ -15,6 +15,7 @@ import RcAuditConnection from './modules/Mapping/RcAuditConnection'
 import TaskManager from './modules/Mapping/TaskManagerConnection'
 import MappingAudits from './modules/Mapping/AuditsConnection'
 import MappingCodesystems from './modules/Mapping/CodesystemsConnection'
+import MappingLookup from './modules/Mapping/MappingLookup'
 
 // Demo's
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
@@ -53,6 +54,7 @@ export default new Vuex.Store({
       MappingTasks,
       MappingComments,
       MappingProjects,
+      MappingLookup,
       MappingCodesystems,
       authentication,
       MappingAudits,
