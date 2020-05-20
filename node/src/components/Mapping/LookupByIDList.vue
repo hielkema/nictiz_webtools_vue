@@ -122,7 +122,6 @@ export default {
     data() {
         return {
             headers: [
-                { text: 'Error', value: 'error' },
                 { text: 'Project', value: 'project' },
                 { text: 'Task', value: 'task' },
                 { text: 'Status', value: 'status' },
