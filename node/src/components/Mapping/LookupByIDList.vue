@@ -133,7 +133,7 @@ export default {
             filters: {
                 error: [],
             },
-            lookupList: '74400008',
+            lookupList: '',
             groupByList: ['source_ident', 'target_ident'],
             groupBy: [],
             pagination: {
