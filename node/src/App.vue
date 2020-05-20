@@ -122,6 +122,13 @@
                 <router-link to="/mapping/Projects"><v-list-item-title>Mapping tool v2</v-list-item-title></router-link>
             </v-list-item-content>
           </v-list-item>
+          <!-- Link 5 in subgroep -->
+          <v-list-item v-if="groups.includes('mapping | access')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/mapping/lookup"><v-list-item-title>Regels zoeken op ID</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
         <!-- EIND Groep Mapping tools -->
         </v-list-group>
       </v-list>
