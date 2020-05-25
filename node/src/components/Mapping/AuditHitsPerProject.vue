@@ -65,10 +65,11 @@
                         <v-card-text>
                             <v-data-table
                                 :headers="headers"
+                                :footer-props="pagination" 
                                 :items="filteredHits"
-                                :items-per-page="5"
+                                :items-per-page="50"
                                 :loading="loading"
-                                :search="search" 
+                                :search="search"
                                 class="elevation-2"
                                 multi-sort
                                 dense
@@ -102,6 +103,9 @@ export default {
                 { text: 'Whitelist', value: 'ignore' },
                 { text: 'timestamp', value: 'timestamp' },
             ],
+            pagination: {
+                "items-per-page-options": [25,50,100,150]
+            },
             filters: {
                 user: [],
                 status: [],
