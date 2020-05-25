@@ -68,6 +68,7 @@
                                 :items="filteredHits"
                                 :items-per-page="5"
                                 :loading="loading"
+                                :search="search" 
                                 class="elevation-2"
                                 multi-sort
                                 dense
