@@ -39,7 +39,7 @@
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title>DHD</v-list-item-title>
+              <v-list-item-title>Demo's</v-list-item-title>
             </v-list-item-content>
           </template>
 
@@ -51,6 +51,26 @@
             </v-list-item-content>
           </v-list-item>
           <!-- Link 2 in subgroep -->
+          <v-list-item v-if="groups.includes('dhd | demo integratie')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/demo/Snomed-MRCM"><v-list-item-title>SNOMED MRCM</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 3 in subgroep -->
+          <v-list-item v-if="groups.includes('dhd | demo integratie')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/demo/Postco"><v-list-item-title>SNOMED Postco</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 4 in subgroep -->
+          <v-list-item v-if="groups.includes('dhd | demo integratie')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/demo/Snomed-tree"><v-list-item-title>SNOMED tree</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
         <!-- EIND Groep Demo's -->
 

@@ -21,6 +21,7 @@ import MappingLookup from './modules/Mapping/MappingLookup'
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
 import Postco from './modules/DHD/Postco'
 import MRCM from './modules/DHD/MRCM'
+import TreeView from './modules/DHD/TreeView'
 
 // Snowstorm integration
 import Snowstorm from './modules/DHD/Snowstorm'
@@ -49,6 +50,7 @@ export default new Vuex.Store({
       Epd,
       TermspaceComments,
       Snowstorm,
+      TreeView,
       MRCM,
       Postco,
       MappingTasks,

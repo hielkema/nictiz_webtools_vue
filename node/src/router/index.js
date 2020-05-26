@@ -92,6 +92,11 @@ const routes = [
     component: () => import('../views/Demos/Postco.vue')
   },
   {
+    path: '/demo/Snomed-tree',
+    name: 'Snomed tree',
+    component: () => import('../views/Demos/SnomedTree.vue')
+  },
+  {
     path: '/demo/Snomed-MRCM',
     name: 'Snomed MRCM demo',
     component: () => import('../views/Demos/SnomedMRCM.vue')
