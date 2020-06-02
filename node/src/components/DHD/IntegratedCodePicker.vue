@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fluid v-if="user.groups.includes('dhd | demo integratie')">
+    <v-container fluid>
         <v-row>
             <v-col cols=6>
                 <v-card>

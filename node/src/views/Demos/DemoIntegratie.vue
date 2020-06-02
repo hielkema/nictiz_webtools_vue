@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" v-if="user.groups.includes('dhd | demo integratie')">
         <IntegratedCodePicker />
     </div>
 </template>
