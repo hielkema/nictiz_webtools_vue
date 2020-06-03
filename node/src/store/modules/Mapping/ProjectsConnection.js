@@ -34,9 +34,9 @@ const state = {
       axios
       .get(context.rootState.baseUrl+'mapping/api/1.0/projects/')
       .then((response) => {
+          context.state.loading = false
           console.log(response.data)
           context.commit('setProjects',response.data)
-          context.state.loading = false
           return true;
       })
     },  
@@ -46,9 +46,9 @@ const state = {
       axios
       .get(context.rootState.baseUrl+'mapping/api/1.0/projects/'+projectid+'/')
       .then((response) => {
+          context.state.loading = false
           console.log(response.data)
           context.commit('setProjectDetails',response.data)
-          context.state.loading = false
           this.$toast.info('Info toast')
           return true;
       })
@@ -59,9 +59,9 @@ const state = {
       axios
       .get(context.rootState.baseUrl+'mapping/api/1.0/statuses/'+projectid+'/')
       .then((response) => {
+          context.state.loading = false
           console.log(response.data)
           context.commit('setProjectStatuses',response.data)
-          context.state.loading = false
           return true;
       })
     },
@@ -71,9 +71,9 @@ const state = {
       axios
       .get(context.rootState.baseUrl+'mapping/api/1.0/users/'+projectid+'/')
       .then((response) => {
+          context.state.loading = false
           console.log(response.data)
           context.commit('setProjectUsers',response.data)
-          context.state.loading = false
           return true;
       })
     },

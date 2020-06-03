@@ -33,7 +33,7 @@
                     </v-row>
                 </v-card-text>
             </v-card>
-
+    
             <v-card
                 max-width="400"
                 class="mx-auto"
@@ -60,6 +60,12 @@
                     </v-list-item-group>
                 </v-list>
             </v-card>
+            <v-skeleton-loader
+                v-if="(loading) && (!selectedTask)"
+                class="mx-auto"
+                max-width="400"
+                type="article"
+                ></v-skeleton-loader>
         </v-container>
     </div>
 </template>
