@@ -260,6 +260,11 @@ export default {
                 { text: 'Project', value: 'project', align: ' d-none' },
                 { text: 'My fiat', value: 'accepted_me', align: ' d-none' },
                 { text: 'My veto', value: 'rejected_me', align: ' d-none' },
+                { text: 'Fiat Nictiz', value: 'accepted_nictiz', align: ' d-none' },
+                { text: 'Fiat NHG', value: 'accepted_nhg', align: ' d-none' },
+                { text: 'Fiat PALGA', value: 'accepted_palga', align: ' d-none' },
+                { text: 'Fiat NVKC', value: 'accepted_nvkc', align: ' d-none' },
+                { text: 'Fiat NVMM', value: 'accepted_nvmm', align: ' d-none' },
             ],
             search: '',
             groupBy: null,
@@ -277,6 +282,11 @@ export default {
                 status: [],
                 accepted_me: [],
                 rejected_me: [],
+                accepted_nictiz: [],
+                accepted_nvmm: [],
+                accepted_nvkc: [],
+                accepted_nhg: [],
+                accepted_palga: [],
             }
         }
     },
