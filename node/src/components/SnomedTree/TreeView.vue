@@ -31,12 +31,9 @@
                     </template>
                     
                     <template v-slot:append="{item}">
-                        <span v-for="(item, key) in item.refsets" :key="key">
-                            {{item}} / 
-                        </span>
+                        <v-icon v-if="item.refsets" color="green">mdi-check-circle</v-icon>
                     </template>
                 </v-treeview>
-
             </v-col> 
         </v-row>          
     </v-container>

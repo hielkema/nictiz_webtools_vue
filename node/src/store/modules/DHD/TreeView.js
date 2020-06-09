@@ -21,10 +21,10 @@ const state = {
   //// ---- Actions
   const actions = {
     // Get results
-    getTreeData: (context, concept) => {
+    getTreeData: (context, payload) => {
       state.loading.templates = true
       axios
-      .get(context.rootState.baseUrl+'termspace/snomed_json_tree/'+concept+'/')
+      .get(context.rootState.baseUrl+'termspace/snomed_json_tree/'+payload.concept+'**'+payload.refset+'/')
       .then((response) => {
         // alert('Respons getResults: '+response.data)
         context.commit('setTreeData',response.data)

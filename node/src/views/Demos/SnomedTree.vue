@@ -7,7 +7,8 @@
                 </v-card-title>
                 <v-card-text>
                     <v-text-field v-model="searchString" label="Root concept"></v-text-field><br>
-                    <v-btn @click="search(searchString)">Zoek</v-btn>
+                    <v-text-field v-model="searchCrossref" label="Crossreference refset ID"></v-text-field> laat Crossreference leeg om crosscheck achterwege te laten<br>
+                    <v-btn @click="search()">Zoek</v-btn>
                 </v-card-text>
             </v-card>
             
@@ -31,11 +32,18 @@ export default {
     data() {
         return{
             searchString: '',
+            searchCrossref: '',
         }
     },
     methods: {
         search () {
-            this.$store.dispatch('TreeView/getTreeData', this.searchString)
+            var payloadSearchString = this.searchString
+            var payloadRefsetID = this.searchCrossref
+            var payload = {
+                'concept' : payloadSearchString,
+                'refset' : payloadRefsetID,
+            }
+            this.$store.dispatch('TreeView/getTreeData', payload)
         },
     },
     components: {
