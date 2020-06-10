@@ -1,16 +1,16 @@
 <template>
     <div id="app">
-        <v-container no-gutters>
-            <v-row>
+        <v-container>
+            <v-row no-gutters>
                 <v-cols cols=12>
                     <v-card>
                         <v-card-title>{{selectedProject.title}}</v-card-title>
                     </v-card>
                 </v-cols>
             </v-row>
-            <v-row>
+            <v-row no-gutters>
                 <v-col cols=3>
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <BackToProjects />
                             <TaskList />
@@ -19,39 +19,39 @@
                 </v-col>
 
                 <v-col cols=5 v-if="selectedTask">
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <TaskDetails />
                         </v-col>
                     </v-row>
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <AuditList />
                         </v-col>
                     </v-row>
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <Statuses />
                         </v-col>
                     </v-row>
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <Users />
                         </v-col>
                     </v-row>
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <CommentsForm />
                         </v-col>
                     </v-row>
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <CommentsList />
                         </v-col>
                     </v-row>
                 </v-col>
                 <v-col cols=4>
-                    <v-row>
+                    <v-row no-gutters>
                         <v-col cols=12>
                             <MappingEditor1N />
                         </v-col>
