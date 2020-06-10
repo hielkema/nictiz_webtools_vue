@@ -115,9 +115,9 @@
                                 v-on:click="createCacheSelectedRc()"
                                 >Genereer een FHIR ConceptMap</v-btn><br>
                             <v-btn 
-                                v-if="user.groups.includes('mapping | audit admin')"
+                                v-if="user.groups.includes('mapping | audit admin') && (RcRules.rc.status != 'Production')"
                                 v-on:click="massPullChanges()"
-                                >Mass pull changes (needs manual refresh)</v-btn>
+                                >Mass pull changes (needs manual refresh) </v-btn>
                         </v-card-actions>
                         <v-card-text>
                             <v-alert type="info" v-if="!RcRules.rc.finished">

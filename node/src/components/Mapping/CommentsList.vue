@@ -21,9 +21,34 @@
                             class="yellow lighten-4"
                             :key="item.id">
                             <v-list-item-content class="yellow lighten-5">
-                                <v-list-item-title><v-icon>mdi-label-multiple-outline</v-icon> Statuswijziging (door {{item.action_user.name}})</v-list-item-title>
-                                <v-list-item-subtitle v-html="item.created"></v-list-item-subtitle>
+                                <v-list-item-title><v-icon>mdi-label-multiple-outline</v-icon> Statuswijziging (door {{item.action_user.name}})
+                                    <v-tooltip right>
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
+                                        </template>
+                                            <li v-for="(rule, key) in item.data" :key="key">
+                                                {{key+1}}
+                                                <table>
+                                                    <thead>
+                                                        <th>Variabele</th><th>Waarde</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item, key) in rule" :key="key">
+                                                            <td>{{key}}</td><td>{{item}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </li>
+                                    </v-tooltip>
+                                
+                                </v-list-item-title>
+                                <v-list-item-subtitle>
+                                    {{item.created}}
+                                    
+
+                                </v-list-item-subtitle>
                                 {{item.text}}
+                                
                             </v-list-item-content>
                         </v-list-item>
                         <v-list-item
@@ -49,6 +74,7 @@
                                 {{item.text}}
                             </v-list-item-content>
                         </v-list-item>
+                        
                         <v-divider :key="item.timestamp"></v-divider>
                     </template>
                 </v-list>
