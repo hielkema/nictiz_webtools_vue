@@ -26,19 +26,27 @@
                                         <template v-slot:activator="{ on }">
                                             <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
                                         </template>
-                                            <li v-for="(rule, key) in item.data" :key="key">
-                                                {{key+1}}
+                                            <ul v-for="(rule, key) in item.data" :key="key">
+                                                <strong>Mapping rule {{key+1}}</strong>
                                                 <table>
                                                     <thead>
                                                         <th>Variabele</th><th>Waarde</th>
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="(item, key) in rule" :key="key">
-                                                            <td>{{key}}</td><td>{{item}}</td>
+                                                            <td>{{key}}</td>
+                                                            <td v-if="key == 'Mapcorrelation' && item == '447559001'">Broad to narrow</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447557004'">Exact match</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447558009'">Narrow to broad</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447560006'">Partial overlap</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447556008'">Not mappable</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447561005'">Not specified</td>
+                                                            <td v-else>{{item}}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </li>
+                                                <hr>
+                                            </ul>
                                     </v-tooltip>
                                 
                                 </v-list-item-title>
@@ -69,7 +77,35 @@
                             class="yellow lighten-4"
                             :key="item.id">
                             <v-list-item-content class="yellow lighten-5">
-                                <v-list-item-title><v-icon>mdi-account-arrow-right</v-icon> Toewijzing (door {{item.action_user.name}})</v-list-item-title>
+                                <v-list-item-title><v-icon>mdi-account-arrow-right</v-icon> Toewijzing (door {{item.action_user.name}})
+                                    <v-tooltip right>
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
+                                        </template>
+                                            <ul v-for="(rule, key) in item.data" :key="key">
+                                                <strong>Mapping rule {{key+1}}</strong>
+                                                <table>
+                                                    <thead>
+                                                        <th>Variabele</th><th>Waarde</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item, key) in rule" :key="key">
+                                                            <td>{{key}}</td>
+                                                            <td v-if="key == 'Mapcorrelation' && item == '447559001'">Broad to narrow</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447557004'">Exact match</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447558009'">Narrow to broad</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447560006'">Partial overlap</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447556008'">Not mappable</td>
+                                                            <td v-else-if="key == 'Mapcorrelation' && item == '447561005'">Not specified</td>
+                                                            <td v-else>{{item}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <hr>
+                                            </ul>
+                                    </v-tooltip>
+                                
+                                </v-list-item-title>
                                 <v-list-item-subtitle v-html="item.created"></v-list-item-subtitle>
                                 {{item.text}}
                             </v-list-item-content>
