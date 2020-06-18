@@ -31,6 +31,13 @@
                             <v-select class="pa-1" :items="statuses" v-model="filterStatus" label="Filter op status"></v-select>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <v-col cols=1>
+                        </v-col>
+                        <v-col cols=10>
+                            <v-select class="pa-1" :items="perPageOptions" v-model="perPage" label="Aantal per pagina"></v-select>
+                        </v-col>
+                    </v-row>
                     <!-- <v-row>
                         <v-col cols=1>
                             <v-checkbox v-model="filterOnCode"></v-checkbox>
@@ -44,24 +51,18 @@
                     </v-row> -->
                 </v-card-text>
             </v-card>
-    
-            <v-card
-                class="mx-auto"
-            >
-                <v-pagination
-                    v-model="page"
-                    total-visible="3"
-                    dense
-                    :length="Math.ceil(tasksFiltered.length/perPage)"
-                ></v-pagination>
-            </v-card>
 
             <v-card
                 max-width="400"
                 class="mx-auto"
                 :loading="loading"
             >
-                
+                <v-pagination
+                    v-model="page"
+                    total-visible="5"
+                    dense
+                    :length="Math.ceil(tasksFiltered.length/perPage)"
+                ></v-pagination>
 
                 <v-list three-line
                     style="max-height:800px"
@@ -83,14 +84,10 @@
                         </v-list-item>
                     </v-list-item-group>
                 </v-list>
-            </v-card>
 
-            <v-card
-                class="mx-auto"
-            >
                 <v-pagination
                     v-model="page"
-                    total-visible="3"
+                    total-visible="5"
                     dense
                     :length="Math.ceil(tasksFiltered.length/perPage)"
                 ></v-pagination>
@@ -119,6 +116,7 @@ export default {
 
             page: 1,
             perPage: 8,
+            perPageOptions: [8,20,50,100,500,1000,3000,8000],
         }
     },
     methods: {
