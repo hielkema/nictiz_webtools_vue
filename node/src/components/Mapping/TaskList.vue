@@ -31,23 +31,47 @@
                             <v-select class="pa-1" :items="statuses" v-model="filterStatus" label="Filter op status"></v-select>
                         </v-col>
                     </v-row>
+                    <!-- <v-row>
+                        <v-col cols=1>
+                            <v-checkbox v-model="filterOnCode"></v-checkbox>
+                        </v-col>
+                        <v-col cols=10>
+                            <v-text-field
+                                label="Zoek op code"
+                                model="filterCode"
+                                ></v-text-field>
+                        </v-col>
+                    </v-row> -->
                 </v-card-text>
             </v-card>
     
+            <v-card
+                class="mx-auto"
+            >
+                <v-pagination
+                    v-model="page"
+                    total-visible="3"
+                    dense
+                    :length="Math.ceil(tasksFiltered.length/perPage)"
+                ></v-pagination>
+            </v-card>
+
             <v-card
                 max-width="400"
                 class="mx-auto"
                 :loading="loading"
             >
+                
+
                 <v-list three-line
                     style="max-height:800px"
                     class="overflow-y-auto pa-0"
                     >
                     <v-list-item-group
-                        v-model=tasksFiltered>
+                        v-model=visiblePages>
                         <v-list-item
                             @click="selectTask(item.id)"
-                            v-for="item in tasksFiltered"
+                            v-for="item in visiblePages"
                             :key="item.id">
                             <v-list-item-content>
                                 <v-list-item-title v-html="item.component.title"></v-list-item-title>
@@ -60,6 +84,18 @@
                     </v-list-item-group>
                 </v-list>
             </v-card>
+
+            <v-card
+                class="mx-auto"
+            >
+                <v-pagination
+                    v-model="page"
+                    total-visible="3"
+                    dense
+                    :length="Math.ceil(tasksFiltered.length/perPage)"
+                ></v-pagination>
+            </v-card>
+
             <v-skeleton-loader
                 v-if="(loading) && (!selectedTask)"
                 class="mx-auto"
@@ -75,9 +111,14 @@ export default {
         return {
             filterStatus: '',
             filterUser: '',
+            filterCode: '',
             filterOnUser: true,
             filterOnStatus: true,
+            filterOnCode: true,
             filterBox: false,
+
+            page: 1,
+            perPage: 8,
         }
     },
     methods: {
@@ -132,7 +173,10 @@ export default {
                 }
                 return filtered
             })
-      },
+        },
+        visiblePages () {
+            return this.tasksFiltered.slice((this.page - 1)* this.perPage, this.page* this.perPage)
+        },
     },
     created() {
         // this.$store.dispatch('MappingTasks/getTasks',this.$route.params.projectid)
