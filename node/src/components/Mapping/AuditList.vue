@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-container 
-            v-if="user.groups.includes('mapping | access') && audits_active.length > 0"
+            v-if="user.groups.includes('mapping | access') && (audits_active.length > 0 || audits_whitelisted.length > 0 )"
             fluid
             >
                 <v-alert 
@@ -9,7 +9,19 @@
                 dense
                 color="red lighten-2"
                 type="error" v-for="hit in audits_active" :key="hit.id">
-                    {{hit.reason}}
+                    {{hit.reason}}<br>
+                    <a @click="whitelistAudit(hit.id)">[whitelist]</a>
+                    <a @click="removeAudit(hit.id)">[remove]</a>
+                </v-alert>
+
+                <v-alert 
+                border="left"
+                dense
+                color="green lighten-2"
+                type="info" v-for="hit in audits_whitelisted" :key="hit.id">
+                    Whitelisted | {{hit.reason}}<br>
+                    <a @click="removeWhitelistAudit(hit.id)">[reset whitelist]</a>
+                    <a @click="removeAudit(hit.id)">[remove]</a>
                 </v-alert>
         </v-container>
     </div>
@@ -21,7 +33,15 @@ export default {
         }
     },
     methods: {
-        
+        whitelistAudit(id){
+            this.$store.dispatch('MappingAudits/whitelist', id)
+        },
+        removeWhitelistAudit(id){
+            this.$store.dispatch('MappingAudits/removeWhitelist', id)
+        },
+        removeAudit(id){
+            this.$store.dispatch('MappingAudits/remove', id)
+        },
     },
     computed: {
         selectedTask(){
@@ -33,6 +53,11 @@ export default {
         audits_active(){
             return this.audits.filter(function(item){
                 return item.ignore == false
+            })
+        },
+        audits_whitelisted(){
+            return this.audits.filter(function(item){
+                return item.ignore
             })
         },
         loading(){

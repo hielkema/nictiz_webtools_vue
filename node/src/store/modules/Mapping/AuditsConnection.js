@@ -35,6 +35,39 @@ const state = {
           return true;
       })
     },
+    whitelist: (context, id) => {
+      // context.state.RcRules = {}
+      context.audits = []
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/audit_whitelist/'+id+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.dispatch('getAudits',context.rootState.MappingTasks.selectedTask.id)
+          return true;
+      })
+    },
+    remove: (context, id) => {
+      // context.state.RcRules = {}
+      context.audits = []
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/audit_remove/'+id+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.dispatch('getAudits',context.rootState.MappingTasks.selectedTask.id)
+          return true;
+      })
+    },
+    removeWhitelist: (context, id) => {
+      // context.state.RcRules = {}
+      context.audits = []
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/audit_remove_whitelist/'+id+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.dispatch('getAudits',context.rootState.MappingTasks.selectedTask.id)
+          return true;
+      })
+    },
     getAuditsByProject: (context, project) => {
       // context.state.RcRules = {}
       context.state.loading = true
