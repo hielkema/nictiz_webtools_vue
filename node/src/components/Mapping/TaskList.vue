@@ -73,9 +73,11 @@
                         <v-list-item
                             @click="selectTask(item.id)"
                             v-for="item in visiblePages"
-                            :key="item.id">
+                            :key="item.id"
+                            :class="{'cyan lighten-3' : item.id == selectedTask.id}">
                             <v-list-item-content>
-                                <v-list-item-title v-html="item.component.title"></v-list-item-title>
+                                <v-list-item-title 
+                                    v-html="item.component.title"></v-list-item-title>
                                 <v-list-item-subtitle>
                                     {{item.status.title}} @ {{item.user.name}}<br>
                                     Code: {{item.component.id}} / Taak: {{item.id}}
@@ -115,6 +117,8 @@ export default {
             filterOnStatus: true,
             filterOnCode: true,
             filterBox: false,
+
+            selectedColor: 'green',
 
             page: 1,
             perPage: 8,
