@@ -85,6 +85,13 @@
                     </v-list-item-group>
                 </v-list>
 
+                <v-skeleton-loader
+                    v-if="(loading) && (!selectedTask)"
+                    class="mx-auto"
+                    max-width="400"
+                    type="article"
+                    ></v-skeleton-loader>
+
                 <v-pagination
                     v-model="page"
                     total-visible="5"
@@ -93,12 +100,7 @@
                 ></v-pagination>
             </v-card>
 
-            <v-skeleton-loader
-                v-if="(loading) && (!selectedTask)"
-                class="mx-auto"
-                max-width="400"
-                type="article"
-                ></v-skeleton-loader>
+            
         </v-container>
     </div>
 </template>
