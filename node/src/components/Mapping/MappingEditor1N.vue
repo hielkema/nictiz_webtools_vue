@@ -11,7 +11,7 @@
                     color="cyan darken-2"
                     dark
                     dense>
-                    <v-toolbar-title>Mappings</v-toolbar-title>
+                    <v-toolbar-title>Mappings [1-Many interface]</v-toolbar-title>
                 </v-toolbar>
             </v-card>
             
