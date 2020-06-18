@@ -4,11 +4,14 @@
             <v-row no-gutters>
                 <v-cols cols=12>
                     <v-card>
-                        <v-card-title>{{selectedProject.title}}</v-card-title>
+                        <v-card-title>{{selectedProject.title}}<br>
+
+                        </v-card-title>
                     </v-card>
                 </v-cols>
             </v-row>
-            <v-row no-gutters>
+            <!-- Interface 1-N mapping -->
+            <v-row no-gutters v-if="selectedProject.type == '1'">
                 <v-col cols=3>
                     <v-row no-gutters>
                         <v-col cols=12>
@@ -18,7 +21,69 @@
                     </v-row>
                 </v-col>
 
+                
                 <v-col cols=5 v-if="selectedTask">
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <TaskDetails />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <AuditList />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <CommentsList />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <CommentsForm />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <Statuses />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <Users />
+                        </v-col>
+                    </v-row>
+                </v-col>
+                
+                <v-col cols=4>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <MappingEditor1N />
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+
+            <!-- ECL - 1 mapping interface -->
+            <v-row no-gutters v-if="selectedProject.type == '4'">
+                <v-col cols=3>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <BackToProjects />
+                            <TaskList />
+                        </v-col>
+                    </v-row>
+                </v-col>
+
+                <v-col cols=5>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <MappingEditorECL1 />
+                        </v-col>
+                    </v-row>
+                </v-col>
+                
+                <v-col cols=4 v-if="selectedTask">
                     <v-row no-gutters>
                         <v-col cols=12>
                             <TaskDetails />
@@ -39,25 +104,10 @@
                             <Users />
                         </v-col>
                     </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <CommentsForm />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <CommentsList />
-                        </v-col>
-                    </v-row>
                 </v-col>
-                <v-col cols=4>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <MappingEditor1N />
-                        </v-col>
-                    </v-row>
-                </v-col>
+                
             </v-row>
+
         </v-container>
     </div>
 </template>
@@ -68,6 +118,7 @@ import TaskDetails from '@/components/Mapping/TaskDetails';
 import AuditList from '@/components/Mapping/AuditList';
 import CommentsList from '@/components/Mapping/CommentsList';
 import MappingEditor1N from '@/components/Mapping/MappingEditor1N';
+import MappingEditorECL1 from '@/components/Mapping/MappingEditorECL1';
 import Statuses from '@/components/Mapping/Statuses';
 import Users from '@/components/Mapping/Users';
 import BackToProjects from '@/components/Mapping/BackToProjects';
@@ -84,6 +135,7 @@ export default {
         Users,
         AuditList,
         MappingEditor1N,
+        MappingEditorECL1,
     },
     created(){
         
