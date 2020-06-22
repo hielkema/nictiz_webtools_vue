@@ -14,107 +14,162 @@
                     <v-toolbar-title>Mappings [ECL - 1 interface]</v-toolbar-title>
                 </v-toolbar>
             </v-card>
-            
-            <form>
-                <template v-for="item in targets">
-                    <v-card :key="item.id"
-                        class="my-1">
-                        <v-list three-line>
-                            <v-list-item
-                                :key="item.id"
-                                dense
-                                :loading="loading.targets">
-                                <v-list-item-content v-if="(item.id == 'extra') && (formDisabled == false)">
-                                        <v-btn color="grey lighten-2" small v-on:click="openDialog(item.id)">Nieuwe mapping toevoegen</v-btn>
-                                </v-list-item-content>
 
-                                <span v-else-if="(item.id == 'extra' && formDisabled == true)"></span>
+            <!-- Tabs -->
+            <v-tabs
+                v-model="tab"
+                background-color="primary"
+                dark
+                >
+                    <v-tab
+                        key="query"
+                    >
+                        Queries
+                    </v-tab>
+                    <v-tab
+                        key="results"
+                    >
+                        Resultaten
+                    </v-tab>
+            </v-tabs>
 
-                                <v-list-item-content v-else>
-                                        <v-container>
-                                            <v-row  no-gutters align="center">
-                                                <v-col cols=11>
-                                                    <v-simple-table dense>
-                                                        <template v-slot:default>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th width="50">Term</th>
-                                                                    <td>{{item.target.component_title}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Code</th>
-                                                                    <td v-if="item.target.codesystem.title == 'SNOMED'">{{item.target.codesystem.title}} - Code: {{item.target.component_id}} <a :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+item.target.component_id" target="_blank">Open in browser</a></td>
-                                                                    <td v-else-if="item.target.codesystem.title == 'Labcodeset'">{{item.target.codesystem.title}} - Code: {{item.target.component_id}} <a :href="'https://labterminologie.nl/art-decor/labconcepts?search='+item.target.component_id" target="_blank">Open in browser</a></td>
-                                                                    <td v-else>{{item.target.codesystem.title}} - Code: {{item.target.component_id}}</td>
-                                                                </tr>
-                                                                <tr v-if="project.group">
-                                                                    <th>Group</th>
-                                                                    <td>{{item.group}}</td>
-                                                                </tr>
-                                                                <tr v-if="project.priority">
-                                                                    <th>Priority</th>
-                                                                    <td>{{item.priority}}</td>
-                                                                </tr>
-                                                                <tr v-if="project.correlation">
-                                                                    <th>Correlation</th>
-                                                                    <td v-if="item.correlation == '447559001'">Broad to narrow</td>
-                                                                    <td v-if="item.correlation == '447557004'">Exact match</td>
-                                                                    <td v-if="item.correlation == '447558009'">Narrow to broad</td>
-                                                                    <td v-if="item.correlation == '447560006'">Partial overlap</td>
-                                                                    <td v-if="item.correlation == '447556008'">Not mappable</td>
-                                                                    <td v-if="item.correlation == '447561005'">Not specified</td>
-                                                                </tr>
-                                                                <tr v-if="project.rule">
-                                                                    <th>Rule</th>
-                                                                    <td>{{item.rule}}</td>
-                                                                </tr>
-                                                                <tr v-if="project.advice">
-                                                                    <th>Advice</th>
-                                                                    <td>{{item.advice}}</td>
-                                                                </tr>
-                                                                <tr v-if="project.rulebinding">
-                                                                    <th>Bindings</th>
-                                                                    <td>
-                                                                        <ul v-for="dependency in item.dependency" :key="dependency.id">
-                                                                            <li v-if="dependency.binding == true">{{dependency.source}}</li>
-                                                                        </ul>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </template>
-                                                    </v-simple-table>
-                                                </v-col>
-                                                <v-col cols="1">
-                                                    <v-row v-if="formDisabled == false">
-                                                        <v-btn color="grey" v-on:click="openDialog(item.id)" icon><v-icon right>mdi-file-edit</v-icon></v-btn>
-                                                    </v-row>
-                                                    <v-row>
-                                                        <v-tooltip right>
-                                                            <template v-slot:activator="{ on }">
-                                                                <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
-                                                            </template>
-                                                            <span>
-                                                                <table>
-                                                                    <tr v-for="(value, key) in item.target.extra" :key="key">
-                                                                        <th>{{ key }}</th>
-                                                                        <td v-if="key == 'Materialen'">
-                                                                            <li v-for="value in value" :key="value.SCTID">{{value.SCTID}} {{value.FSN}}</li>
-                                                                        </td>
-                                                                        <td v-else>{{ value }}</td>
-                                                                    </tr>
-                                                                </table>
-                                                            </span>
-                                                        </v-tooltip>
-                                                    </v-row>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list>
+            <v-tabs-items v-model="tab">
+                <v-tab-item
+                    kay="query"
+                >
+                    <v-card ma-1>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="loadTargets()">Reset</v-btn>
+                            <v-btn color="blue darken-1" :disabled="formDisabled" text @click="saveQueries()">Opslaan</v-btn>
+                        </v-card-actions>
                     </v-card>
-                </template>
-            </form>
+
+                    <!-- Existing queries -->
+                    <template v-for="item in targets.queries">
+                        <v-card :key="item.id"
+                            class="my-1">
+                            <v-card-title v-if="item.id == 'extra'">
+                                <span>Nieuwe ECL query</span>
+                            </v-card-title>
+                            <v-card-text>
+                                <v-container dense>
+                                    <v-row dense>
+                                        <v-col>
+                                            <span v-if="item.id != 'extra'">
+                                                Query ID = {{item.id}}
+                                                <v-alert 
+                                                    border="left"
+                                                    dense
+                                                    color="red lighten-2"
+                                                    type="alert"
+                                                    v-if="item.failed">
+                                                    Query is mislukt: {{item.error}}
+                                                </v-alert>
+                                                <v-alert 
+                                                    border="left"
+                                                    dense
+                                                    color="red lighten-2"
+                                                    type="alert"
+                                                    v-if="!item.finished">
+                                                    Query loopt nog, of is overleden zonder foutmelding.
+                                                </v-alert>
+                                                <v-alert 
+                                                    border="left"
+                                                    dense
+                                                    type="success"
+                                                    v-else>
+                                                    Query is klaar.
+                                                </v-alert>
+                                            </span>
+                                            <v-textarea
+                                                :disabled="formDisabled"
+                                                name="input-7-1"
+                                                label="Beschrijving"
+                                                hint="Beschrijving van de query - zorg dat je duidelijk maakt wat het doel van deze ECL query is."
+                                                v-model="item.description" 
+                                                rows="2"
+                                                auto-grow
+                                                ></v-textarea>
+                                            <v-textarea
+                                                :disabled="formDisabled"
+                                                label="Query"
+                                                hint="ECL query - snomed.org/ecl"
+                                                rows="2"
+                                                v-model="item.query" 
+                                                auto-grow></v-textarea>
+                                            <v-select 
+                                                :disabled="formDisabled" 
+                                                v-model="item.correlation" 
+                                                :items="project.correlation_options" 
+                                                label="Correlation"></v-select>
+                                            <span>Aantal concepten: {{item.result.numResults}}</span>
+                                            <v-checkbox
+                                                :disabled="formDisabled"
+                                                v-model="item.delete"
+                                                label="Verwijderen"
+                                                dense
+                                                ></v-checkbox>
+                                                <!-- {{item.failed}} {{item.finished}} {{item.error}} -->
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+                        </v-card>
+                    </template>
+
+                    
+                    <v-card ma-1>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="loadTargets()">Reset</v-btn>
+                            <v-btn color="blue darken-1" :disabled="formDisabled" text @click="saveQueries()">Opslaan</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                    <br>
+                    <v-card ma-1>
+                        <v-card-actions>
+                            <v-btn color="blue darken-1" :disabled="formDisabled" text @click="console.log('run')">Mappingsregels aanmaken</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-tab-item>
+
+                <v-tab-item
+                    kay="results"
+                >
+                    <v-card ma-1>
+                        <v-card-title>Alle resultaten</v-card-title>
+                        <v-card-text>
+                            <v-data-table
+                                :headers="resultsHeaders"
+                                :items="Object.values(targets.allResults)">
+
+                                <template v-slot:item.query="{ item }">
+                                    <v-tooltip right>
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
+                                        </template>
+                                        <pre>{{item.description}}</pre>
+                                        <hr>
+                                        <pre>{{item.query}}</pre>
+                                    </v-tooltip>
+                                </template>
+                                <template v-slot:item.pt="{ item }">
+                                    {{item.fsn.term}}
+                                </template>
+                                <template v-slot:item.correlation="{ item }">
+                                    <span v-if="item.correlation == '447559001'" style="color:purple; font-weight:bold; white-space: nowrap;">Broad to narrow</span>
+                                    <span v-if="item.correlation == '447557004'" style="color:red; font-weight:bold; white-space: nowrap;">Exact match</span>
+                                    <span v-if="item.correlation == '447558009'" style="color:orange; font-weight:bold; white-space: nowrap;">Narrow to broad</span>
+                                    <span v-if="item.correlation == '447560006'" style="color:blue; font-weight:bold; white-space: nowrap;">Partial overlap</span>
+                                    <span v-if="item.correlation == '447556008'" style="color:black; font-weight:bold; white-space: nowrap;">Not mappable</span>
+                                    <span v-if="item.correlation == '447561005'" style="color:black; font-weight:bold; white-space: nowrap;">Not specified</span>
+                                </template>
+                            </v-data-table>
+                        </v-card-text>
+                    </v-card>
+                </v-tab-item>
+            </v-tabs-items>
         </v-container>
 
 
@@ -131,27 +186,27 @@ export default {
             targetEditDialog: false,
             targetDialogOldTarget: {},
             targetDialogNewTarget: false,
+            resultsHeaders: [
+                { text: 'Query', value: 'query' },
+                { text: 'QueryID', value: 'queryId' },
+                { text: 'ID', value: 'id' },
+                { text: 'Preferred term', value: 'pt' },
+                { text: 'Correlation', value: 'correlation' },
+            ],
+            tab: null,
+            items: [
+                { tab: 'One', content: 'Tab 1 Content' },
+                { tab: 'Tweee', content: 'Tab 2 Content' },
+            ]
         }
     },
     watch: {
     },
     methods: {
-        submit () {
-            this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
+        loadTargets () {
+            this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
         },
-        openDialog (mappingid) {
-            this.targetEditDialog = true
-            this.$store.dispatch('MappingTasks/getDialogData', mappingid)
-            // this.$store.dispatch('MappingTasks/getDialogTarget', mappingid)
-            this.dialogTarget = this.targets.filter(obj => {
-                return obj.id === mappingid
-            })[0]
-        },
-        saveDialog (newData) {
-            this.targetEditDialog = false
-            this.targetDialogOldTarget = {}
-            this.targetDialogNewTarget = false
-            this.$store.dispatch('MappingTasks/saveDialogTarget', newData)
+        saveQueries () {
             this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
         }
     },

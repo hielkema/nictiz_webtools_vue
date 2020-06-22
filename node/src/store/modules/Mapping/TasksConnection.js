@@ -10,6 +10,8 @@ const state = {
       'targets' : false,
       'dialog' : false,
       'search' : false,
+      'eclqueries' : false,
+      'reverse' : false,
     },
     tasks: [],
     selectedTask: false,
@@ -20,6 +22,8 @@ const state = {
     dialogData: {
       'component':{},
     },
+    eclQueries: [],
+    reverse: [],
   }
 
   //// ---- Mutations
@@ -35,6 +39,12 @@ const state = {
     },
     setTargets: (state, payload) => {
       state.mappingTargets = payload
+    },
+    setEclQueries: (state, payload) => {
+      state.eclQueries = payload
+    },
+    setReverse: (state, payload) => {
+      state.reverse = payload
     },
     setSearchResults: (state, payload) => {
       state.searchResults = payload
@@ -99,6 +109,28 @@ const state = {
           console.log(response.data)
           context.commit('setTargets',response.data)
           context.state.loading.targets = false
+          return true;
+      })
+    },
+    getReverse: (context, taskid) => {
+      context.state.loading.eclqueries = true
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/reverse/'+taskid+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.commit('setReverse',response.data)
+          context.state.loading.reverse = false
+          return true;
+      })
+    },
+    getEclQueries: (context, taskid) => {
+      context.state.loading.eclqueries = true
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/eclqueries/'+taskid+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.commit('setQueries',response.data)
+          context.state.loading.eclqueries = false
           return true;
       })
     },

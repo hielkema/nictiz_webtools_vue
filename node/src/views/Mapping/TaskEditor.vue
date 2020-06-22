@@ -78,6 +78,11 @@
                 <v-col cols=5>
                     <v-row no-gutters>
                         <v-col cols=12>
+                            <ReverseMappings />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
                             <MappingEditorECL1 />
                         </v-col>
                     </v-row>
@@ -92,6 +97,16 @@
                     <v-row no-gutters>
                         <v-col cols=12>
                             <AuditList />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <CommentsList />
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols=12>
+                            <CommentsForm />
                         </v-col>
                     </v-row>
                     <v-row no-gutters>
@@ -123,6 +138,7 @@ import Statuses from '@/components/Mapping/Statuses';
 import Users from '@/components/Mapping/Users';
 import BackToProjects from '@/components/Mapping/BackToProjects';
 import CommentsForm from '@/components/Mapping/CommentsForm';
+import ReverseMappings from '@/components/Mapping/ReverseMappings';
 
 export default {
     components: {
@@ -133,6 +149,7 @@ export default {
         BackToProjects,
         Statuses,
         Users,
+        ReverseMappings,
         AuditList,
         MappingEditor1N,
         MappingEditorECL1,
@@ -148,6 +165,7 @@ export default {
         if(this.$route.params.taskid){
             this.$store.dispatch('MappingTasks/getTaskDetails', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getComments', this.$route.params.taskid)
+            this.$store.dispatch('MappingTasks/getReverse', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getMappingTargets', this.$route.params.taskid)
         }
     },

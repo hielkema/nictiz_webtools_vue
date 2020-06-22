@@ -131,6 +131,7 @@ export default {
             this.$store.dispatch('MappingAudits/getAudits',taskid)
             this.$store.dispatch('MappingTasks/getTaskDetails',taskid)
             this.$store.dispatch('MappingTasks/getMappingTargets',taskid)
+            this.$store.dispatch('MappingTasks/getReverse', taskid)
             this.$store.dispatch('MappingTasks/getComments',taskid)
         },
         toggleFilterBox(){
