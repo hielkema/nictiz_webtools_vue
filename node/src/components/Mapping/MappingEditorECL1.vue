@@ -45,6 +45,15 @@
                         </v-card-actions>
                     </v-card>
 
+                    <!-- General warning -->
+                    <v-alert 
+                        dense
+                        color="red lighten-2"
+                        type="warning"
+                        v-if="targets.unfinished">
+                        Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
+                    </v-alert>
+
                     <!-- Existing queries -->
                     <template v-for="item in targets.queries">
                         <v-card :key="item.id"
@@ -59,7 +68,6 @@
                                             <span v-if="item.id != 'extra'">
                                                 Query ID = {{item.id}}
                                                 <v-alert 
-                                                    border="left"
                                                     dense
                                                     color="red lighten-2"
                                                     type="alert"
@@ -67,7 +75,6 @@
                                                     Query is mislukt: {{item.error}}
                                                 </v-alert>
                                                 <v-alert 
-                                                    border="left"
                                                     dense
                                                     color="red lighten-2"
                                                     type="alert"
@@ -75,7 +82,6 @@
                                                     Query loopt nog, of is overleden zonder foutmelding.
                                                 </v-alert>
                                                 <v-alert 
-                                                    border="left"
                                                     dense
                                                     type="success"
                                                     v-else>
@@ -140,6 +146,13 @@
                     <v-card ma-1>
                         <v-card-title>Alle resultaten</v-card-title>
                         <v-card-text>
+                            <v-alert 
+                                dense
+                                color="red lighten-2"
+                                type="warning"
+                                v-if="targets.unfinished">
+                                Nog niet alle queries zijn klaar!
+                            </v-alert>
                             <v-data-table
                                 :headers="resultsHeaders"
                                 :items="Object.values(targets.allResults)">
@@ -197,7 +210,7 @@ export default {
             items: [
                 { tab: 'One', content: 'Tab 1 Content' },
                 { tab: 'Tweee', content: 'Tab 2 Content' },
-            ]
+            ],
         }
     },
     watch: {
@@ -208,7 +221,17 @@ export default {
         },
         saveQueries () {
             this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
-        }
+            this.pollTargets()
+        },
+        pollTargets () {
+            setInterval(() => {
+                if(this.targets.unfinished == true){
+                    this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+                }else{
+                    clearInterval()
+                }
+            }, 1500)
+        },
     },
     computed: {
         formDisabled(){
