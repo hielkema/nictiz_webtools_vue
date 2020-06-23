@@ -13,7 +13,7 @@
                         dense
                         color="green lighten-2"
                         type="info" v-for="(mapping, key) in reverse_mappings" :key="key">
-                            {{mapping.codesystem.title}} #{{mapping.id}} - {{mapping.title}}
+                            {{mapping.codesystem.title}} {{mapping.id}} |{{mapping.title}}|
                             (
                             <span v-if="mapping.correlation == '447559001'">B2N</span>
                             <span v-if="mapping.correlation == '447557004'">EM</span>
