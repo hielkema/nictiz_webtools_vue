@@ -19,7 +19,8 @@
             <v-tabs
                 v-model="tab"
                 background-color="primary"
-                dark>
+                dark
+                :loading="loading">
                     <v-tab key="query" >
                         Queries
                     </v-tab>
@@ -28,7 +29,8 @@
                     </v-tab>
             </v-tabs>
 
-            <v-tabs-items v-model="tab">
+            <v-tabs-items v-model="tab"
+                :loading="loading">
                 <v-tab-item key="query" >
                     <v-card ma-1>
                         <v-card-actions>
@@ -156,8 +158,13 @@
                     </v-card>
                 </v-tab-item>
 
-                <v-tab-item key="results">
+                <v-tab-item key="results"
+                    :loading="loading">
                     <v-card ma-1>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
+                        </v-card-actions>
                         <v-card-text>
                             <v-alert 
                                 dense
@@ -204,6 +211,10 @@
                                 </template>
                             </v-data-table>
                         </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-tab-item>
             </v-tabs-items>
@@ -278,7 +289,7 @@ export default {
             return this.$store.state.MappingTasks.searchResults
         },
         loading(){
-            return this.$store.state.MappingTasks.loading
+            return this.$store.state.MappingTasks.loading.eclqueries
         },
         user(){
             return this.$store.state.userData

@@ -113,7 +113,7 @@ const state = {
       })
     },
     getReverse: (context, taskid) => {
-      context.state.loading.eclqueries = true
+      context.state.loading.reverse = true
       axios
       .get(context.rootState.baseUrl+'mapping/api/1.0/reverse/'+taskid+'/')
       .then((response) => {
