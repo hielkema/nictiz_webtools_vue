@@ -14,6 +14,14 @@
                         color="green lighten-2"
                         type="info" v-for="(mapping, key) in reverse_mappings" :key="key">
                             {{mapping.codesystem.title}} #{{mapping.id}} - {{mapping.title}}
+                            (
+                            <span v-if="mapping.correlation == '447559001'">B2N</span>
+                            <span v-if="mapping.correlation == '447557004'">EM</span>
+                            <span v-if="mapping.correlation == '447558009'">N2B</span>
+                            <span v-if="mapping.correlation == '447560006'">PO</span>
+                            <span v-if="mapping.correlation == '447556008'">Not mappable</span>
+                            <span v-if="mapping.correlation == '447561005'">Not specified</span>
+                            )
                             <a v-if="mapping.codesystem.title == 'SNOMED'" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+mapping.id" target="_blank">Open in browser</a>
                             <a v-if="mapping.codesystem.title == 'Labcodeset'" :href="'https://labterminologie.nl/art-decor/labconcepts?search='+mapping.id" target="_blank">Open in browser</a>
                     </v-alert>
