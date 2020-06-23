@@ -19,28 +19,21 @@
             <v-tabs
                 v-model="tab"
                 background-color="primary"
-                dark
-                >
-                    <v-tab
-                        key="query"
-                    >
+                dark>
+                    <v-tab key="query" >
                         Queries
                     </v-tab>
-                    <v-tab
-                        key="results"
-                    >
+                    <v-tab key="results" >
                         Resultaten
                     </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-                <v-tab-item
-                    kay="query"
-                >
+                <v-tab-item key="query" >
                     <v-card ma-1>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="loadTargets()">Reset</v-btn>
+                            <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
                             <v-btn color="blue darken-1" :disabled="formDisabled" text @click="saveQueries()">Opslaan</v-btn>
                         </v-card-actions>
                     </v-card>
@@ -128,7 +121,7 @@
                     <v-card ma-1>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="loadTargets()">Reset</v-btn>
+                            <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
                             <v-btn color="blue darken-1" :disabled="formDisabled" text @click="saveQueries()">Opslaan</v-btn>
                         </v-card-actions>
                     </v-card>
@@ -140,9 +133,7 @@
                     </v-card>
                 </v-tab-item>
 
-                <v-tab-item
-                    kay="results"
-                >
+                <v-tab-item key="results">
                     <v-card ma-1>
                         <v-card-title>Alle resultaten</v-card-title>
                         <v-card-text>
@@ -207,10 +198,6 @@ export default {
                 { text: 'Correlation', value: 'correlation' },
             ],
             tab: null,
-            items: [
-                { tab: 'One', content: 'Tab 1 Content' },
-                { tab: 'Tweee', content: 'Tab 2 Content' },
-            ],
         }
     },
     watch: {
