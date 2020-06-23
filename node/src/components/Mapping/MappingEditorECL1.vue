@@ -59,7 +59,7 @@
                                     <v-row dense>
                                         <v-col>
                                             <span v-if="item.id != 'extra'">
-                                                Query ID = {{item.id}}
+                                                <!-- Query ID = {{item.id}} -->
                                                 <v-alert 
                                                     dense
                                                     color="red lighten-2"
@@ -74,43 +74,66 @@
                                                     v-if="!item.finished">
                                                     Query loopt nog, of is overleden zonder foutmelding.
                                                 </v-alert>
-                                                <v-alert 
+                                                <!-- <v-alert 
                                                     dense
                                                     type="success"
                                                     v-else>
                                                     Query is klaar.
-                                                </v-alert>
+                                                </v-alert> -->
                                             </span>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row dense>
+                                        <v-col>
                                             <v-textarea
                                                 :disabled="formDisabled"
+                                                dense
+                                                outlined
                                                 name="input-7-1"
-                                                label="Beschrijving"
+                                                label="Beschrijving *"
                                                 hint="Beschrijving van de query - zorg dat je duidelijk maakt wat het doel van deze ECL query is."
                                                 v-model="item.description" 
                                                 rows="2"
                                                 auto-grow
                                                 ></v-textarea>
+                                                
+                                        </v-col>
+                                    </v-row>
+                                    <v-row dense>
+                                        <v-col>
                                             <v-textarea
                                                 :disabled="formDisabled"
-                                                label="Query"
+                                                dense
+                                                outlined
+                                                label="Query *"
                                                 hint="ECL query - snomed.org/ecl"
                                                 rows="2"
                                                 v-model="item.query" 
                                                 auto-grow></v-textarea>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row dense>
+                                        <v-col cols=4>
                                             <v-select 
                                                 :disabled="formDisabled" 
+                                                dense
+                                                outlined
                                                 v-model="item.correlation" 
                                                 :items="project.correlation_options" 
-                                                label="Correlation"></v-select>
-                                            <span>Aantal concepten: {{item.result.numResults}}</span>
+                                                label="Correlation *"></v-select>
+                                        </v-col>
+                                        <v-col cols=4 v-if="item.id != 'extra'">
+                                            Aantal concepten in resultaat: {{item.result.numResults}}
+                                        </v-col>
+                                        <v-col cols=4 v-if="item.id != 'extra'">
                                             <v-checkbox
                                                 :disabled="formDisabled"
                                                 v-model="item.delete"
                                                 label="Verwijderen"
-                                                dense
+                                                dense   
                                                 ></v-checkbox>
-                                                <!-- {{item.failed}} {{item.finished}} {{item.error}} -->
                                         </v-col>
+                                                <!-- {{item.failed}} {{item.finished}} {{item.error}} -->
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -135,7 +158,6 @@
 
                 <v-tab-item key="results">
                     <v-card ma-1>
-                        <v-card-title>Alle resultaten</v-card-title>
                         <v-card-text>
                             <v-alert 
                                 dense
@@ -144,8 +166,19 @@
                                 v-if="targets.unfinished">
                                 Nog niet alle queries zijn klaar!
                             </v-alert>
+                            <v-card-title>
+                            Resultaten
+                            <v-spacer></v-spacer>
+                            <v-text-field
+                                v-model="searchString"
+                                append-icon="mdi-magnify"
+                                label="Zoeken (alleen op SCTID / QueryID)"
+                            ></v-text-field>
+                            </v-card-title>
                             <v-data-table
+                                multi-sort
                                 :headers="resultsHeaders"
+                                :search="searchString"
                                 :items="Object.values(targets.allResults)">
 
                                 <template v-slot:item.query="{ item }">
@@ -191,13 +224,14 @@ export default {
             targetDialogOldTarget: {},
             targetDialogNewTarget: false,
             resultsHeaders: [
-                { text: 'Query', value: 'query' },
+                { text: 'Query', value: 'query', sortable: false },
                 { text: 'QueryID', value: 'queryId' },
                 { text: 'ID', value: 'id' },
-                { text: 'Preferred term', value: 'pt' },
+                { text: 'Preferred term', value: 'pt', sortable: false },
                 { text: 'Correlation', value: 'correlation' },
             ],
             tab: null,
+            searchString: '',
         }
     },
     watch: {
