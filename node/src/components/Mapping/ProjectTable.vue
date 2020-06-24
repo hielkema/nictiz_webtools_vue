@@ -11,7 +11,7 @@
                             <v-data-table
                                 :headers="headers"
                                 :items="Projects"
-                                :items-per-page="5"
+                                :items-per-page="15"
                                 :loading="loading"
                                 class="elevation-2"
                                 multi-sort
