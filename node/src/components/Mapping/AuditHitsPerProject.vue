@@ -99,10 +99,12 @@ export default {
                 { text: '', value: 'open' },
                 { text: 'Task ID', value: 'task' },
                 { text: 'Project ID', value: 'project', align: ' d-none'  },
+                { text: 'Type melding', value: 'type' },
                 { text: 'Reden', value: 'reason' },
                 { text: 'Gebruiker', value: 'user' },
                 { text: 'Status', value: 'status' },
                 { text: 'Whitelist', value: 'ignore' },
+                { text: 'Sticky', value: 'sticky' },
                 { text: 'timestamp', value: 'timestamp' },
             ],
             pagination: {
@@ -112,6 +114,7 @@ export default {
                 user: [],
                 status: [],
                 ignore: [],
+                type: [],
             }
         }
     },
