@@ -129,7 +129,7 @@
                             <v-data-table
                                 :headers="headers"
                                 :items="filteredResults"
-                                :items-per-page="5"
+                                :items-per-page="15"
                                 :search="search"
                                 :loading="loading"
                                 class="elevation-2"
@@ -140,7 +140,8 @@
                                 
                                 <template v-slot:item.source.identifier="{ item }">
                                     
-                                    <v-btn small color="primary lighten-2" v-on="on" v-on:click="$router.push({ path: `/mapping/Projects/${item.project_id}/Task/${item.task_id}` })">{{item.source.identifier}}</v-btn> 
+                                    <v-btn small color="primary lighten-2" :href="'?#/mapping/Projects/'+item.project_id+'/Task/'+item.task_id" target="_blank">{{item.source.identifier}}</v-btn>
+                                    <!-- <v-btn small color="primary lighten-2" v-on="on" v-on:click="$router.push({ path: `/mapping/Projects/${item.project_id}/Task/${item.task_id}` })">{{item.source.identifier}}</v-btn>  -->
                                     
                                 </template>
 
@@ -184,6 +185,15 @@
                                             <td width=10>{{rule.mapadvice}}</td>
                                         </tr>
                                     </table>
+                                </template>
+                                <template v-slot:item.audit="{ item }">
+                                    <v-chip
+                                        class="ma-2"
+                                        color="red"
+                                        text-color="white"
+                                        v-if="item.audit.length > 0">
+                                        {{item.audit.length}}
+                                    </v-chip>
                                 </template>
                                 <template v-slot:item.actions="{ item }">
                                     <v-tooltip bottom v-if="user.groups.includes('mapping | rc_audit')">
@@ -251,6 +261,8 @@ export default {
         return {
             headers: [
                 { text: 'Code', value: 'source.identifier' },
+                { text: 'Audit', value: 'audit' },
+                { text: 'Audit hits', value: 'audit_present', align: ' d-none' },
                 { text: 'Source', value: 'source.title' },
                 { text: 'Groep', value: 'group' },
                 // { text: 'Status', value: 'status' },
@@ -280,6 +292,7 @@ export default {
                 group: [],
                 rejected: [],
                 status: [],
+                audit_present: [],
                 accepted_me: [],
                 rejected_me: [],
                 accepted_nictiz: [],
