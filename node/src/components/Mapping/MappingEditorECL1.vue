@@ -27,7 +27,7 @@
                         <v-tab key="query" >
                             Queries
                         </v-tab>
-                        <v-tab key="results" >
+                        <v-tab key="preview" >
                             ECL resultaten
                         </v-tab>
                         <v-tab key="rules" >
@@ -60,6 +60,15 @@
                             type="warning"
                             v-if="targets.queries_unfinished">
                             Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
+                        </v-alert>
+
+                        <!-- Warning against duplicates in ECL results -->
+                        <v-alert 
+                            dense
+                            color="red lighten-2"
+                            type="warning"
+                            v-if="duplicatesInEcl">
+                            Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                         </v-alert>
 
                         <!-- Existing queries -->
@@ -164,8 +173,9 @@
                             </v-card-actions>
                         </v-card>
                     </v-tab-item>
+
                     <!-- Tab results -->
-                    <v-tab-item key="results"
+                    <v-tab-item key="preview"
                         :loading="loading">
                         <v-card ma-1>
                             <v-card-actions>
@@ -179,6 +189,14 @@
                                     type="warning"
                                     v-if="targets.queries_unfinished">
                                     Nog niet alle queries zijn klaar!
+                                </v-alert>
+                                <!-- Warning against duplicates in ECL results -->
+                                <v-alert 
+                                    dense
+                                    color="red lighten-2"
+                                    type="warning"
+                                    v-if="duplicatesInEcl">
+                                    Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                                 </v-alert>
                                 <v-card-title>
                                 Resultaten
@@ -339,8 +357,31 @@ export default {
             this.$store.dispatch('MappingTasks/mappingsEclToRules',this.selectedTask.id)
             this.pollRules()
         },
+        find_duplicate_components(propertyName, inputArray) {
+            var seenDuplicate = false,
+                testObject = {};
+
+            inputArray.map(function(item) {
+                var itemPropertyName = item[propertyName];
+                if (itemPropertyName in testObject) {
+                testObject[itemPropertyName].duplicate = true;
+                item.duplicate = true;
+                seenDuplicate = true;
+                }
+                else {
+                testObject[itemPropertyName] = item;
+                delete item.duplicate;
+                }
+            });
+
+            return seenDuplicate;
+        },
+
     },
     computed: {
+        duplicatesInEcl(){
+            return this.find_duplicate_components("id", Object.values(this.targets.allResults))
+        },
         project(){
             return this.$store.state.MappingProjects.selectedProject
         },
