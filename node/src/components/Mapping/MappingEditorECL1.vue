@@ -69,6 +69,13 @@
                             type="warning"
                             v-if="duplicatesInEcl">
                             Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
+                            <br>
+                            <span v-for="(value, key) in duplicatesInEcl" :key="key">
+                                <li v-if="value.duplicate">
+                                    {{value.id}}
+                                    {{value.pt.term}}
+                                </li>
+                            </span>
                         </v-alert>
 
                         <!-- Existing queries -->
@@ -182,6 +189,21 @@
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
                             </v-card-actions>
+                            <!-- Warning against duplicates in ECL results -->
+                            <v-alert 
+                                dense
+                                color="red lighten-2"
+                                type="warning"
+                                v-if="duplicatesInEcl">
+                                Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
+                                <br>
+                                <span v-for="(value, key) in duplicatesInEcl" :key="key">
+                                    <li v-if="value.duplicate">
+                                        {{value.id}}
+                                        {{value.pt.term}}
+                                    </li>
+                                </span>
+                            </v-alert>
                             <v-card-text>
                                 <v-alert 
                                     dense
@@ -190,14 +212,7 @@
                                     v-if="targets.queries_unfinished">
                                     Nog niet alle queries zijn klaar!
                                 </v-alert>
-                                <!-- Warning against duplicates in ECL results -->
-                                <v-alert 
-                                    dense
-                                    color="red lighten-2"
-                                    type="warning"
-                                    v-if="duplicatesInEcl">
-                                    Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
-                                </v-alert>
+                                
                                 <v-card-title>
                                 Resultaten
                                 <v-spacer></v-spacer>
@@ -247,10 +262,8 @@
                     <!-- Tab mappingrules -->
                     <v-tab-item key="rules">
                         <v-card ma-1>
-                            <v-card-title>
-                                Export bezig? {{targets.mappings_unfinished}}
-                            </v-card-title>
                             <v-card-actions>
+                                <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
                                 <v-btn 
                                     color="blue darken-1" 
@@ -268,7 +281,22 @@
                             v-if="targets.mappings_unfinished">
                             Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
                         </v-alert>
-
+                        <!-- Warning against duplicates in ECL results -->
+                        <v-alert 
+                            dense
+                            color="red lighten-2"
+                            type="warning"
+                            v-if="duplicatesInEcl">
+                            Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
+                            <br>
+                            <h4>Let op: Bij dubbele regels wordt alleen degene in de laatst verwerkte query naar een regel geëxporteerd.</h4>
+                            <span v-for="(value, key) in duplicatesInEcl" :key="key">
+                                <li v-if="value.duplicate">
+                                    {{value.id}}
+                                    {{value.pt.term}}
+                                </li>
+                            </span>
+                        </v-alert>
                          <v-data-table
                             multi-sort
                             :headers="mappingHeaders"
@@ -358,23 +386,24 @@ export default {
             this.pollRules()
         },
         find_duplicate_components(propertyName, inputArray) {
-            var seenDuplicate = false,
-                testObject = {};
+            // var seenDuplicate = false
+            var testObject = {}
 
             inputArray.map(function(item) {
                 var itemPropertyName = item[propertyName];
                 if (itemPropertyName in testObject) {
-                testObject[itemPropertyName].duplicate = true;
-                item.duplicate = true;
-                seenDuplicate = true;
+                    testObject[itemPropertyName].duplicate = true;
+                    item.duplicate = true;
+                    // seenDuplicate = true;
                 }
                 else {
-                testObject[itemPropertyName] = item;
-                delete item.duplicate;
+                    testObject[itemPropertyName] = item;
+                    delete item.duplicate;
                 }
             });
 
-            return seenDuplicate;
+            return testObject;
+            // return seenDuplicate;
         },
 
     },
