@@ -12,9 +12,10 @@ const state = {
       'search' : false,
       'eclqueries' : false,
       'reverse' : false,
+      'eclToRules' : false,
     },
     tasks: [],
-    selectedTask: false,
+    selectedTask: {},
     selectedTaskComments: false,
     mappingTargets: false,
     searchResults: [],
@@ -61,6 +62,8 @@ const state = {
     clearTaskMemory: (state) => {
       state.tasks = []
       state.selectedTask = false
+      state.eclQueries = false
+      state.reverse = false
       state.selectedTaskComments = false
       state.mappingTargets = false
     },
@@ -179,6 +182,18 @@ const state = {
         }
       )
     },
+    mappingsEclToRules: (context, taskid) => {
+      context.state.loading.eclToRules = true
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/mappings_ecl_to_rules/'+taskid+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.dispatch('getMappingTargets',context.state.selectedTask.id)
+          context.state.loading.eclToRules = false
+          return true;
+      })
+    },
+    
     TargetSearch: _.debounce((context, payload) => {
         context.state.loading.search = true
         const auth = {

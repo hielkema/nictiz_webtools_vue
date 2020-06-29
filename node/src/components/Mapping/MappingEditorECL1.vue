@@ -28,7 +28,10 @@
                             Queries
                         </v-tab>
                         <v-tab key="results" >
-                            Resultaten
+                            ECL resultaten
+                        </v-tab>
+                        <v-tab key="rules" >
+                            Regels
                         </v-tab>
                 </v-tabs>
             </v-card>
@@ -55,7 +58,7 @@
                             dense
                             color="red lighten-2"
                             type="warning"
-                            v-if="targets.unfinished">
+                            v-if="targets.queries_unfinished">
                             Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
                         </v-alert>
 
@@ -160,12 +163,6 @@
                                 <v-btn color="blue darken-1" :disabled="formDisabled" text @click="saveQueries()">Opslaan</v-btn>
                             </v-card-actions>
                         </v-card>
-                        <br>
-                        <v-card ma-1>
-                            <v-card-actions>
-                                <v-btn color="blue darken-1" :disabled="formDisabled" text @click="console.log('run')">Mappingsregels aanmaken</v-btn>
-                            </v-card-actions>
-                        </v-card>
                     </v-tab-item>
                     <!-- Tab results -->
                     <v-tab-item key="results"
@@ -180,7 +177,7 @@
                                     dense
                                     color="red lighten-2"
                                     type="warning"
-                                    v-if="targets.unfinished">
+                                    v-if="targets.queries_unfinished">
                                     Nog niet alle queries zijn klaar!
                                 </v-alert>
                                 <v-card-title>
@@ -195,6 +192,8 @@
                                 <v-data-table
                                     multi-sort
                                     :headers="resultsHeaders"
+                                    :footer-props="pagination" 
+                                    :items-per-page="50"
                                     :search="searchString"
                                     :items="Object.values(targets.allResults)">
 
@@ -227,6 +226,47 @@
                             </v-card-actions>
                         </v-card>
                     </v-tab-item>
+                    <!-- Tab mappingrules -->
+                    <v-tab-item key="rules">
+                        <v-card ma-1>
+                            <v-card-title>
+                                Export bezig? {{targets.mappings_unfinished}}
+                            </v-card-title>
+                            <v-card-actions>
+                                <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
+                                <v-btn 
+                                    color="blue darken-1" 
+                                    :disabled="formDisabled" 
+                                    v-if="!targets.queries_unfinished"
+                                    text 
+                                    @click="createMappingRules()">Mappingsregels aanmaken</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                        <!-- General warning -->
+                        <v-alert 
+                            dense
+                            color="red lighten-2"
+                            type="warning"
+                            v-if="targets.mappings_unfinished">
+                            Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
+                        </v-alert>
+
+                         <v-data-table
+                            multi-sort
+                            :headers="mappingHeaders"
+                            :footer-props="pagination" 
+                            :items-per-page="50"
+                            :items="targets.mappings">
+                            <template v-slot:item.correlation="{ item }">
+                                <span v-if="item.correlation == '447559001'" style="color:purple; font-weight:bold; white-space: nowrap;">Broad to narrow</span>
+                                <span v-if="item.correlation == '447557004'" style="color:red; font-weight:bold; white-space: nowrap;">Exact match</span>
+                                <span v-if="item.correlation == '447558009'" style="color:orange; font-weight:bold; white-space: nowrap;">Narrow to broad</span>
+                                <span v-if="item.correlation == '447560006'" style="color:blue; font-weight:bold; white-space: nowrap;">Partial overlap</span>
+                                <span v-if="item.correlation == '447556008'" style="color:black; font-weight:bold; white-space: nowrap;">Not mappable</span>
+                                <span v-if="item.correlation == '447561005'" style="color:black; font-weight:bold; white-space: nowrap;">Not specified</span>
+                            </template>
+                        </v-data-table>
+                    </v-tab-item>
                 </v-tabs-items>
             </v-card>
         </v-container>
@@ -252,8 +292,17 @@ export default {
                 { text: 'Preferred term', value: 'pt', sortable: false },
                 { text: 'Correlation', value: 'correlation' },
             ],
+            mappingHeaders: [
+                { text: 'ID', value: 'id', sortable: true },
+                { text: 'Component', value: 'source.component_title', sortable: true },
+                { text: 'Correlatie', value: 'correlation', sortable: true },
+            ],
             tab: null,
             searchString: '',
+            pagination: {
+                "items-per-page-options": [25,50,100,250,500,1000,3000]
+            },
+            interval : null,
         }
     },
     watch: {
@@ -267,13 +316,28 @@ export default {
             this.pollTargets()
         },
         pollTargets () {
-            setInterval(() => {
-                if(this.targets.unfinished == true){
+            this.interval = setInterval(() => {
+                if(this.targets.queries_unfinished == true){
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                 }else{
-                    clearInterval()
+                    this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+                    clearInterval(this.interval)
                 }
-            }, 1500)
+            }, 2000)
+        },
+        pollRules () {
+            this.interval = setInterval(() => {
+                if(this.targets.mappings_unfinished == true){
+                    this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+                }else{
+                    this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+                    clearInterval(this.interval)
+                }
+            }, 2000)
+        },
+        createMappingRules() {
+            this.$store.dispatch('MappingTasks/mappingsEclToRules',this.selectedTask.id)
+            this.pollRules()
         },
     },
     computed: {
