@@ -67,7 +67,7 @@
                             dense
                             color="red lighten-2"
                             type="warning"
-                            v-if="Object.keys(duplicatesInEcl).length > 0">
+                            v-if="listDuplicatesInEcl">
                             Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                             <br>
                             <span v-for="(value, key) in duplicatesInEcl" :key="key">
@@ -194,7 +194,7 @@
                                 dense
                                 color="red lighten-2"
                                 type="warning"
-                                v-if="Object.keys(duplicatesInEcl).length > 0">
+                                v-if="listDuplicatesInEcl">
                                 Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                                 <br>
                                 <span v-for="(value, key) in duplicatesInEcl" :key="key">
@@ -259,6 +259,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-tab-item>
+
                     <!-- Tab mappingrules -->
                     <v-tab-item key="rules">
                         <v-card ma-1>
@@ -286,7 +287,7 @@
                             dense
                             color="red lighten-2"
                             type="warning"
-                            v-if="Object.keys(duplicatesInEcl).length > 0">
+                            v-if="listDuplicatesInEcl">
                             Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                             <br>
                             <h4>Let op: Bij dubbele regels wordt alleen degene in de laatst verwerkte query naar een regel geëxporteerd.</h4>
@@ -405,11 +406,34 @@ export default {
             return testObject;
             // return seenDuplicate;
         },
+        list_duplicate_components(propertyName, inputArray) {
+            var seenDuplicate = false
+            var testObject = {}
+
+            inputArray.map(function(item) {
+                var itemPropertyName = item[propertyName];
+                if (itemPropertyName in testObject) {
+                    testObject[itemPropertyName].duplicate = true;
+                    item.duplicate = true;
+                    seenDuplicate = true;
+                }
+                else {
+                    testObject[itemPropertyName] = item;
+                    delete item.duplicate;
+                }
+            });
+
+            // return testObject;
+            return seenDuplicate;
+        },
 
     },
     computed: {
         duplicatesInEcl(){
             return this.find_duplicate_components("id", Object.values(this.targets.allResults))
+        },
+        listDuplicatesInEcl(){
+            return this.list_duplicate_components("id", Object.values(this.targets.allResults))
         },
         project(){
             return this.$store.state.MappingProjects.selectedProject
