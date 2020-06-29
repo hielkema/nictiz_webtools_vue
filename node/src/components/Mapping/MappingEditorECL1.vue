@@ -67,7 +67,7 @@
                             dense
                             color="red lighten-2"
                             type="warning"
-                            v-if="duplicatesInEcl">
+                            v-if="Object.keys(duplicatesInEcl).length > 0">
                             Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                             <br>
                             <span v-for="(value, key) in duplicatesInEcl" :key="key">
@@ -194,7 +194,7 @@
                                 dense
                                 color="red lighten-2"
                                 type="warning"
-                                v-if="duplicatesInEcl">
+                                v-if="Object.keys(duplicatesInEcl).length > 0">
                                 Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                                 <br>
                                 <span v-for="(value, key) in duplicatesInEcl" :key="key">
@@ -286,7 +286,7 @@
                             dense
                             color="red lighten-2"
                             type="warning"
-                            v-if="duplicatesInEcl">
+                            v-if="Object.keys(duplicatesInEcl).length > 0">
                             Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                             <br>
                             <h4>Let op: Bij dubbele regels wordt alleen degene in de laatst verwerkte query naar een regel geëxporteerd.</h4>
