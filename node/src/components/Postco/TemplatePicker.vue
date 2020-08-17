@@ -9,7 +9,6 @@
                 <span v-if="selectedTemplate">
                     {{selectedTemplate.description}}
                 </span>
-
             </v-card-text>
         </v-card>
     </v-container>

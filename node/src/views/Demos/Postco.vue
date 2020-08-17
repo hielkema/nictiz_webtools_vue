@@ -12,6 +12,17 @@
 
             
             <v-card>
+                <v-card-text>
+                    <v-row dense v-for="(value, key) in selectedTemplate.attributes" v-bind:key="key">
+                        <v-col cols=12>
+                            <!-- KEY={{key}} -->
+                            <attributeValuePair v-bind:arrayKey="key"/>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+
+            <v-card>
                 <v-card-text v-if="selectedTemplate.root_concept">
                     <v-row>
                         <v-col cols=12>
@@ -31,17 +42,6 @@
                     </v-row>
                 </v-card-text>
             </v-card>
-            <v-card>
-                <v-card-text>
-                    <v-row dense v-for="(value, key) in selectedTemplate.attributes" v-bind:key="key">
-                        <v-col cols=12>
-                            <!-- KEY={{key}} -->
-                            <attributeValuePair v-bind:arrayKey="key"/>
-                        </v-col>
-                    </v-row>
-                </v-card-text>
-            </v-card>
-
         </v-container>
     </div>
 </template>
