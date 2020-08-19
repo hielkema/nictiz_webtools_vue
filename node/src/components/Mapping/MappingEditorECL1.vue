@@ -359,6 +359,11 @@ export default {
             this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
         },
         saveQueries () {
+            var payload = this.targets
+            delete payload.allResults
+            delete payload.mappings
+            payload.queries.forEach(function(query){ delete query.result });
+
             this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
             this.pollTargets()
         },
