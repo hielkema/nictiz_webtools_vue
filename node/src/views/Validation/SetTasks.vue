@@ -1,5 +1,5 @@
 <template>
-    <div id="app" v-if="user.groups.includes('validation | access')">
+    <div id="app" v-if="user.groups.includes('validation | admin')">
         <v-container>
             <v-row>
                 <v-col cols=3>
