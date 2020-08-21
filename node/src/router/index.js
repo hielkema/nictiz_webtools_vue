@@ -102,6 +102,16 @@ const routes = [
     component: () => import('../views/Demos/SnomedMRCM.vue')
   },
   {
+    path: '/validation/answerModule',
+    name: 'Validatie patientvriendelijke beschrijvingen',
+    component: () => import('../views/Validation/Tasks.vue')
+  },
+  {
+    path: '/validation/setTasks',
+    name: 'Validatie patientvriendelijke beschrijvingen',
+    component: () => import('../views/Validation/SetTasks.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
