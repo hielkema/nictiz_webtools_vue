@@ -26,6 +26,9 @@ import TreeView from './modules/DHD/TreeView'
 // Snowstorm integration
 import Snowstorm from './modules/DHD/Snowstorm'
 
+// Validation patientfriendly descriptions
+import Validation from './modules/Validation/ValidationConnection'
+
 // Framework modules
 import { authentication } from './authentication.module';
 import { alert } from './alert.module';
@@ -50,6 +53,7 @@ export default new Vuex.Store({
       Epd,
       TermspaceComments,
       Snowstorm,
+      Validation, 
       TreeView,
       MRCM,
       Postco,
