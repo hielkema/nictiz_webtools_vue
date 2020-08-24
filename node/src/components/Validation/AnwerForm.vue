@@ -66,6 +66,7 @@
                         </v-card-title>
                         <v-card-text>
                             <!-- Compleet? -->
+                            <strong>Hoe compleet is deze toelichting, van 1 heel incompleet tot 5 heel compleet?</strong>
                             <v-radio-group 
                                 v-model="complete" 
                                 row
@@ -133,6 +134,7 @@
                                 <li>Hoe zou u anders zelf deze diagnose uitleggen aan een leek of patiënt in een korte toelichting?</li>
                             </strong>
                             <v-textarea
+                            solo
                                 v-model="feedback"
                                 cols = 100
                             ></v-textarea>
