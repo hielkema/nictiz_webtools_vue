@@ -152,6 +152,36 @@
           </v-list-item>
         <!-- EIND Groep Mapping tools -->
         </v-list-group>
+
+
+        <!-- Groep Validatie patiëntvriendelijke beschrijvingen -->
+        <v-list-group
+          prepend-icon="account_circle"
+          :value="false"
+          v-if="groups.includes('validation | access')"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Validatiestudie AMC</v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <!-- Link 1 in subgroep -->
+          <v-list-item v-if="groups.includes('validation | access')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/validation/answerModule"><v-list-item-title>Validatiemodule</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 2 in subgroep -->
+          <v-list-item v-if="groups.includes('validation | admin')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/validation/setTasks"><v-list-item-title>BEHEER Validatiemodule</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+        <!-- EIND Groep Validatie patiëntvriendelijke beschrijvingen -->
+      
       </v-list>
     </v-navigation-drawer>
 
