@@ -23,8 +23,8 @@
                             :rules="[v => (cannot_validate && !!v) || 'Item is required']"
                             required
                         ></v-textarea>
-                    </v-card-text>
-                </v-card>
+                </v-card-text>
+            </v-card>
                 <div v-if="!cannot_validate">
                     <v-card class="ma-1">
                         <v-card-title>
@@ -96,7 +96,7 @@
                             </v-radio-group>
 
                             <!-- Duidelijk? -->
-                            <strong>Hoe duidelijk is deze toelichting, van 1 heel onduidelijk tot 5 heel onduidelijk?</strong>
+                            <strong>Hoe duidelijk is deze toelichting, van 1 heel onduidelijk tot 5 heel duidelijk?</strong>
                             <v-radio-group 
                                 v-model="clarity" 
                                 row
@@ -109,9 +109,16 @@
                                 <v-radio key="4" label="4" value="4"></v-radio>
                                 <v-radio key="5" label="5" value="5"></v-radio>
                             </v-radio-group>
+                        </v-card-text>
+                    </v-card>
+                    
 
+                    <v-card class="ma-1">
+                        <v-card-title>
+                            Wanneer u deze diagnose registreert in het medische dossier van de patiënt, vindt u het acceptabel dat deze toelichting bij de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond?
+                        </v-card-title>
+                        <v-card-text>
                             <!-- Acceptabel? -->
-                            <strong>Wanneer u deze diagnose registreert in het medische dossier van de patiënt, vindt u het acceptabel dat deze toelichting bij de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond?</strong>
                             <v-radio-group 
                                 v-model="acceptable" 
                                 row
@@ -123,25 +130,46 @@
                             </v-radio-group>
                         </v-card-text>
                     </v-card>
+
                     <v-card class="ma-1">
                         <v-card-title>
-                            Feedback
+                            Wanneer niet compleet, relevant, duidelijk of acceptabel: wat maakt het incompleet, irrelevant, onduidelijk of onacceptabel en hoe zou het verbeterd kunnen worden?
                         </v-card-title>
                         <v-card-text>
                             <!-- Feedback -->
-                            <strong>
-                                <li>Wanneer niet compleet, relevant of duidelijk: wat maakt het incompleet, irrelevant of onduidelijk en hoe zou het verbeterd kunnen worden?</li>
-                                <li>Hoe zou u anders zelf deze diagnose uitleggen aan een leek of patiënt in een korte toelichting?</li>
-                            </strong>
+                            <v-textarea
+                                solo
+                                v-model="feedback_notes"
+                                :rules="[v => rules_FeedbackNotes() || 'Item is required']"
+                                cols = 100
+                            ></v-textarea>
+                        </v-card-text>
+                    </v-card>
+
+
+                    <v-card class="ma-1">
+                        <v-card-title>
+                            Hoe zou u anders zelf deze diagnose uitleggen aan een leek of patiënt?
+                        </v-card-title>
+                        <v-card-text>
+                            <!-- Feedback -->
                             <v-textarea
                             solo
-                                v-model="feedback"
+                                v-model="feedback_suggestion"
                                 cols = 100
                             ></v-textarea>
                         </v-card-text>
                     </v-card>
                 </div>
 
+                <v-btn
+                        v-if="!valid"
+                        color="info"
+                        class="mr-4"
+                        @click="validate"
+                    >
+                        Valideer Formulier
+                    </v-btn>
                 <v-btn
                         :disabled="!valid"
                         color="success"
@@ -151,13 +179,6 @@
                         Opslaan en volgende taak
                     </v-btn>
 
-                <!-- <v-btn
-                        color="error"
-                        class="mr-4"
-                        @click="reset"
-                    >
-                        Reset Formulier
-                    </v-btn> -->
         </v-form>
     </v-container>
 </template>
@@ -171,18 +192,28 @@ export default {
         what_errors: '',
         clarity: false,
         relevance: false,
-        acceptable: 0,
+        acceptable: false,
         complete: false,
-        feedback: '',
+        feedback_suggestion: '',
+        feedback_notes: '',
     
         // Form validation
-        valid: true,
+        valid: false,
         lazy: false,
 
     }),
     methods: {
         validate () {
             this.$refs.form.validate()
+        },
+        rules_FeedbackNotes() {
+            var output = true
+            if(this.acceptable == "0"){
+                if(this.feedback_notes == false){
+                    output = false
+                }
+            }
+            return output
         },
         reset () {
             this.$refs.form.reset()
@@ -200,11 +231,20 @@ export default {
                 'relevance' : this.relevance,
                 'acceptable' : this.acceptable,
                 'complete' : this.complete,
-                'feedback' : this.feedback,
+                'feedback_notes' : this.feedback_notes,
+                'feedback_suggestion' : this.feedback_suggestion,
             }
             this.$store.dispatch('Validation/sendForm', payload)
-            this.why_no_validate = ''
-            this.what_errors = ''
+            this.cannot_validate = 0,
+            this.why_no_validate  = '',
+            this.errors = 0,
+            this.what_errors = '',
+            this.clarity = false,
+            this.relevance = false,
+            this.acceptable = false,
+            this.complete = false,
+            this.feedback_suggestion = '',
+            this.feedback_notes = '',
             this.$refs.form.reset()
         }
     },

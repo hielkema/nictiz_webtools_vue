@@ -9,6 +9,10 @@
                     <template v-slot:default>
                         <tbody>
                             <tr>
+                                <th>SortIndex</th>
+                                <td>{{currentTask.data.sortIndex}}</td>
+                            </tr>
+                            <tr>
                                 <th>Term</th>
                                 <td>{{currentTask.data.preferredTerm}}</td>
                             </tr>
