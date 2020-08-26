@@ -153,14 +153,14 @@ const state = {
         headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
         withCredentials: true
       }
-      axios
+      return axios
       .post(context.rootState.baseUrl+'mapping/api/1.0/mapping_dialog/', {
         'mapping' : context.state.dialogData,
         'task' : context.state.selectedTask.id,
         'new' : payload,
       },auth)
       .then(() => {
-        context.dispatch('getMappingTargets',context.state.selectedTask.id)
+        // context.dispatch('getMappingTargets',context.state.selectedTask.id)
         context.commit('resetDialogData')
         return true
         }
