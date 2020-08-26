@@ -320,7 +320,7 @@ export default {
             this.targetDialogOldTarget = {}
             this.targetDialogNewTarget = false
             this.$store.dispatch('MappingTasks/saveDialogTarget', newData)
-            this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
+            // this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
         }
     },
     computed: {
