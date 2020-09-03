@@ -45,9 +45,9 @@ export default {
             return this.$store.state.Validation.currentTask
         }
     },
-    mounted() {
-        this.$store.dispatch('Validation/getTask')
-    }
+    // mounted() {
+    //     this.$store.dispatch('Validation/getTask')
+    // }
 }
 </script>
 

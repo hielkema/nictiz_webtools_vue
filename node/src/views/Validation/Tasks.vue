@@ -36,6 +36,9 @@ export default {
         currentTask(){
             return this.$store.state.Validation.currentTask
         }
+    },
+    mounted() {
+        this.$store.dispatch('Validation/getTask')
     }
 }
 </script>

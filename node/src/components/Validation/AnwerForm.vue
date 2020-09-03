@@ -62,6 +62,25 @@
 
                     <v-card class="ma-1">
                         <v-card-title>
+                            <!-- Wanneer niet compleet, relevant, duidelijk of acceptabel: wat maakt het incompleet, irrelevant, onduidelijk of onacceptabel en hoe zou het verbeterd kunnen worden? -->
+                        </v-card-title>
+                        <v-card-text>
+                            <!-- Feedback -->
+                            <strong>
+                                Wanneer u deze diagnose registreert in het medische dossier van de patiënt en de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond, wat vindt u daarvan? <br>Wanneer niet compleet, relevant, duidelijk of acceptabel: kunt u beschrijven wat het incompleet, irrelevant, onduidelijk of onacceptabel maakt en hoe zou het verbeterd kunnen worden?
+                            </strong>
+                            <v-textarea
+                                
+                                v-model="feedback_notes"
+                                label='Hier kunt u feedback geven op de toelichting. '
+                                :rules="[v => rules_FeedbackNotes() || 'Item is required']"
+                                cols = 100
+                            ></v-textarea>
+                        </v-card-text>
+                    </v-card>
+
+                    <v-card class="ma-1">
+                        <v-card-title>
                             Vergeleken met hoe u als arts deze diagnose aan een patiënt, naaste of leek uit zou leggen:
                         </v-card-title>
                         <v-card-text>
@@ -115,51 +134,28 @@
 
                     <v-card class="ma-1">
                         <v-card-title>
-                            Wanneer u deze diagnose registreert in het medische dossier van de patiënt, vindt u het acceptabel dat deze toelichting bij de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond?
                         </v-card-title>
                         <v-card-text>
                             <!-- Acceptabel? -->
+                            <strong>
+                                Wanneer u deze diagnose registreert in het medische dossier van de patiënt, hoe acceptabel vindt u het dat deze toelichting bij de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond?
+                                <!-- Hoe acceptabel is deze toelichting, van 1 heel onacceptabel tot 5 heel acceptabel? -->
+                            </strong>
                             <v-radio-group 
                                 v-model="acceptable" 
                                 row
                                 required
                                 :rules="[v => ((cannot_validate) || (!!v)) || 'Item is required']"
                                 >
-                                <v-radio key="1" label="Ja" value="1"></v-radio>
-                                <v-radio key="2" label="Nee" value="0"></v-radio>
+                                <v-radio key="1" label="1" value="1"></v-radio>
+                                <v-radio key="2" label="2" value="2"></v-radio>
+                                <v-radio key="3" label="3" value="3"></v-radio>
+                                <v-radio key="4" label="4" value="4"></v-radio>
+                                <v-radio key="5" label="5" value="5"></v-radio>
                             </v-radio-group>
                         </v-card-text>
                     </v-card>
 
-                    <v-card class="ma-1">
-                        <v-card-title>
-                            Wanneer niet compleet, relevant, duidelijk of acceptabel: wat maakt het incompleet, irrelevant, onduidelijk of onacceptabel en hoe zou het verbeterd kunnen worden?
-                        </v-card-title>
-                        <v-card-text>
-                            <!-- Feedback -->
-                            <v-textarea
-                                solo
-                                v-model="feedback_notes"
-                                :rules="[v => rules_FeedbackNotes() || 'Item is required']"
-                                cols = 100
-                            ></v-textarea>
-                        </v-card-text>
-                    </v-card>
-
-
-                    <v-card class="ma-1">
-                        <v-card-title>
-                            Hoe zou u anders zelf deze diagnose uitleggen aan een leek of patiënt?
-                        </v-card-title>
-                        <v-card-text>
-                            <!-- Feedback -->
-                            <v-textarea
-                            solo
-                                v-model="feedback_suggestion"
-                                cols = 100
-                            ></v-textarea>
-                        </v-card-text>
-                    </v-card>
                 </div>
 
                 <v-btn
@@ -194,7 +190,6 @@ export default {
         relevance: false,
         acceptable: false,
         complete: false,
-        feedback_suggestion: '',
         feedback_notes: '',
     
         // Form validation
@@ -232,7 +227,6 @@ export default {
                 'acceptable' : this.acceptable,
                 'complete' : this.complete,
                 'feedback_notes' : this.feedback_notes,
-                'feedback_suggestion' : this.feedback_suggestion,
             }
             this.$store.dispatch('Validation/sendForm', payload)
             this.cannot_validate = 0,
