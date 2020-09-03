@@ -62,17 +62,16 @@
 
                     <v-card class="ma-1">
                         <v-card-title>
-                            <!-- Wanneer niet compleet, relevant, duidelijk of acceptabel: wat maakt het incompleet, irrelevant, onduidelijk of onacceptabel en hoe zou het verbeterd kunnen worden? -->
+                            Wanneer u deze diagnose registreert in het medische dossier van de patiënt en de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond, wat vindt u daarvan?
                         </v-card-title>
                         <v-card-text>
                             <!-- Feedback -->
                             <strong>
-                                Wanneer u deze diagnose registreert in het medische dossier van de patiënt en de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond, wat vindt u daarvan? <br>Wanneer niet compleet, relevant, duidelijk of acceptabel: kunt u beschrijven wat het incompleet, irrelevant, onduidelijk of onacceptabel maakt en hoe zou het verbeterd kunnen worden?
+                                Wanneer niet compleet, relevant, duidelijk of acceptabel: kunt u beschrijven wat het incompleet, irrelevant, onduidelijk of onacceptabel maakt en hoe zou het verbeterd kunnen worden?
                             </strong>
                             <v-textarea
                                 
                                 v-model="feedback_notes"
-                                label='Hier kunt u feedback geven op de toelichting. '
                                 :rules="[v => rules_FeedbackNotes() || 'Item is required']"
                                 cols = 100
                             ></v-textarea>
@@ -81,7 +80,7 @@
 
                     <v-card class="ma-1">
                         <v-card-title>
-                            Vergeleken met hoe u als arts deze diagnose aan een patiënt, naaste of leek uit zou leggen:
+                            <!-- Vergeleken met hoe u als arts deze diagnose aan een patiënt, naaste of leek uit zou leggen: -->
                         </v-card-title>
                         <v-card-text>
                             <!-- Compleet? -->
@@ -138,8 +137,8 @@
                         <v-card-text>
                             <!-- Acceptabel? -->
                             <strong>
-                                Wanneer u deze diagnose registreert in het medische dossier van de patiënt, hoe acceptabel vindt u het dat deze toelichting bij de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond?
-                                <!-- Hoe acceptabel is deze toelichting, van 1 heel onacceptabel tot 5 heel acceptabel? -->
+                                <!-- Wanneer u deze diagnose registreert in het medische dossier van de patiënt, hoe acceptabel vindt u het dat deze toelichting bij de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond? -->
+                                Hoe acceptabel is deze toelichting, van 1 heel onacceptabel tot 5 heel acceptabel?
                             </strong>
                             <v-radio-group 
                                 v-model="acceptable" 
