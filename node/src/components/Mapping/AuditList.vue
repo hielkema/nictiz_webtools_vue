@@ -1,9 +1,18 @@
 <template>
     <div>
         <v-container 
+            v-if="user.groups.includes('mapping | access')"
+            fluid
+            >
+            <v-btn @click="triggerAudit(selectedTask.id)">Trigger audit</v-btn>
+            <v-btn @click="getAudits(selectedTask.id)">Vernieuw QA hits</v-btn>
+        </v-container>
+
+        <v-container 
             v-if="user.groups.includes('mapping | access') && (audits_active.length > 0 || audits_whitelisted.length > 0 )"
             fluid
             >
+
                 <v-alert 
                 border="left"
                 dense
@@ -42,6 +51,13 @@ export default {
         removeAudit(id){
             this.$store.dispatch('MappingAudits/remove', id)
         },
+        triggerAudit(id){
+            this.$store.dispatch('MappingAudits/trigger', id)
+        },
+        getAudits(id){
+            this.$store.dispatch('MappingAudits/getAudits', id)
+        },
+
     },
     computed: {
         selectedTask(){

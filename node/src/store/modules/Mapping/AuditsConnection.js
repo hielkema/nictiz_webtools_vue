@@ -35,6 +35,18 @@ const state = {
           return true;
       })
     },
+    trigger: (context, taskid) => {
+      // context.state.RcRules = {}
+      context.state.loading = true
+      context.audits = []
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/audit_trigger/'+taskid+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.state.loading = false
+          return true;
+      })
+    },
     whitelist: (context, id) => {
       // context.state.RcRules = {}
       context.audits = []
