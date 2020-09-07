@@ -239,6 +239,11 @@ export default {
             this.feedback_suggestion = '',
             this.feedback_notes = '',
             this.$refs.form.reset()
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
         }
     },
     computed: {
