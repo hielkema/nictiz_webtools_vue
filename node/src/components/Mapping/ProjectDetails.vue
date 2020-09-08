@@ -28,7 +28,7 @@
                                 <v-btn v-on:click="openAudit()">Audit hits</v-btn>
                                 <v-btn v-if="user.groups.includes('mapping | taskmanager')" v-on:click="openTaskManager()">Taskmanager</v-btn>
                                 <v-btn v-if="user.groups.includes('mapping | create tasks')" v-on:click="openTaskCreator()">Taken aanmaken</v-btn>
-
+                                <v-btn v-if="user.groups.includes('mapping | audit')" @click="triggerAudit(projectDetails.id)">Trigger audit voor hele project</v-btn>
                             </v-card-actions>
                         </v-card-text>
                     </v-card>
@@ -58,6 +58,9 @@ export default {
         },
         openAudit(){
             this.$router.push({ path: `/mapping/ProjectAudit/${this.projectDetails.id}/` });
+        },
+        triggerAudit(id){
+            this.$store.dispatch('MappingAudits/triggerProject', id)
         },
     },
     computed: {
