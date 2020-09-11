@@ -84,7 +84,7 @@
                         </v-card-title>
                         <v-card-text>
                             <!-- Compleet? -->
-                            <strong>Hoe compleet is deze toelichting, van 1 heel incompleet tot 5 heel compleet?</strong>
+                            <strong>Hoe compleet is deze toelichting, van 1 heel incompleet tot 5 heel compleet, waarbij 3 niet incompleet of compleet is? </strong>
                             <v-radio-group 
                                 v-model="complete" 
                                 row
@@ -99,7 +99,7 @@
                             </v-radio-group>
 
                             <!-- Relevant? -->
-                            <strong>Hoe relevant is deze toelichting, van 1 heel irrelevant tot 5 heel relevant?</strong>
+                            <strong>Hoe relevant is deze toelichting, van 1 heel irrelevant tot 5 heel relevant, waarbij 3 niet irrelevant of relevant is? </strong>
                             <v-radio-group 
                                 v-model="relevance" 
                                 row
@@ -114,7 +114,7 @@
                             </v-radio-group>
 
                             <!-- Duidelijk? -->
-                            <strong>Hoe duidelijk is deze toelichting, van 1 heel onduidelijk tot 5 heel duidelijk?</strong>
+                            <strong>Hoe duidelijk is deze toelichting, van 1 heel onduidelijk tot 5 heel duidelijk, waarbij 3 niet onduidelijk of duidelijk is? </strong>
                             <v-radio-group 
                                 v-model="clarity" 
                                 row
@@ -133,12 +133,13 @@
 
                     <v-card class="ma-1">
                         <v-card-title>
+                            Wanneer u deze diagnose registreert in het medische dossier van de patiënt en de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond: 
                         </v-card-title>
                         <v-card-text>
                             <!-- Acceptabel? -->
                             <strong>
                                 <!-- Wanneer u deze diagnose registreert in het medische dossier van de patiënt, hoe acceptabel vindt u het dat deze toelichting bij de diagnose op de probleemlijst in het patiëntenportaal aan uw patiënt en zijn of haar naasten wordt getoond? -->
-                                Hoe acceptabel is deze toelichting, van 1 heel onacceptabel tot 5 heel acceptabel?
+                                Hoe acceptabel is deze toelichting, van 1 heel onacceptabel tot 5 heel acceptabel, waarbij 3 niet onacceptabel of acceptabel is?
                             </strong>
                             <v-radio-group 
                                 v-model="acceptable" 
