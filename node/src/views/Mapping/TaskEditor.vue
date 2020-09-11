@@ -1,128 +1,128 @@
 <template>
     <div id="app">
         <v-container>
-            <v-row no-gutters>
-                <v-cols cols=12>
-                    <v-card>
-                        <v-card-title>{{selectedProject.title}}<br>
+            <v-col>
+                <v-row no-gutters>
+                    <v-col cols=12>
+                        <v-card>
+                            <v-card-title>{{selectedProject.title}}
+                            </v-card-title>
+                        </v-card>
+                    </v-col>
+                </v-row>
+                <!-- Interface 1-N mapping -->
+                <v-row no-gutters v-if="selectedProject && (selectedProject.type == '1')">
+                    <v-col cols=3>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <BackToProjects />
+                                <TaskList />
+                            </v-col>
+                        </v-row>
+                    </v-col>
 
-                        </v-card-title>
-                    </v-card>
-                </v-cols>
-            </v-row>
-            <!-- Interface 1-N mapping -->
-            <v-row no-gutters v-if="selectedProject.type == '1'">
-                <v-col cols=3>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <BackToProjects />
-                            <TaskList />
-                        </v-col>
-                    </v-row>
-                </v-col>
+                    
+                    <v-col cols=5 v-if="selectedTask">
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <TaskDetails />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <AuditList />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <CommentsList />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <CommentsForm />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <Statuses />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <Users />
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    
+                    <v-col cols=4>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <MappingEditor1N />
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
 
-                
-                <v-col cols=5 v-if="selectedTask">
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <TaskDetails />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <AuditList />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <CommentsList />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <CommentsForm />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <Statuses />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <Users />
-                        </v-col>
-                    </v-row>
-                </v-col>
-                
-                <v-col cols=4>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <MappingEditor1N />
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
+                <!-- ECL - 1 mapping interface -->
+                <v-row no-gutters v-if="selectedProject && (selectedProject.type == '4')">
+                    <v-col cols=3>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <BackToProjects />
+                                <TaskList />
+                            </v-col>
+                        </v-row>
+                    </v-col>
 
-            <!-- ECL - 1 mapping interface -->
-            <v-row no-gutters v-if="selectedProject.type == '4'">
-                <v-col cols=3>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <BackToProjects />
-                            <TaskList />
-                        </v-col>
-                    </v-row>
-                </v-col>
-
-                <v-col cols=5>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <ReverseMappings />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <MappingEditorECL1 />
-                        </v-col>
-                    </v-row>
-                </v-col>
-                
-                <v-col cols=4 v-if="selectedTask">
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <TaskDetails />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <AuditList />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <CommentsList />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <CommentsForm />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <Statuses />
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols=12>
-                            <Users />
-                        </v-col>
-                    </v-row>
-                </v-col>
-                
-            </v-row>
-
+                    <v-col cols=5>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <ReverseMappings />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <MappingEditorECL1 />
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    
+                    <v-col cols=4 v-if="selectedTask">
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <TaskDetails />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <AuditList />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <CommentsList />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <CommentsForm />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <Statuses />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
+                                <Users />
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    
+                </v-row>
+            </v-col>
         </v-container>
     </div>
 </template>
@@ -175,6 +175,9 @@ export default {
         },
         selectedProject(){
             return this.$store.state.MappingProjects.selectedProject
+        },
+        user(){
+            return this.$store.state.userData
         }
     }
 }

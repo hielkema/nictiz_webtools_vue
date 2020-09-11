@@ -49,7 +49,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
-                                <v-btn color="blue darken-1" :disabled="formDisabled" text @click="saveQueries()">Opslaan</v-btn>
+                                <v-btn color="blue darken-1" :disabled="formDisabled()" text @click="saveQueries()">Opslaan</v-btn>
                             </v-card-actions>
                         </v-card>
 
@@ -117,7 +117,7 @@
                                         <v-row dense>
                                             <v-col>
                                                 <v-textarea
-                                                    :disabled="formDisabled"
+                                                    :disabled="formDisabled()"
                                                     dense
                                                     outlined
                                                     name="input-7-1"
@@ -133,7 +133,7 @@
                                         <v-row dense>
                                             <v-col>
                                                 <v-textarea
-                                                    :disabled="formDisabled"
+                                                    :disabled="formDisabled()"
                                                     dense
                                                     outlined
                                                     label="Query *"
@@ -146,7 +146,7 @@
                                         <v-row dense>
                                             <v-col cols=4>
                                                 <v-select 
-                                                    :disabled="formDisabled" 
+                                                    :disabled="formDisabled()" 
                                                     dense
                                                     outlined
                                                     v-model="item.correlation" 
@@ -158,7 +158,7 @@
                                             </v-col>
                                             <v-col cols=4 v-if="item.id != 'extra'">
                                                 <v-checkbox
-                                                    :disabled="formDisabled"
+                                                    :disabled="formDisabled()"
                                                     v-model="item.delete"
                                                     label="Verwijderen"
                                                     dense   
@@ -176,7 +176,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
-                                <v-btn color="blue darken-1" :disabled="formDisabled" text @click="saveQueries()">Opslaan</v-btn>
+                                <v-btn color="blue darken-1" :disabled="formDisabled()" text @click="saveQueries()">Opslaan</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-tab-item>
@@ -268,7 +268,7 @@
                                 <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
                                 <v-btn 
                                     color="blue darken-1" 
-                                    :disabled="formDisabled" 
+                                    :disabled="formDisabled()" 
                                     v-if="!targets.queries_unfinished"
                                     text 
                                     @click="createMappingRules()">Mappingsregels aanmaken</v-btn>
@@ -317,9 +317,6 @@
                 </v-tabs-items>
             </v-card>
         </v-container>
-
-
-
     </div>
 </template>
 <script>
@@ -431,6 +428,13 @@ export default {
             // return testObject;
             return seenDuplicate;
         },
+        formDisabled(){
+            if((this.user.id == this.selectedTask.user.id) && (this.user.groups.includes('mapping | edit mapping'))){
+                return false
+            }else{
+                return true
+            }
+        },
 
     },
     computed: {
@@ -460,13 +464,6 @@ export default {
         },
         user(){
             return this.$store.state.userData
-        },
-        formDisabled(){
-            if((this.user.id == this.selectedTask.user.id) && (this.user.groups.includes('mapping | edit mapping'))){
-                return false
-            }else{
-                return true
-            }
         },
     },
     created() {
