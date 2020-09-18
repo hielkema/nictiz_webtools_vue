@@ -182,6 +182,18 @@ const state = {
         }
       )
     },
+
+    postMappingExclusions:(context, payload) => {
+      const auth = {
+        headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
+        withCredentials: true
+      }
+      return axios
+      .post(context.rootState.baseUrl+'mapping/api/1.0/mapping_exclusions/', {
+        'payload' : payload,
+      },auth)
+    },
+    
     mappingsEclToRules: (context, taskid) => {
       context.state.loading.eclToRules = true
       axios

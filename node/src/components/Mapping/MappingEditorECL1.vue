@@ -27,6 +27,9 @@
                         <v-tab key="query" >
                             Queries
                         </v-tab>
+                        <v-tab key="exclusions" >
+                            Exclusies
+                        </v-tab>
                         <v-tab key="preview" >
                             ECL resultaten
                         </v-tab>
@@ -170,6 +173,58 @@
                                 </v-card-text>
                             </v-card>
                         </template>
+
+                        
+                        <v-card ma-1>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
+                                <v-btn color="blue darken-1" :disabled="formDisabled()" text @click="saveQueries()">Opslaan</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-tab-item>
+
+                    <!-- Tab queries -->
+                    <v-tab-item key="exclusions" >
+                        <v-card ma-1>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
+                                <v-btn color="blue darken-1" :disabled="formDisabled()" text @click="saveQueries()">Opslaan</v-btn>
+                            </v-card-actions>
+                        </v-card>
+
+                        <!-- Exclusion form -->
+                        <v-card
+                            class="my-1">
+                            <v-card-title>
+                                <span>Excludeer resultaat van ander component</span>
+                            </v-card-title>
+                            <v-card-text>
+                                
+                                <v-textarea
+                                    :disabled="formDisabled()"
+                                    dense
+                                    outlined
+                                    label="Exclusies"
+                                    hint="1 component ID per regel"
+                                    rows="3"
+                                    v-model="selectedTask.exclusions.string" 
+                                    auto-grow></v-textarea>
+                                    <strong>Herkende codes:</strong><br>
+                                    <pre>{{selectedTask.exclusions.recognized}}</pre>
+                                    <br>
+                                    Op basis van dit veld zijn <strong>{{targets.excluded.length}}</strong> concepten geëxcludeerd.
+
+                                    <v-data-table
+                                        multi-sort
+                                        :headers="excludedHeaders"
+                                        :items-per-page="10"
+                                        :items="targets.excluded">
+                                    </v-data-table>
+
+                            </v-card-text>
+                        </v-card>
 
                         
                         <v-card ma-1>
@@ -341,6 +396,10 @@ export default {
                 { text: 'Component', value: 'source.component_title', sortable: true },
                 { text: 'Correlatie', value: 'correlation', sortable: true },
             ],
+            excludedHeaders: [
+                { text: 'ID', value: 'id', sortable: true },
+                { text: 'FSN', value: 'fsn.term', sortable: true },
+            ],
             tab: null,
             searchString: '',
             pagination: {
@@ -353,6 +412,7 @@ export default {
     },
     methods: {
         loadTargets () {
+            this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
             this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
         },
         saveQueries () {
@@ -361,14 +421,19 @@ export default {
             delete payload.mappings
             payload.queries.forEach(function(query){ delete query.result });
 
-            this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
+            // First, save exclusions
+            this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask).then(
+                this.$store.dispatch('MappingTasks/postMappingTargets',this.targets)
+            )
             this.pollTargets()
         },
         pollTargets () {
             this.interval = setInterval(() => {
                 if(this.targets.queries_unfinished == true){
+                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                 }else{
+                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     clearInterval(this.interval)
                 }
@@ -377,8 +442,10 @@ export default {
         pollRules () {
             this.interval = setInterval(() => {
                 if(this.targets.mappings_unfinished == true){
+                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                 }else{
+                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     clearInterval(this.interval)
                 }
