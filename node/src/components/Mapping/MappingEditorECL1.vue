@@ -185,6 +185,15 @@
                     </v-tab-item>
 
                     <!-- Tab queries -->
+                    <!-- General warning -->
+                    <v-alert 
+                        dense
+                        color="red lighten-2"
+                        type="warning"
+                        v-if="targets.queries_unfinished">
+                        Nog niet alle requests zijn klaar! Het scherm ververst automatisch.
+                    </v-alert>
+
                     <v-tab-item key="exclusions" >
                         <v-card ma-1>
                             <v-card-actions>
