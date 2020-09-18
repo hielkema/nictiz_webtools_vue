@@ -412,7 +412,7 @@ export default {
     },
     methods: {
         loadTargets () {
-            this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
+            this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
             this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
         },
         saveQueries () {
@@ -430,10 +430,10 @@ export default {
         pollTargets () {
             this.interval = setInterval(() => {
                 if(this.targets.queries_unfinished == true){
-                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
+                    this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                 }else{
-                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
+                    this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     clearInterval(this.interval)
                 }
@@ -442,10 +442,10 @@ export default {
         pollRules () {
             this.interval = setInterval(() => {
                 if(this.targets.mappings_unfinished == true){
-                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
+                    this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                 }else{
-                    this.$store.dispatch('MappingTasks/postMappingExclusions',this.selectedTask)
+                    this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     clearInterval(this.interval)
                 }
