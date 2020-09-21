@@ -299,10 +299,13 @@
                                             <template v-slot:activator="{ on }">
                                                 <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
                                             </template>
-                                            <pre>{{item.description}}</pre>
+                                            <pre>{{item.queryId}} - {{item.description}}</pre>
                                             <hr>
                                             <pre>{{item.query}}</pre>
                                         </v-tooltip>
+                                    </template>
+                                    <template v-slot:item.id="{ item }">
+                                        <a :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+item.id" target="_blank">{{item.id}}</a>
                                     </template>
                                     <template v-slot:item.pt="{ item }">
                                         {{item.fsn.term}}
@@ -395,7 +398,7 @@ export default {
             targetDialogNewTarget: false,
             resultsHeaders: [
                 { text: 'Query', value: 'query', sortable: false },
-                { text: 'QueryID', value: 'queryId' },
+                // { text: 'QueryID', value: 'queryId' },
                 { text: 'ID', value: 'id' },
                 { text: 'Preferred term', value: 'pt', sortable: false },
                 { text: 'Correlation', value: 'correlation' },
