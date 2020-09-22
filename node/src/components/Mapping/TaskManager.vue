@@ -70,7 +70,7 @@
                                 color="success"
                                 class="mr-4"
                                 @click="select()">
-                                Uitvoeren
+                                Voeg selectie toe
                             </v-btn>
                         </v-card-text>
                     </v-card>
@@ -140,7 +140,15 @@
                             Taken
                         </v-card-title>
                         <v-card-actions>
-                            <v-btn v-on:click="refresh()">Ververs gehele tabel</v-btn><br>
+                            <v-btn 
+                                class="ms-2"
+                                v-on:click="refresh()">Ververs gehele tabel</v-btn><br>
+                            <v-btn
+                                color="info"
+                                class="ms-2"
+                                @click="selected=[]">
+                                Verwijder selectie
+                            </v-btn>
                         </v-card-actions>
                         <v-card-text>
                             <v-data-table
@@ -186,7 +194,7 @@ export default {
                 { text: 'Code', value: 'component_id' },
                 { text: 'Term', value: 'component.title' },
                 { text: 'Categorie', value: 'category' },
-                { text: 'Component actief', value: 'component_actief' },
+                { text: 'Component actief', value: 'component_actief', align: ' d-none' },
                 { text: 'Status', value: 'status_title' },
                 { text: 'Gebruiker', value: 'user.name' },
                 // headers used exclusively for filtering
@@ -249,6 +257,7 @@ export default {
                 }
             }
             
+            this.selectString = ''
         },
         columnValueList(val) {
            return this.$store.state.TaskManager.tasks.map(d => d[val]).sort()
