@@ -10,7 +10,7 @@
             </v-row>
             <v-row>
                 <v-col cols=6>
-                    <v-card class="pa-1">
+                    <v-card class="ma-1">
                         <v-card-title>
                             Filters en zoeken
                         </v-card-title>   
@@ -54,9 +54,30 @@
                             </v-simple-table>
                         </v-card-text>
                     </v-card>
+
+                    <v-card class="ma-1">
+                        <v-card-title>
+                            Voeg toe aan selectie
+                        </v-card-title> 
+                        <v-card-text>
+                            Voeg ID's toe aan selectie. 1 per regel.
+                            <v-textarea
+                                v-model="selectString"
+                                cols="10"
+                                solo>
+                            </v-textarea>
+                            <v-btn
+                                color="success"
+                                class="mr-4"
+                                @click="select()">
+                                Uitvoeren
+                            </v-btn>
+                        </v-card-text>
+                    </v-card>
+
                 </v-col>
                 <v-col cols=6>
-                    <v-card class="pa-1">   
+                    <v-card class="ma-1">   
                         <v-card-title>
                             Acties
                         </v-card-title>
@@ -111,10 +132,12 @@
                     </v-card>
                 </v-col>
             </v-row>
+
+
         
             <v-row>
                 <v-col cols=12>
-                    <v-card>
+                    <v-card class="ma-1">
                         <v-card-title>
                             Taken
                         </v-card-title>
@@ -186,6 +209,7 @@ export default {
                 'changeCategory': false,
             },
             selected: [],
+            selectString: '',
             search: '',
             groupBy: null,
             form: true,
@@ -214,6 +238,14 @@ export default {
                 'projectid': this.$route.params.projectid,
             }
             this.$store.dispatch('TaskManager/changeTasks', payload)
+        },
+        select () {
+            var selectArray = this.selectString.split('\n')
+            var output = {}
+            for (const value of selectArray) {
+                output['id'] = value;
+            }
+            this.selected.push(output)
         },
         columnValueList(val) {
            return this.$store.state.TaskManager.tasks.map(d => d[val]).sort()
