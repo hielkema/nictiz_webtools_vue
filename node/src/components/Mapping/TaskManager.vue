@@ -79,6 +79,14 @@
                             </v-row>
                             <v-row>
                                 <v-col cols=5>
+                                    <v-checkbox class="pa-1" v-model="action.changeCategory" label="Wijzig Categorie"></v-checkbox>
+                                </v-col>
+                                <v-col cols=6>
+                                    <v-select class="pa-1" :items="categories" v-model="value.changeCategory" label="Categorie"></v-select>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols=5>
                                     <v-checkbox class="pa-1" v-model="action.changeProject" label="Wijzig Project"></v-checkbox>
                                 </v-col>
                                 <v-col cols=6>
@@ -89,6 +97,7 @@
                             <v-alert type="warning" v-if="action.changeProject && value.changeProject && (selectedTasks.length != 0)">Het project wordt bij {{selectedTasks.length}} taken gewijzigd</v-alert>
                             <v-alert type="info" v-if="action.changeUser && value.changeUser && (selectedTasks.length != 0)">De gebruiker wordt bij {{selectedTasks.length}} taken gewijzigd</v-alert>
                             <v-alert type="info" v-if="action.changeStatus && value.changeStatus && (selectedTasks.length != 0)">De status wordt bij {{selectedTasks.length}} taken gewijzigd</v-alert>
+                            <v-alert type="info" v-if="action.changeCategory && value.changeCategory && (selectedTasks.length != 0)">De categorie wordt bij {{selectedTasks.length}} taken gewijzigd</v-alert>
 
                         </v-card-text>
                         <v-card-actions>
@@ -96,7 +105,7 @@
                                 color="success"
                                 class="mr-4"
                                 @click="submit()">
-                                Validate
+                                Uitvoeren
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -126,6 +135,12 @@
                                 show-select
                                 dense
                             >
+                                <template v-slot:item.component_extra="{ item }">
+                                    <!-- {{item.component_extra}} -->
+                                    <div v-for="(value, key) in item.component_extra" :key="key">
+                                        <li v-if="value != false">{{key}} - {{value}}</li>
+                                    </div>
+                                </template>
                             </v-data-table>
                         </v-card-text>
                     </v-card>
@@ -145,26 +160,30 @@ export default {
         return {
             headers: [
                 { text: 'Task ID', value: 'id' },
-                { text: 'Project', value: 'project' },
+                { text: 'Project', value: 'project', align: ' d-none' },
                 { text: 'Codesystem', value: 'component.codesystem.title' },
                 { text: 'Code', value: 'component.id' },
                 { text: 'Term', value: 'component.title' },
+                { text: 'Categorie', value: 'category' },
                 { text: 'Component actief', value: 'component_actief' },
                 { text: 'Status', value: 'status_title' },
                 { text: 'Gebruiker', value: 'user.name' },
                 // headers used exclusively for filtering
                 { text: 'Source codesystem', value: 'codesystem', align: ' d-none' },
                 { text: 'Gebruikersnaam', value: 'username', align: ' d-none' },
+                { text: 'Meta', value: 'component_extra' },
             ],
             action: {
                 'changeUser': false,
                 'changeStatus': false,
                 'changeProject': false,
+                'changeCategory': false,
             },
             value: {
                 'changeUser': false,
                 'changeStatus': false,
                 'changeProject': false,
+                'changeCategory': false,
             },
             selected: [],
             search: '',
@@ -177,6 +196,7 @@ export default {
                 username: [],
                 component_actief: [],
                 codesystem: [],
+                category: [],
                 project: [],
                 status_title: [],
             }
@@ -229,6 +249,9 @@ export default {
         },
         statuses(){
             return this.$store.state.MappingProjects.statuses
+        },
+        categories(){
+            return this.$store.state.MappingProjects.selectedProject.categories
         },
         projects(){
             return this.$store.state.MappingProjects.projects

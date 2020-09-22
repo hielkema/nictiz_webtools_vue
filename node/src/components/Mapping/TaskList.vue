@@ -33,6 +33,14 @@
                     </v-row>
                     <v-row>
                         <v-col cols=1>
+                            <v-checkbox v-model="filterOnCategory"></v-checkbox>
+                        </v-col>
+                        <v-col cols=10>
+                            <v-select class="pa-1" :items="categories" v-model="filterCategory" label="Filter op categorie"></v-select>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols=1>
                         </v-col>
                         <v-col cols=10>
                             <v-select class="pa-1" :items="perPageOptions" v-model="perPage" label="Aantal per pagina"></v-select>
@@ -79,8 +87,8 @@
                                 <v-list-item-title 
                                     v-html="item.component.title"></v-list-item-title>
                                 <v-list-item-subtitle>
-                                    {{item.status.title}} @ {{item.user.name}}<br>
-                                    Code: {{item.component.id}} / Taak: {{item.id}}
+                                    {{item.status.title}} @ {{item.user.name}} [{{item.category}}]<br>
+                                    Code: {{item.component.id}} / Taak: {{item.id}}                                    
                                     </v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
@@ -113,9 +121,11 @@ export default {
             filterStatus: '',
             filterUser: '',
             filterCode: '',
+            filterCategory: '',
             filterOnUser: true,
             filterOnStatus: true,
             filterOnCode: true,
+            filterOnCategory: true,
             filterBox: false,
 
             selectedColor: 'green',
@@ -150,6 +160,9 @@ export default {
         statuses(){
             return this.$store.state.MappingProjects.statuses
         },
+        categories(){
+            return this.$store.state.MappingProjects.selectedProject.categories
+        },
         selectedTask(){
             return this.$store.state.MappingTasks.selectedTask
         },
@@ -165,7 +178,8 @@ export default {
         tasksFiltered: function () {
             var that = this
             let filterUser = this.filterUser.toString(),
-                filterStatus = this.filterStatus.toString()
+                filterStatus = this.filterStatus.toString(),
+                filterCategory = this.filterCategory.toString()
             return this.tasks.filter(function(item){
                 let filtered = true
                 if(that.filterOnUser && filterUser && (filterUser.length > 0)){
@@ -175,6 +189,9 @@ export default {
                     if(that.filterOnStatus && filterStatus && filterStatus.length > 0){
                         filtered = item.status.id == filterStatus
                     }
+                }
+                if(that.filterOnCategory && filterCategory && filterCategory.length > 0){
+                    filtered = item.category == filterCategory
                 }
                 return filtered
             })
