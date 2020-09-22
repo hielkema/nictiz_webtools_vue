@@ -243,8 +243,10 @@ export default {
             
             for (const value of selectArray) {
                 var obj = this.tasks.find( function(item) { return item.component_id == value } )
-                console.log(obj)
-                output['component_id'] = this.selected.push(obj)
+                // console.log(obj)
+                if(obj != undefined){
+                    output['component_id'] = this.selected.push(obj)
+                }
             }
             
         },
