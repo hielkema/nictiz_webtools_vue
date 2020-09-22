@@ -119,7 +119,7 @@ export default {
     data() {
         return {
             filterStatus: '',
-            filterUser: '',
+            filterUser: this.$store.state.userData.id,
             filterCode: '',
             filterCategory: 'Prioriteit 1',
             filterOnUser: true,
@@ -190,8 +190,10 @@ export default {
                         filtered = item.status.id == filterStatus
                     }
                 }
-                if(that.filterOnCategory && filterCategory && filterCategory.length > 0){
-                    filtered = item.category == filterCategory
+                if(filtered){
+                    if(that.filterOnCategory && filterCategory && filterCategory.length > 0){
+                        filtered = item.category == filterCategory
+                    }
                 }
                 return filtered
             })
