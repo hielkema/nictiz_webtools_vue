@@ -133,8 +133,6 @@
                 </v-col>
             </v-row>
 
-            {{selected}}
-        
             <v-row>
                 <v-col cols=12>
                     <v-card class="ma-1">
