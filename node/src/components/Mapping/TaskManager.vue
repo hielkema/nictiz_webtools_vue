@@ -133,7 +133,7 @@
                 </v-col>
             </v-row>
 
-
+            {{selected}}
         
             <v-row>
                 <v-col cols=12>
@@ -151,7 +151,7 @@
                                 :items-per-page="10"
                                 :search="search"
                                 :loading="loading"
-                                item-key="id"
+                                item-key="component_id"
                                 v-model="selected"
                                 class="elevation-2"
                                 multi-sort
@@ -185,7 +185,7 @@ export default {
                 { text: 'Task ID', value: 'id' },
                 { text: 'Project', value: 'project', align: ' d-none' },
                 { text: 'Codesystem', value: 'component.codesystem.title' },
-                { text: 'Code', value: 'component.id' },
+                { text: 'Code', value: 'component_id' },
                 { text: 'Term', value: 'component.title' },
                 { text: 'Categorie', value: 'category' },
                 { text: 'Component actief', value: 'component_actief' },
@@ -242,10 +242,13 @@ export default {
         select () {
             var selectArray = this.selectString.split('\n')
             var output = {}
+            
             for (const value of selectArray) {
-                output['id'] = value;
+                var obj = this.tasks.find( function(item) { return item.component_id == value } )
+                console.log(obj)
+                output['component_id'] = this.selected.push(obj)
             }
-            this.selected.push(output)
+            
         },
         columnValueList(val) {
            return this.$store.state.TaskManager.tasks.map(d => d[val]).sort()
