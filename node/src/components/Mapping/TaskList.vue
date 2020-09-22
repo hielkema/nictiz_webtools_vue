@@ -121,7 +121,7 @@ export default {
             filterStatus: '',
             filterUser: '',
             filterCode: '',
-            filterCategory: '',
+            filterCategory: 'Prioriteit 1',
             filterOnUser: true,
             filterOnStatus: true,
             filterOnCode: true,
