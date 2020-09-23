@@ -317,6 +317,7 @@ export default {
                     'taskId' : task_id,
                 }
                 this.$store.dispatch('MappingTasks/postComment', payload)
+                this.$store.dispatch('RcAuditConnection/createAuditHit', task_id)                
             }
             this.$store.dispatch('RcAuditConnection/postRuleReview', {'rc_id':rc_id, 'component_id':component_id, 'action': action, 'task_id':task_id})
             this.rejectCommentDialog = false
