@@ -195,6 +195,7 @@
 
     <v-content>
       <v-container
+      fluid
       >
         <v-row
           no-gutters

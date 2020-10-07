@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-        <v-container>
             <v-col>
                 <v-row no-gutters>
                     <v-col cols=12>
@@ -123,7 +122,6 @@
                     
                 </v-row>
             </v-col>
-        </v-container>
     </div>
 </template>
 
