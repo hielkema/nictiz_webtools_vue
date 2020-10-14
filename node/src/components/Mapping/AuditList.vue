@@ -12,26 +12,27 @@
             v-if="user.groups.includes('mapping | access') && (audits_active.length > 0 || audits_whitelisted.length > 0 )"
             fluid
             >
+            <div style="max-height:200px; overflow:auto;">
+                <v-alert 
+                    border="left"
+                    dense
+                    color="red lighten-2"
+                    type="error" v-for="hit in audits_active" :key="hit.id">
+                        {{hit.reason}}<br>
+                        <a @click="whitelistAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[whitelist]</a>
+                        <a @click="removeAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[remove]</a>
+                    </v-alert>
 
                 <v-alert 
-                border="left"
-                dense
-                color="red lighten-2"
-                type="error" v-for="hit in audits_active" :key="hit.id">
-                    {{hit.reason}}<br>
-                    <a @click="whitelistAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[whitelist]</a>
-                    <a @click="removeAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[remove]</a>
-                </v-alert>
-
-                <v-alert 
-                border="left"
-                dense
-                color="green lighten-2"
-                type="info" v-for="hit in audits_whitelisted" :key="hit.id">
-                    Whitelisted | {{hit.reason}}<br>
-                    <a @click="removeWhitelistAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[reset whitelist]</a>
-                    <a @click="removeAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[remove]</a>
-                </v-alert>
+                    border="left"
+                    dense
+                    color="green lighten-2"
+                    type="info" v-for="hit in audits_whitelisted" :key="hit.id">
+                        Whitelisted | {{hit.reason}}<br>
+                        <a @click="removeWhitelistAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[reset whitelist]</a>
+                        <a @click="removeAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[remove]</a>
+                    </v-alert>
+            </div>
         </v-container>
     </div>
 </template>
