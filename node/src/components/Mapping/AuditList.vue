@@ -12,7 +12,7 @@
             v-if="user.groups.includes('mapping | access') && (audits_active.length > 0 || audits_whitelisted.length > 0 )"
             fluid
             >
-            <div style="max-height:200px; overflow:auto;">
+            <div style="max-height:400px; overflow:auto;">
                 <v-alert 
                     border="left"
                     dense
