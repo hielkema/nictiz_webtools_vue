@@ -172,6 +172,7 @@ export default {
             this.$store.dispatch('MappingTasks/getComments', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getReverse', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getMappingTargets', this.$route.params.taskid)
+            this.$store.dispatch('MappingAudits/getAudits', this.$route.params.taskid)
         }
     },
     computed: {
