@@ -13,6 +13,7 @@ const state = {
       'eclqueries' : false,
       'reverse' : false,
       'eclToRules' : false,
+      'reverseExclusions' : false,
     },
     tasks: [],
     selectedTask: {},
@@ -87,13 +88,14 @@ const state = {
       })
     },   
     getReverseExclusions: (context, component_id) => {
-      context.state.loading.tasklist = true
+      context.state.loading.reverseExclusions = true
       axios
       .get(context.rootState.baseUrl+'mapping/api/1.0/mapping_reverse_exclusions/'+component_id+'/')
       .then((response) => {
           console.log(response.data)
           context.commit('setReverseExclusions',response.data)
-          return true;
+          context.state.loading.reverseExclusions = false
+      return true;
       })
     },    
     getTaskDetails: (context, taskid) => {
