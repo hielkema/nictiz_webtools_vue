@@ -25,6 +25,7 @@ const state = {
     },
     eclQueries: [],
     reverse: [],
+    reverseExclusions: [],
   }
 
   //// ---- Mutations
@@ -46,6 +47,9 @@ const state = {
     },
     setReverse: (state, payload) => {
       state.reverse = payload
+    },
+    setReverseExclusions: (state, payload) => {
+      state.reverseExclusions = payload
     },
     setSearchResults: (state, payload) => {
       state.searchResults = payload
@@ -79,6 +83,16 @@ const state = {
           console.log(response.data)
           context.commit('setTasks',response.data)
           context.state.loading.tasklist = false
+          return true;
+      })
+    },   
+    getReverseExclusions: (context, component_id) => {
+      context.state.loading.tasklist = true
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/mapping_reverse_exclusions/'+component_id+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.commit('setReverseExclusions',response.data)
           return true;
       })
     },    

@@ -143,6 +143,8 @@ export default {
             this.$store.dispatch('MappingTasks/getMappingTargets',taskid)
             this.$store.dispatch('MappingTasks/getReverse', taskid)
             this.$store.dispatch('MappingTasks/getComments',taskid)
+            this.$store.dispatch('MappingTasks/getReverseExclusions', taskid)
+
         },
         toggleFilterBox(){
             if(this.filterBox == true){

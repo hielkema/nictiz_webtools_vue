@@ -203,6 +203,20 @@
                             </v-card-actions>
                         </v-card>
 
+                        <!-- Reverse exclusions -->
+                        <v-card
+                            v-if="reverseExclusions.length > 0"
+                            class="my-1 warning lighten-3">
+                            <v-card-title>
+                                <span>Het huidige component wordt geëxcludeerd bij de volgende taken:</span>
+                            </v-card-title>
+                            <v-card-text>
+                                <li v-for="(value, key) in reverseExclusions" :key="key">
+                                    Taak: {{value.task}} / Component: {{value.component_id}} {{value.component_title}}
+                                </li>
+                            </v-card-text>
+                        </v-card>
+
                         <!-- Exclusion form -->
                         <v-card
                             class="my-1">
@@ -426,6 +440,7 @@ export default {
         loadTargets () {
             this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
             this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+            this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.component.id)
         },
         saveQueries () {
             var payload = this.targets
@@ -444,9 +459,11 @@ export default {
                 if(this.targets.queries_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+                    this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
                 }else{
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+                    this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
                     clearInterval(this.interval)
                 }
             }, 2000)
@@ -532,6 +549,9 @@ export default {
         selectedTask(){
             return this.$store.state.MappingTasks.selectedTask
         },
+        reverseExclusions(){
+            return this.$store.state.MappingTasks.reverseExclusions
+        },
         dialogData(){
             return this.$store.state.MappingTasks.dialogData
         },
@@ -545,7 +565,7 @@ export default {
             return this.$store.state.userData
         },
     },
-    created() {
+    mounted() {
     }
 }
 </script>
