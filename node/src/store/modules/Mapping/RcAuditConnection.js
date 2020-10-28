@@ -36,6 +36,10 @@ const state = {
           context.state.loading = false
           return true;
       })
+      .catch(function(error){
+        console.log(error)
+        context.state.loading = false
+      })
     },
     getRcs: (context) => {
       axios
@@ -99,6 +103,20 @@ const state = {
       },auth)
       .then(() => {
         context.dispatch('getRcRules',context.state.selectedRc)
+        return true;
+        }
+      )
+    },
+    createAuditHit: (context, payload) => {
+      const auth = {
+        headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
+        withCredentials: true
+      }
+      axios
+      .post(context.rootState.baseUrl+'mapping/api/1.0/audits/', {
+        'task_id' : payload
+      },auth)
+      .then(() => {
         return true;
         }
       )

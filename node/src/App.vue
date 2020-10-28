@@ -35,11 +35,11 @@
         <v-list-group
           prepend-icon="account_circle"
           :value="false"
-          v-if="groups.includes('dhd | demo integratie')"
+          v-if="groups.includes('demo | groep')"
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title>DHD/Chipsoft</v-list-item-title>
+              <v-list-item-title>Demo's</v-list-item-title>
             </v-list-item-content>
           </template>
 
@@ -51,6 +51,26 @@
             </v-list-item-content>
           </v-list-item>
           <!-- Link 2 in subgroep -->
+          <v-list-item v-if="groups.includes('demo | demo MRCM')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/demo/Snomed-MRCM"><v-list-item-title>SNOMED MRCM</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 3 in subgroep -->
+          <v-list-item v-if="groups.includes('demo | demo MRCM')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/demo/Postco"><v-list-item-title>SNOMED Postco</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 4 in subgroep -->
+          <v-list-item v-if="groups.includes('HTML tree')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/demo/Snomed-tree"><v-list-item-title>SNOMED tree</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
         <!-- EIND Groep Demo's -->
 
@@ -109,14 +129,59 @@
             </v-list-item-content>
           </v-list-item>
           <!-- Link 3 in subgroep -->
-          <v-list-item v-if="groups.includes('mapping | taskmanager')">
+          <v-list-item v-if="groups.includes('mapping | access')">
             <v-list-item-action></v-list-item-action>
             <v-list-item-content>
-                <router-link to="/mapping/TaskManager"><v-list-item-title>Taskmanager</v-list-item-title></router-link>
+                <router-link to="/mapping/RuleFinder"><v-list-item-title>Regels zoeken op component</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 4 in subgroep -->
+          <v-list-item v-if="groups.includes('mapping | access')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/mapping/lookup"><v-list-item-title>Regels zoeken op ID</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 5 in subgroep -->
+          <v-list-item v-if="groups.includes('mapping | access')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/mapping/Projects"><v-list-item-title>Mapping tool</v-list-item-title></router-link>
+            </v-list-item-content>
+            <!-- Einde links in subgroep -->
+          </v-list-item>
+        <!-- EIND Groep Mapping tools -->
+        </v-list-group>
+
+
+        <!-- Groep Validatie patiëntvriendelijke beschrijvingen -->
+        <v-list-group
+          prepend-icon="account_circle"
+          :value="false"
+          v-if="groups.includes('validation | access')"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Validatiestudie AMC</v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <!-- Link 1 in subgroep -->
+          <v-list-item v-if="groups.includes('validation | access')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/validation/answerModule"><v-list-item-title>Validatiemodule</v-list-item-title></router-link>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Link 2 in subgroep -->
+          <v-list-item v-if="groups.includes('validation | admin')">
+            <v-list-item-action></v-list-item-action>
+            <v-list-item-content>
+                <router-link to="/validation/setTasks"><v-list-item-title>BEHEER Validatiemodule</v-list-item-title></router-link>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
-        <!-- EIND Groep Mapping tools -->
+        <!-- EIND Groep Validatie patiëntvriendelijke beschrijvingen -->
+      
       </v-list>
     </v-navigation-drawer>
 
@@ -130,12 +195,12 @@
 
     <v-content>
       <v-container
-        fluid
+      fluid
       >
         <v-row
           no-gutters
         >
-          <v-col>
+          <v-col cols=12>
             <router-view />
           </v-col>
         </v-row>
@@ -163,6 +228,7 @@
     },
     mounted (){
       this.$store.dispatch('getPermissions')
+      console.log(process.env);
     },
     computed: {
         loggedIn () {

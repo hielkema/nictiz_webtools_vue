@@ -4,5 +4,9 @@ module.exports = {
   ],
   devServer: {
     disableHostCheck: true
-  }
+  },
+  devServer: {
+    proxy: 'https://termservice.test-nictiz.nl/',
+  },
+  publicPath: '/node',
 }

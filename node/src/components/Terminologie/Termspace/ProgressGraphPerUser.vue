@@ -34,6 +34,8 @@ export default {
     return {
       selection : [
         'e.degroot total open',
+        'h.groot total open',
+        'dijkstra total open',
         'krul total open',
         'mertens total open',
         'soons total open',

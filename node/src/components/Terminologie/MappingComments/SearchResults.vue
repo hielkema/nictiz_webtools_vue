@@ -115,6 +115,9 @@ export default {
       const result = this.headers
       // result.push('Niet groeperen')
       return result
+    },
+    user(){
+        return this.$store.state.userData
     }
   }
 }

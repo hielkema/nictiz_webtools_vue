@@ -50,7 +50,7 @@ const state = {
     },
     getProgressPerUser: (context) => {
       axios
-      .get(context.rootState.baseUrl+'termspace/fetch_termspace_user_tasksupply/all/')
+      .get(context.rootState.baseUrl+'termspace/fetch_termspace_user_tasksupply/total%20open/')
       .then((response) => {
         // alert('Respons getResults: '+response.data)
         context.commit('setProgressPerUser',response.data)

@@ -9,11 +9,25 @@ import TermspaceProgress from './modules/Terminologie/TermspaceProgress'
 
 // Mapping tools
 import MappingComments from './modules/Terminologie/MappingComments'
+import MappingProjects from './modules/Mapping/ProjectsConnection'
+import MappingTasks from './modules/Mapping/TasksConnection'
 import RcAuditConnection from './modules/Mapping/RcAuditConnection'
 import TaskManager from './modules/Mapping/TaskManagerConnection'
+import MappingAudits from './modules/Mapping/AuditsConnection'
+import MappingCodesystems from './modules/Mapping/CodesystemsConnection'
+import MappingLookup from './modules/Mapping/MappingLookup'
 
-// DHD - SNOMED integration modules
+// Demo's
 import IntegratedCodePicker from './modules/DHD/IntegratedCodePicker'
+import Postco from './modules/DHD/Postco'
+import MRCM from './modules/DHD/MRCM'
+import TreeView from './modules/DHD/TreeView'
+
+// Snowstorm integration
+import Snowstorm from './modules/DHD/Snowstorm'
+
+// Validation patientfriendly descriptions
+import Validation from './modules/Validation/ValidationConnection'
 
 // Framework modules
 import { authentication } from './authentication.module';
@@ -24,11 +38,14 @@ import { alert } from './alert.module';
 Vue.use(Vuex)
 Vue.use(axios)
 
+var envBaseUrl = 'https://termservice.test-nictiz.nl/'
+if(process.env['NODE_ENV'] == 'development'){
+  envBaseUrl = 'http://localhost:8000/'
+}
 
 export default new Vuex.Store({
   state: {
-    // baseUrl: 'https://termservice.test-nictiz.nl/',
-    baseUrl: 'http://localhost/',
+    baseUrl: envBaseUrl,
     userData: {
       'id': null,
       'groups' : [],
@@ -38,8 +55,18 @@ export default new Vuex.Store({
   modules: {
       Epd,
       TermspaceComments,
+      Snowstorm,
+      Validation, 
+      TreeView,
+      MRCM,
+      Postco,
+      MappingTasks,
       MappingComments,
+      MappingProjects,
+      MappingLookup,
+      MappingCodesystems,
       authentication,
+      MappingAudits,
       TermspaceProgress,
       RcAuditConnection,
       IntegratedCodePicker,
@@ -53,7 +80,7 @@ export default new Vuex.Store({
       .then(response => {
         context.commit('setPermissions', response);
       })
-    }
+    },
   },
   mutations: {
     setPermissions(state, response) {

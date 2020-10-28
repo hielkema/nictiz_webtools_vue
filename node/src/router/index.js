@@ -37,14 +37,79 @@ const routes = [
     component: () => import('../views/Mapping/RcAudit.vue')
   },
   {
-    path: '/mapping/TaskManager',
+    path: '/mapping/TaskManager/:projectid',
     name: 'Mapping taskmanager',
     component: () => import('../views/Mapping/TaskManager.vue')
   },
   {
+    path: '/mapping/RuleFinder',
+    name: 'Mapping taskfinder',
+    component: () => import('../views/Mapping/RuleFinder.vue')
+  },
+  {
+    path: '/mapping/Projects',
+    name: 'Mapping projecten',
+    component: () => import('../views/Mapping/Projects.vue')
+  },
+  {
+    path: '/mapping/Projects/:projectid',
+    name: 'Mapping taken',
+    component: () => import('../views/Mapping/Projects.vue')
+  },
+  {
+    path: '/mapping/Projects/:projectid/Task/',
+    name: 'Mapping takenlijst',
+    component: () => import('../views/Mapping/TaskEditor.vue')
+  },
+  {
+    path: '/mapping/CreateTasks/:projectid/',
+    name: 'Aanmaken nieuwe taken',
+    component: () => import('../views/Mapping/CreateTasks.vue')
+  },
+  {
+    path: '/mapping/projectAudit/:projectid/',
+    name: 'Audits per project',
+    component: () => import('../views/Mapping/ProjectAudit.vue')
+  },
+  {
+    path: '/mapping/lookup/',
+    name: 'Mapping lookup',
+    component: () => import('../views/Mapping/LookupByIDList.vue')
+  },
+  {
+    path: '/mapping/Projects/:projectid/Task/:taskid',
+    name: 'Mapping taak',
+    component: () => import('../views/Mapping/TaskEditor.vue')
+  },
+  {
     path: '/demo/Snomed-DT',
     name: 'DT Snomed integratie',
-    component: () => import('../views/DHD/DemoIntegratie.vue')
+    component: () => import('../views/Demos/DemoIntegratie.vue')
+  },
+  {
+    path: '/demo/Postco',
+    name: 'Snomed postcoordination',
+    component: () => import('../views/Demos/Postco.vue')
+  },
+  {
+    path: '/demo/Snomed-tree',
+    name: 'Snomed tree',
+    component: () => import('../views/Demos/SnomedTree.vue')
+  },
+  {
+    path: '/demo/Snomed-MRCM',
+    name: 'Snomed MRCM demo',
+    component: () => import('../views/Demos/SnomedMRCM.vue')
+  },
+  {
+    path: '/validation/answerModule',
+    name: 'Validatie patientvriendelijke beschrijvingen',
+    component: () => import('../views/Validation/Tasks.vue')
+  },
+  {
+    path: '/validation/setTasks',
+    name: 'Validatie patientvriendelijke beschrijvingen',
+    component: () => import('../views/Validation/SetTasks.vue')
   },
   {
     path: '/about',
