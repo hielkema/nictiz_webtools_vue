@@ -12,5 +12,6 @@ services:
     environment: 
       - CHOKIDAR_USEPOLLING=true
       - CORS_DEBUG=1
+      - SERVER=https://testing.com/
     ports:
       - '9123:8080'

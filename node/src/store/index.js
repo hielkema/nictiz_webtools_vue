@@ -38,11 +38,14 @@ import { alert } from './alert.module';
 Vue.use(Vuex)
 Vue.use(axios)
 
+var envBaseUrl = 'https://termservice.test-nictiz.nl/'
+if(process.env['NODE_ENV'] == 'development'){
+  envBaseUrl = 'http://localhost:8000/'
+}
 
 export default new Vuex.Store({
   state: {
-    baseUrl: 'https://termservice.test-nictiz.nl/',
-    // baseUrl: 'http://localhost:8000/',
+    baseUrl: envBaseUrl,
     userData: {
       'id': null,
       'groups' : [],
@@ -77,7 +80,7 @@ export default new Vuex.Store({
       .then(response => {
         context.commit('setPermissions', response);
       })
-    }
+    },
   },
   mutations: {
     setPermissions(state, response) {
