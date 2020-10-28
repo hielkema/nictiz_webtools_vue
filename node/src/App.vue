@@ -228,7 +228,6 @@
     },
     mounted (){
       this.$store.dispatch('getPermissions')
-      console.log(process.env);
     },
     computed: {
         loggedIn () {
