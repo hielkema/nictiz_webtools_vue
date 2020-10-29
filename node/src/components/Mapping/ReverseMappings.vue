@@ -7,7 +7,7 @@
                 <v-card-title>
                     Reverse mappings
                 </v-card-title>
-                <v-card-text>
+                <v-card-text v-if="reverse_mappings.length <= 5">
                     <v-alert 
                         border="left"
                         dense
@@ -24,6 +24,15 @@
                             )
                             <a v-if="mapping.codesystem.title == 'SNOMED'" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+mapping.id" target="_blank">Open in browser</a>
                             <a v-if="mapping.codesystem.title == 'Labcodeset'" :href="'https://labterminologie.nl/art-decor/labconcepts?search='+mapping.id" target="_blank">Open in browser</a>
+                    </v-alert>
+                </v-card-text>
+                <v-card-text v-else>
+                    <v-alert 
+                        border="left"
+                        dense
+                        color="green lighten-2"
+                        type="info">
+                        Er zijn >5 reverse mappings voor dit component.
                     </v-alert>
                 </v-card-text>
             </v-card>
