@@ -221,6 +221,18 @@ const state = {
           return true;
       })
     },
+
+    removeMappingRules: (context, taskid) => {
+      context.state.loading.eclToRules = true
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/remove_rules/'+taskid+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.dispatch('getMappingTargets',context.state.selectedTask.id)
+          context.state.loading.eclToRules = false
+          return true;
+      })
+    },
     
     TargetSearch: _.debounce((context, payload) => {
         context.state.loading.search = true

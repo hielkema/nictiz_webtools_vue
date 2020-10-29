@@ -365,9 +365,15 @@
                                 <v-btn 
                                     color="blue darken-1" 
                                     :disabled="formDisabled()" 
-                                    v-if="!targets.queries_unfinished"
+                                    v-if="!targets.mappings_unfinished"
                                     text 
                                     @click="createMappingRules()">Mappingsregels aanmaken</v-btn>
+                                <v-btn 
+                                    v-if="!targets.mappings_unfinished"
+                                    :disabled="formDisabled()" 
+                                    color="red darken-1" 
+                                    text 
+                                    @click="removeMappingRules()">Verwijder regels</v-btn>
                             </v-card-actions>
                         </v-card>
                         <!-- General warning -->
@@ -504,6 +510,10 @@ export default {
         },
         createMappingRules() {
             this.$store.dispatch('MappingTasks/mappingsEclToRules',this.selectedTask.id)
+            this.pollRules()
+        },
+        removeMappingRules() {
+            this.$store.dispatch('MappingTasks/removeMappingRules',this.selectedTask.id)
             this.pollRules()
         },
         find_duplicate_components(propertyName, inputArray) {
