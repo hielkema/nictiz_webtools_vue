@@ -46,7 +46,15 @@
                                     :items-per-page="5"
                                     class="elevation-1"
                                     dense
-                                ></v-data-table>
+                                >
+                                    <template v-slot:top="{ pagination, options, updateOptions }">
+                                        <v-data-footer 
+                                        :pagination="pagination" 
+                                        :options="options"
+                                        @update:options="updateOptions"
+                                        items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+                                    </template>
+                                </v-data-table>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                     </v-expansion-panels>

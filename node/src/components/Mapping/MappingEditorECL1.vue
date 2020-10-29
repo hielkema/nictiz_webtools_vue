@@ -244,6 +244,13 @@
                                         :headers="excludedHeaders"
                                         :items-per-page="10"
                                         :items="targets.excluded">
+                                        <template v-slot:top="{ pagination, options, updateOptions }">
+                                            <v-data-footer 
+                                            :pagination="pagination" 
+                                            :options="options"
+                                            @update:options="updateOptions"
+                                            items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+                                        </template>
                                     </v-data-table>
 
                             </v-card-text>
@@ -307,6 +314,14 @@
                                     :items-per-page="50"
                                     :search="searchString"
                                     :items="Object.values(targets.allResults)">
+
+                                    <template v-slot:top="{ pagination, options, updateOptions }">
+                                        <v-data-footer 
+                                        :pagination="pagination" 
+                                        :options="options"
+                                        @update:options="updateOptions"
+                                        items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+                                    </template>
 
                                     <template v-slot:item.query="{ item }">
                                         <v-tooltip right>
@@ -385,6 +400,13 @@
                             :footer-props="pagination" 
                             :items-per-page="50"
                             :items="targets.mappings">
+                            <template v-slot:top="{ pagination, options, updateOptions }">
+                                <v-data-footer 
+                                :pagination="pagination" 
+                                :options="options"
+                                @update:options="updateOptions"
+                                items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+                            </template>
                             <template v-slot:item.correlation="{ item }">
                                 <span v-if="item.correlation == '447559001'" style="color:purple; font-weight:bold; white-space: nowrap;">Broad to narrow</span>
                                 <span v-if="item.correlation == '447557004'" style="color:red; font-weight:bold; white-space: nowrap;">Exact match</span>

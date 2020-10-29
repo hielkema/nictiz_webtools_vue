@@ -137,6 +137,13 @@
                                 multi-sort
                                 dense
                             >
+                                <template v-slot:top="{ pagination, options, updateOptions }">
+                                    <v-data-footer 
+                                    :pagination="pagination" 
+                                    :options="options"
+                                    @update:options="updateOptions"
+                                    items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+                                </template>
                                 
                                 <template v-slot:item.source.identifier="{ item }">
                                     
