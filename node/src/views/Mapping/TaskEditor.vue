@@ -31,6 +31,11 @@
                     <v-col cols=5 v-if="selectedTask">
                         <v-row no-gutters>
                             <v-col cols=12>
+                                <ReverseMappings />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
                                 <TaskDetails />
                             </v-col>
                         </v-row>
