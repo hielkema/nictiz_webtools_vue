@@ -44,7 +44,12 @@
                                                                 <tr>
                                                                     <th>Code</th>
                                                                     <td v-if="item.target.codesystem.title == 'SNOMED'">{{item.target.codesystem.title}} - Code: {{item.target.component_id}} <a :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+item.target.component_id" target="_blank">Open in browser</a></td>
-                                                                    <td v-else-if="item.target.codesystem.title == 'Labcodeset'">{{item.target.codesystem.title}} - Code: {{item.target.component_id}} <a :href="'https://labterminologie.nl/art-decor/labconcepts?search='+item.target.component_id" target="_blank">Open in browser</a></td>
+                                                                    <td v-else-if="item.target.codesystem.title == 'Labcodeset'">
+                                                                        {{item.target.codesystem.title}} - Code: {{item.target.component_id}} <br>
+                                                                        <a :href="'https://labterminologie.nl/art-decor/labconcepts?search='+item.target.component_id" target="_blank">Labterminologie</a>
+                                                                        <v-spacer/>
+                                                                        <a :href="'https://search.loinc.org/searchLOINC/search.zul?query='+item.target.component_id" target="_blank">LOINC browser</a>
+                                                                    </td>
                                                                     <td v-else>{{item.target.codesystem.title}} - Code: {{item.target.component_id}}</td>
                                                                 </tr>
                                                                 <tr v-if="project.group">
