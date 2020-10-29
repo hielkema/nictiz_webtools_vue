@@ -3,11 +3,11 @@
         <v-container
             v-if="user.groups.includes('mapping | access') && (reverse_mappings.length > 0)"
             fluid>
-            <v-card>
+            <v-card v-if="reverse_mappings.length <= 5">
                 <v-card-title>
                     Reverse mappings
                 </v-card-title>
-                <v-card-text v-if="reverse_mappings.length <= 5">
+                <v-card-text>
                     <v-alert 
                         border="left"
                         dense
@@ -26,15 +26,30 @@
                             <a v-if="mapping.codesystem.title == 'Labcodeset'" :href="'https://labterminologie.nl/art-decor/labconcepts?search='+mapping.id" target="_blank">Open in browser</a>
                     </v-alert>
                 </v-card-text>
-                <v-card-text v-else>
-                    <v-alert 
-                        border="left"
-                        dense
-                        color="green lighten-2"
-                        type="info">
-                        Er zijn >5 reverse mappings voor dit component.
-                    </v-alert>
-                </v-card-text>
+            </v-card>
+            <v-card v-else>
+                    <v-expansion-panels>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header>
+                                <v-alert 
+                                    border="left"
+                                    dense
+                                    color="green lighten-2"
+                                    type="info">
+                                    Er zijn {{reverse_mappings.length}} reverse mappings voor dit component.
+                                </v-alert>
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <v-data-table
+                                    :headers="headers"
+                                    :items="reverse_mappings"
+                                    :items-per-page="5"
+                                    class="elevation-1"
+                                    dense
+                                ></v-data-table>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
             </v-card>
         </v-container>
     </div>
@@ -43,6 +58,11 @@
 export default {
     data() {
         return {
+            headers: [
+                {text : 'Codesystem', value: 'codesystem.title'},
+                {text : 'ID', value: 'id'},
+                {text : 'FSN', value: 'title'},
+            ]
         }
     },
     methods: {
