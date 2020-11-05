@@ -83,103 +83,107 @@
 
                         <!-- Existing queries -->
                         <template v-for="item in targets.queries">
-                            <v-card :key="item.id"
-                                class="my-1">
-                                <v-card-title v-if="item.id == 'extra'">
-                                    <span>Nieuwe ECL query</span>
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-container dense>
-                                        <v-row dense>
-                                            <v-col>
-                                                <span v-if="item.id != 'extra'">
-                                                    <!-- Query ID = {{item.id}} -->
-                                                    <v-alert 
+                            <div v-if="(item.id == 'extra') && (formDisabled())" :key="item.id">
+                                
+                            </div>
+                            <div v-else :key="item.id">
+                                <v-card :key="item.id" class="my-1">
+                                    <v-card-title v-if="(item.id == 'extra')">
+                                        <span>Nieuwe ECL query</span>
+                                    </v-card-title>
+                                    <v-card-text>
+                                        <v-container dense>
+                                            <v-row dense>
+                                                <v-col>
+                                                    <span v-if="item.id != 'extra'">
+                                                        <!-- Query ID = {{item.id}} -->
+                                                        <v-alert 
+                                                            dense
+                                                            color="red lighten-2"
+                                                            type="alert"
+                                                            v-if="item.failed">
+                                                            Query is mislukt: {{item.error}}
+                                                        </v-alert>
+                                                        <v-alert 
+                                                            dense
+                                                            color="red lighten-2"
+                                                            type="alert"
+                                                            v-if="!item.finished">
+                                                            Query loopt nog, of is overleden zonder foutmelding.
+                                                        </v-alert>
+                                                        <!-- <v-alert 
+                                                            dense
+                                                            type="success"
+                                                            v-else>
+                                                            Query is klaar.
+                                                        </v-alert> -->
+                                                    </span>
+                                                </v-col>
+                                            </v-row>
+                                            <v-row dense>
+                                                <v-col v-if="!formDisabled()">
+                                                    <v-textarea
+                                                        :disabled="formDisabled()"
                                                         dense
-                                                        color="red lighten-2"
-                                                        type="alert"
-                                                        v-if="item.failed">
-                                                        Query is mislukt: {{item.error}}
-                                                    </v-alert>
-                                                    <v-alert 
+                                                        outlined
+                                                        name="input-7-1"
+                                                        label="Beschrijving *"
+                                                        hint="Beschrijving van de query - zorg dat je duidelijk maakt wat het doel van deze ECL query is."
+                                                        v-model="item.description" 
+                                                        rows="2"
+                                                        auto-grow
+                                                        ></v-textarea>
+                                                </v-col>
+                                                <v-col v-else>
+                                                    <strong>Beschrijving van de query - zorg dat je duidelijk maakt wat het doel van deze ECL query is.</strong><br>
+                                                    {{item.description}}
+                                                </v-col>
+                                            </v-row>
+                                            <v-row dense>
+                                                <v-col v-if="!formDisabled()">
+                                                    <v-textarea
+                                                        :disabled="formDisabled()"
                                                         dense
-                                                        color="red lighten-2"
-                                                        type="alert"
-                                                        v-if="!item.finished">
-                                                        Query loopt nog, of is overleden zonder foutmelding.
-                                                    </v-alert>
-                                                    <!-- <v-alert 
+                                                        outlined
+                                                        label="Query *"
+                                                        hint="ECL query - snomed.org/ecl"
+                                                        rows="2"
+                                                        v-model="item.query" 
+                                                        auto-grow></v-textarea>
+                                                </v-col>
+                                                <v-col v-else>
+                                                    <strong>ECL query</strong><br>
+                                                    <pre>{{item.query}}</pre>
+                                                    <br>
+                                                </v-col>
+                                            </v-row>
+                                            <v-row dense>
+                                                <v-col cols=4>
+                                                    <v-select 
+                                                        :disabled="formDisabled()" 
                                                         dense
-                                                        type="success"
-                                                        v-else>
-                                                        Query is klaar.
-                                                    </v-alert> -->
-                                                </span>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row dense>
-                                            <v-col v-if="!formDisabled()">
-                                                <v-textarea
-                                                    :disabled="formDisabled()"
-                                                    dense
-                                                    outlined
-                                                    name="input-7-1"
-                                                    label="Beschrijving *"
-                                                    hint="Beschrijving van de query - zorg dat je duidelijk maakt wat het doel van deze ECL query is."
-                                                    v-model="item.description" 
-                                                    rows="2"
-                                                    auto-grow
-                                                    ></v-textarea>
-                                            </v-col>
-                                            <v-col v-else>
-                                                <strong>Beschrijving van de query - zorg dat je duidelijk maakt wat het doel van deze ECL query is.</strong><br>
-                                                {{item.description}}
-                                            </v-col>
-                                        </v-row>
-                                        <v-row dense>
-                                            <v-col v-if="!formDisabled()">
-                                                <v-textarea
-                                                    :disabled="formDisabled()"
-                                                    dense
-                                                    outlined
-                                                    label="Query *"
-                                                    hint="ECL query - snomed.org/ecl"
-                                                    rows="2"
-                                                    v-model="item.query" 
-                                                    auto-grow></v-textarea>
-                                            </v-col>
-                                            <v-col v-else>
-                                                <strong>ECL query</strong><br>
-                                                <pre>{{item.query}}</pre>
-                                                <br>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row dense>
-                                            <v-col cols=4>
-                                                <v-select 
-                                                    :disabled="formDisabled()" 
-                                                    dense
-                                                    outlined
-                                                    v-model="item.correlation" 
-                                                    :items="project.correlation_options" 
-                                                    label="Correlation *"></v-select>
-                                            </v-col>
-                                            <v-col cols=4 v-if="item.id != 'extra'">
-                                                Aantal concepten in resultaat: {{item.result.numResults}}
-                                            </v-col>
-                                            <v-col cols=4 v-if="item.id != 'extra'">
-                                                <v-checkbox
-                                                    v-if="!formDisabled()"
-                                                    v-model="item.delete"
-                                                    label="Verwijderen"
-                                                    dense   
-                                                    ></v-checkbox>
-                                            </v-col>
-                                                    <!-- {{item.failed}} {{item.finished}} {{item.error}} -->
-                                        </v-row>
-                                    </v-container>
-                                </v-card-text>
-                            </v-card>
+                                                        outlined
+                                                        v-model="item.correlation" 
+                                                        :items="project.correlation_options" 
+                                                        label="Correlation *"></v-select>
+                                                </v-col>
+                                                <v-col cols=4 v-if="item.id != 'extra'">
+                                                    Aantal concepten in resultaat: {{item.result.numResults}}
+                                                </v-col>
+                                                <v-col cols=4 v-if="item.id != 'extra'">
+                                                    <v-checkbox
+                                                        v-if="!formDisabled()"
+                                                        v-model="item.delete"
+                                                        label="Verwijderen"
+                                                        dense   
+                                                        ></v-checkbox>
+                                                </v-col>
+                                                        <!-- {{item.failed}} {{item.finished}} {{item.error}} -->
+                                            </v-row>
+                                        </v-container>
+                                    </v-card-text>
+                                </v-card>
+                            </div>
                         </template>
 
                         
