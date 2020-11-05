@@ -118,7 +118,7 @@
                                             </v-col>
                                         </v-row>
                                         <v-row dense>
-                                            <v-col>
+                                            <v-col v-if="!formDisabled()">
                                                 <v-textarea
                                                     :disabled="formDisabled()"
                                                     dense
@@ -130,11 +130,14 @@
                                                     rows="2"
                                                     auto-grow
                                                     ></v-textarea>
-                                                    
+                                            </v-col>
+                                            <v-col v-else>
+                                                <strong>Beschrijving van de query - zorg dat je duidelijk maakt wat het doel van deze ECL query is.</strong><br>
+                                                {{item.description}}
                                             </v-col>
                                         </v-row>
                                         <v-row dense>
-                                            <v-col>
+                                            <v-col v-if="!formDisabled()">
                                                 <v-textarea
                                                     :disabled="formDisabled()"
                                                     dense
@@ -144,6 +147,10 @@
                                                     rows="2"
                                                     v-model="item.query" 
                                                     auto-grow></v-textarea>
+                                            </v-col>
+                                            <v-col v-else>
+                                                <strong>ECL query</strong><br>
+                                                <pre>{{item.query}}</pre>
                                             </v-col>
                                         </v-row>
                                         <v-row dense>
