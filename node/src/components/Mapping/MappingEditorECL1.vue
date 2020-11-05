@@ -151,6 +151,7 @@
                                             <v-col v-else>
                                                 <strong>ECL query</strong><br>
                                                 <pre>{{item.query}}</pre>
+                                                <br>
                                             </v-col>
                                         </v-row>
                                         <v-row dense>
@@ -168,7 +169,7 @@
                                             </v-col>
                                             <v-col cols=4 v-if="item.id != 'extra'">
                                                 <v-checkbox
-                                                    :disabled="formDisabled()"
+                                                    v-if="!formDisabled()"
                                                     v-model="item.delete"
                                                     label="Verwijderen"
                                                     dense   
