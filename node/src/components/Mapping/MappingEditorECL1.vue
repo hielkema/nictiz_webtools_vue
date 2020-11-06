@@ -153,7 +153,9 @@
                                                 </v-col>
                                                 <v-col v-else>
                                                     <strong>ECL query</strong><br>
-                                                    <pre>{{item.query}}</pre>
+                                                    <div style="width:100%; overflow-x:auto;">
+                                                        <pre>{{item.query}}</pre>
+                                                    </div>
                                                     <br>
                                                 </v-col>
                                             </v-row>
