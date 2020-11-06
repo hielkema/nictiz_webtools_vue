@@ -387,53 +387,68 @@
                                     text 
                                     @click="removeMappingRules()">Verwijder regels</v-btn>
                             </v-card-actions>
+                        
+                            <v-card-title>
+                                Regels
+                                <v-spacer></v-spacer>
+                                <v-text-field
+                                    v-model="searchString"
+                                    append-icon="mdi-magnify"
+                                    label="Zoeken"
+                                ></v-text-field>
+                            </v-card-title>
+                            <!-- General warning -->
+                            <v-alert 
+                                dense
+                                color="red lighten-2"
+                                type="warning"
+                                v-if="targets.mappings_unfinished">
+                                Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
+                            </v-alert>
+                            <!-- Warning against duplicates in ECL results -->
+                            <v-alert 
+                                dense
+                                color="red lighten-2"
+                                type="warning"
+                                v-if="listDuplicatesInEcl">
+                                Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
+                                <br>
+                                <h4>Let op: Bij dubbele regels wordt alleen degene in de laatst verwerkte query naar een regel geëxporteerd.</h4>
+                                <span v-for="(value, key) in duplicatesInEcl" :key="key">
+                                    <li v-if="value.duplicate">
+                                        {{value.id}}
+                                        {{value.pt.term}}
+                                    </li>
+                                </span>
+                            </v-alert>
+                            
+                            <v-data-table
+                                multi-sort
+                                :headers="mappingHeaders"
+                                :footer-props="pagination" 
+                                :search="searchString"
+                                :items-per-page="50"
+                                :items="targets.mappings">
+                                <template v-slot:top="{ pagination, options, updateOptions }">
+                                    <v-data-footer 
+                                    :pagination="pagination" 
+                                    :options="options"
+                                    @update:options="updateOptions"
+                                    items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+                                </template>
+                                <template v-slot:item.source.component_id="{ item }">
+                                    <a :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+item.source.component_id" target="_blank">{{item.source.component_id}}</a>
+                                </template>
+                                <template v-slot:item.correlation="{ item }">
+                                    <span v-if="item.correlation == '447559001'" style="color:purple; font-weight:bold; white-space: nowrap;">Broad to narrow</span>
+                                    <span v-if="item.correlation == '447557004'" style="color:red; font-weight:bold; white-space: nowrap;">Exact match</span>
+                                    <span v-if="item.correlation == '447558009'" style="color:orange; font-weight:bold; white-space: nowrap;">Narrow to broad</span>
+                                    <span v-if="item.correlation == '447560006'" style="color:blue; font-weight:bold; white-space: nowrap;">Partial overlap</span>
+                                    <span v-if="item.correlation == '447556008'" style="color:black; font-weight:bold; white-space: nowrap;">Not mappable</span>
+                                    <span v-if="item.correlation == '447561005'" style="color:black; font-weight:bold; white-space: nowrap;">Not specified</span>
+                                </template>
+                            </v-data-table>
                         </v-card>
-                        <!-- General warning -->
-                        <v-alert 
-                            dense
-                            color="red lighten-2"
-                            type="warning"
-                            v-if="targets.mappings_unfinished">
-                            Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
-                        </v-alert>
-                        <!-- Warning against duplicates in ECL results -->
-                        <v-alert 
-                            dense
-                            color="red lighten-2"
-                            type="warning"
-                            v-if="listDuplicatesInEcl">
-                            Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
-                            <br>
-                            <h4>Let op: Bij dubbele regels wordt alleen degene in de laatst verwerkte query naar een regel geëxporteerd.</h4>
-                            <span v-for="(value, key) in duplicatesInEcl" :key="key">
-                                <li v-if="value.duplicate">
-                                    {{value.id}}
-                                    {{value.pt.term}}
-                                </li>
-                            </span>
-                        </v-alert>
-                         <v-data-table
-                            multi-sort
-                            :headers="mappingHeaders"
-                            :footer-props="pagination" 
-                            :items-per-page="50"
-                            :items="targets.mappings">
-                            <template v-slot:top="{ pagination, options, updateOptions }">
-                                <v-data-footer 
-                                :pagination="pagination" 
-                                :options="options"
-                                @update:options="updateOptions"
-                                items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
-                            </template>
-                            <template v-slot:item.correlation="{ item }">
-                                <span v-if="item.correlation == '447559001'" style="color:purple; font-weight:bold; white-space: nowrap;">Broad to narrow</span>
-                                <span v-if="item.correlation == '447557004'" style="color:red; font-weight:bold; white-space: nowrap;">Exact match</span>
-                                <span v-if="item.correlation == '447558009'" style="color:orange; font-weight:bold; white-space: nowrap;">Narrow to broad</span>
-                                <span v-if="item.correlation == '447560006'" style="color:blue; font-weight:bold; white-space: nowrap;">Partial overlap</span>
-                                <span v-if="item.correlation == '447556008'" style="color:black; font-weight:bold; white-space: nowrap;">Not mappable</span>
-                                <span v-if="item.correlation == '447561005'" style="color:black; font-weight:bold; white-space: nowrap;">Not specified</span>
-                            </template>
-                        </v-data-table>
                     </v-tab-item>
                 </v-tabs-items>
             </v-card>
@@ -458,7 +473,7 @@ export default {
                 { text: 'Correlation', value: 'correlation' },
             ],
             mappingHeaders: [
-                { text: 'ID', value: 'id', sortable: true },
+                { text: 'ID', value: 'source.component_id', sortable: true },
                 { text: 'Component', value: 'source.component_title', sortable: true },
                 { text: 'Correlatie', value: 'correlation', sortable: true },
             ],
