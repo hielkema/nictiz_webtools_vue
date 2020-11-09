@@ -60,7 +60,11 @@
         :headers="headers" 
         :items="filteredResults" 
         :search="search" 
-        item-key="id+comment+user"></v-data-table>
+        item-key="id+comment+user">
+          <template v-slot:item.time="{ item }">
+            <span>{{new Date(item.time).toLocaleString()}}</span>
+          </template>
+         </v-data-table>
     </v-card>
   </div>
 </template>
@@ -73,6 +77,7 @@ export default {
       groupBy: null,
       headers: [
         { 'text' : 'ID', value: 'id', filterable: true },
+        { 'text' : 'Tijd', value: 'time' },
         { 'text' : 'FSN', value: 'fsn', filterable: true },
         { 'text' : 'Status', value: 'status' },
         { 'text' : 'User', value: 'author' },
