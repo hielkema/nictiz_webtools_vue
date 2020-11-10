@@ -609,7 +609,8 @@ export default {
         },
         createRemoteExclusion() {
             this.$store.dispatch('MappingTasks/addRemoteExclusion', {'task': this.selectedTask.id, 'targetComponent': this.selectedTask.component.id, 'sourceComponent': this.remoteExclusion})
-            // this.pollRules()
+            this.remoteExclusion = null
+            this.pollRules()
         },
     },
     computed: {
