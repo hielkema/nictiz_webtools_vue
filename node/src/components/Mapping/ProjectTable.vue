@@ -13,6 +13,7 @@
                                 :items="Projects"
                                 :items-per-page="15"
                                 :loading="loading"
+                                sort-by="title"
                                 class="elevation-2"
                                 multi-sort
                                 dense
