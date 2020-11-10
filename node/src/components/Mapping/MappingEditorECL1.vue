@@ -257,6 +257,11 @@
                                 <span>Excludeer resultaat van ander component</span>
                             </v-card-title>
                             <v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
+                                    <v-btn color="blue darken-1" :disabled="formDisabled()" text @click="saveQueries()">Opslaan</v-btn>
+                                </v-card-actions>
                                 <v-textarea
                                     :disabled="formDisabled()"
                                     dense
