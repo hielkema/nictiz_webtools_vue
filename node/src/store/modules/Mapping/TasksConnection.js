@@ -210,7 +210,7 @@ const state = {
         'payload' : payload,
       },auth)
       .then((response) => {
-        context.dispatch('getTaskDetails', context.state.selectedTask.id)
+        context.dispatch('getReverseExclusions', context.state.selectedTask.id)
         console.log(response)
         return true;
       })

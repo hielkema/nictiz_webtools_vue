@@ -512,7 +512,7 @@ export default {
         loadTargets () {
             this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
             this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
-            this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.component.id)
+            this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
         },
         saveQueries () {
             var payload = this.targets
@@ -531,7 +531,7 @@ export default {
                 if(this.targets.queries_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
-                    // this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
+                    this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
                 }else{
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
