@@ -199,6 +199,23 @@ const state = {
       )
     },
 
+    // Creeert een exclusie van source naar target
+    addRemoteExclusion:(context, payload) => {
+      const auth = {
+        headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
+        withCredentials: true
+      }
+      return axios
+      .post(context.rootState.baseUrl+'mapping/api/1.0/mapping_add_remote_exclusion/', {
+        'payload' : payload,
+      },auth)
+      .then((response) => {
+        context.dispatch('getTaskDetails', context.state.selectedTask.id)
+        console.log(response)
+        return true;
+      })
+    },
+
     // Voegt een mapping naar een concept toe 
     addMappingFromReverse:(context, payload) => {
       const auth = {

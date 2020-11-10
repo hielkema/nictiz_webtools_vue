@@ -209,13 +209,32 @@
                     </v-alert>
 
                     <v-tab-item key="exclusions" >
-                        <v-card ma-1>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
-                                <v-btn color="blue darken-1" :disabled="formDisabled()" text @click="saveQueries()">Opslaan</v-btn>
-                            </v-card-actions>
+
+                        <!-- Add reverse exclusion to remote task -->
+                        <v-card class="my-2" v-if="!formDisabled()">
+                            <v-card-text>
+                                <v-row>
+                                    <v-col cols=9>
+                                        <v-autocomplete
+                                            dense
+                                            label="Excludeer huidige taak bij.."
+                                            v-model="remoteExclusion"
+                                            :items="tasks"
+                                            item-text="component.id"
+                                            item-value="component.id">
+                                        </v-autocomplete>
+                                    </v-col>
+                                    <v-col cols=3>
+                                        <v-btn
+                                            dense
+                                            @click="createRemoteExclusion(remoteExclusion)">
+                                            Toevoegen
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
                         </v-card>
+
 
                         <!-- Reverse exclusions -->
                         <v-card
@@ -233,12 +252,11 @@
 
                         <!-- Exclusion form -->
                         <v-card
-                            class="my-1">
+                            class="my-2">
                             <v-card-title>
                                 <span>Excludeer resultaat van ander component</span>
                             </v-card-title>
                             <v-card-text>
-                                
                                 <v-textarea
                                     :disabled="formDisabled()"
                                     dense
@@ -266,12 +284,8 @@
                                             items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
                                         </template>
                                     </v-data-table>
-
                             </v-card-text>
-                        </v-card>
-
-                        
-                        <v-card ma-1>
+                            
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="loadTargets()">Opnieuw laden</v-btn>
@@ -467,6 +481,7 @@ export default {
             targetEditDialog: false,
             targetDialogOldTarget: {},
             targetDialogNewTarget: false,
+            remoteExclusion: null,
             resultsHeaders: [
                 { text: 'Query', value: 'query', sortable: false },
                 // { text: 'QueryID', value: 'queryId' },
@@ -592,7 +607,10 @@ export default {
                 return true
             }
         },
-
+        createRemoteExclusion() {
+            this.$store.dispatch('MappingTasks/addRemoteExclusion', {'task': this.selectedTask.id, 'targetComponent': this.selectedTask.component.id, 'sourceComponent': this.remoteExclusion})
+            // this.pollRules()
+        },
     },
     computed: {
         duplicatesInEcl(){
@@ -606,6 +624,9 @@ export default {
         },
         targets(){
             return this.$store.state.MappingTasks.mappingTargets
+        },
+        tasks(){
+            return this.$store.state.MappingTasks.tasks
         },
         selectedTask(){
             return this.$store.state.MappingTasks.selectedTask
