@@ -18,6 +18,7 @@ const state = {
     tasks: [],
     selectedTask: {},
     selectedTaskComments: false,
+    relatedTasks: [],
     mappingTargets: false,
     searchResults: [],
     searchByComponentResults: [],
@@ -61,6 +62,9 @@ const state = {
     resetDialogData: (state) => {
       state.dialogData = {'component':{}}
     },
+    setRelatedTasks: (state, payload) => {
+      state.relatedTasks = payload
+    },
     setSearchByComponentResults: (state, payload) => {
       state.searchByComponentResults = payload
     },
@@ -84,6 +88,15 @@ const state = {
           console.log(response.data)
           context.commit('setTasks',response.data)
           context.state.loading.tasklist = false
+          return true;
+      })
+    },   
+    getRelatedTasks: (context, componentid) => {
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/related_tasks/'+componentid+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.commit('setRelatedTasks',response.data)
           return true;
       })
     },   
