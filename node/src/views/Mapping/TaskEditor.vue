@@ -179,6 +179,7 @@ export default {
             this.$store.dispatch('MappingTasks/getMappingTargets', this.$route.params.taskid)
             this.$store.dispatch('MappingAudits/getAudits', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getReverseExclusions', this.$route.params.taskid)            
+            this.$store.dispatch('MappingTasks/getRelatedTasks', this.$route.params.taskid)
         }
     },
     computed: {
