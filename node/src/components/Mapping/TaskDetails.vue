@@ -25,10 +25,10 @@
                             <tr>
                                 <th>Gerelateerde taken</th>
                                 <td>
-                                    <div v-for="(task,key) in relatedTasks" :key="key">
-                                        <li v-if="task.id != selectedTask.id">
+                                    <div v-for="(task,key) in relatedTasks" :key="key" dense>
+                                        <li v-if="task.id != selectedTask.id" dense>
                                             <!-- {{task}} -->
-                                            {{task.project.title}}
+                                            {{task.project.title}} [{{task.status.title}} @ {{task.user.username}}]
                                             <v-btn text :href="`#/mapping/Projects/${task.project.id}/Task/`+task.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
                                         </li>
                                     </div>
