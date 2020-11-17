@@ -245,7 +245,8 @@
                             </v-card-title>
                             <v-card-text>
                                 <li v-for="(value, key) in reverseExclusions" :key="key">
-                                    Taak: {{value.task}} / Component: {{value.component_id}} {{value.component_title}}
+                                    Taak: {{value.task}} / Component: {{value.component_id}} {{value.component_title}} 
+                                    <a @click="$store.dispatch('MappingTasks/removeReverseMapping', {'task' : value.task, 'component' : selectedTask.component.id})">Verwijder</a>
                                 </li>
                             </v-card-text>
                         </v-card>

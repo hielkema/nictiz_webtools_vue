@@ -224,6 +224,13 @@ const state = {
       },auth)
       .then((response) => {
         context.dispatch('getReverseExclusions', context.state.selectedTask.id)
+
+        var commentPayload = {
+          'comment' : 'Exclusie voor ['+payload.targetComponent+'] toegevoegd.',
+          'taskId' : response.data,
+        }
+        context.dispatch('postComment',commentPayload)
+
         console.log(response)
         return true;
       })
@@ -242,6 +249,29 @@ const state = {
       .then((response) => {
         context.dispatch('getMappingTargets',context.state.selectedTask.id)
         console.log(response)
+        return true;
+      })
+    },
+    // Verwijderd een reverse mapping
+    removeReverseMapping:(context, payload) => {
+      const auth = {
+        headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
+        withCredentials: true
+      }
+      return axios
+      .post(context.rootState.baseUrl+'mapping/api/1.0/mapping_remove_reverse/', {
+        'payload' : payload,
+      },auth)
+      .then((response) => {
+        context.dispatch('getTaskDetails',context.state.selectedTask.id)
+        context.dispatch('getReverseExclusions', context.state.selectedTask.id)
+
+        var commentPayload = {
+          'comment' : 'Exclusie voor ['+payload.component+'] verwijderd.',
+          'taskId' : response.data,
+        }
+        context.dispatch('postComment',commentPayload)
+        console.log(response.data)
         return true;
       })
     },
