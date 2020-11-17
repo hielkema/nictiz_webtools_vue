@@ -25,11 +25,13 @@
                             <tr>
                                 <th>Gerelateerde taken</th>
                                 <td>
-                                    <li v-for="(task,key) in relatedTasks" :key="key">
-                                        <!-- {{task}} -->
-                                        {{task.project.title}}
-                                        <v-btn text :href="`#/mapping/Projects/${task.project.id}/Task/`+task.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
-                                    </li>
+                                    <div v-for="(task,key) in relatedTasks" :key="key">
+                                        <li v-if="task.id != selectedTask.id">
+                                            <!-- {{task}} -->
+                                            {{task.project.title}}
+                                            <v-btn text :href="`#/mapping/Projects/${task.project.id}/Task/`+task.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
+                                        </li>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
