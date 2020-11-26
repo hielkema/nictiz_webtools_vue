@@ -524,7 +524,7 @@ export default {
             var payload = this.targets
             delete payload.allResults
             delete payload.mappings
-            delete payload.exclusion
+            delete payload.excluded
             payload.queries.forEach(function(query){ delete query.result });
 
             // First, save exclusions
