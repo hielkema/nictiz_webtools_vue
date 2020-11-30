@@ -6,7 +6,7 @@
                     color="cyan darken-1"
                     dark
                     dense>
-                    <span class="headline">Status</span>
+                    <span class="headline">Status {{comment}}</span>
                 </v-toolbar>
                 <v-card-text align-center>
                     <span v-for="status in statuses" :key="status.id">
@@ -43,7 +43,11 @@ export default {
     },
     methods: {
         changeStatus (statusid) {
-            this.$store.dispatch('MappingTasks/changeStatus', statusid)
+            if(this.comment == ''){
+                this.$store.dispatch('MappingTasks/changeStatus', statusid)
+            }else{
+                alert("Het commentaar is nog niet opgeslagen. Verwijder het commentaar, of sla het op voordat je de status wijzigt.")
+            }
         },
     },
     computed: {
@@ -52,6 +56,9 @@ export default {
         },
         task(){
             return this.$store.state.MappingTasks.selectedTask
+        },
+        comment(){
+            return this.$store.state.MappingTasks.commentDraft
         },
         loading(){
             return this.$store.state.MappingProjects.loading

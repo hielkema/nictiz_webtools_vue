@@ -20,6 +20,7 @@ const state = {
     selectedTaskComments: false,
     relatedTasks: [],
     mappingTargets: false,
+    commentDraft: '',
     searchResults: [],
     searchByComponentResults: [],
     dialogData: {
@@ -76,10 +77,16 @@ const state = {
       state.selectedTaskComments = false
       state.mappingTargets = false
     },
+    setDraftComment: (state, payload) => {
+      state.commentDraft = payload
+    }
   }
 
   //// ---- Actions
   const actions = {
+    saveDraftComment: (context, comment) => {
+      context.commit('setDraftComment', comment)
+    },
     getTasks: (context, projectid) => {
       context.state.loading.tasklist = true
       axios

@@ -13,6 +13,7 @@
                         v-model="comment"
                         rows="3"
                         label="Commentaar"
+                        @change="saveDraft()"
                         ></v-textarea>
                     <v-btn @click="submitcomment" color="primary lighten-3" text>Opslaan</v-btn>
                     <Tags />
@@ -29,7 +30,7 @@ export default {
     },
     data() {
         return {
-            comment: '',
+            comment: this.commentStore,
         }
     },
     methods: {
@@ -39,12 +40,19 @@ export default {
                 'taskId' : this.task.id,
             }
             this.$store.dispatch('MappingTasks/postComment', payload)
+            this.$store.dispatch('MappingTasks/saveDraftComment', '')
             this.comment = ''
+        },
+        saveDraft () {
+            this.$store.dispatch('MappingTasks/saveDraftComment', this.comment)
         },
     },
     computed: {
         task(){
             return this.$store.state.MappingTasks.selectedTask
+        },
+        commentStore(){
+            return this.$store.state.MappingTasks.commentDraft
         },
         loading(){
             return this.$store.state.MappingTasks.loading.comments
@@ -58,3 +66,4 @@ export default {
 }
 </script>
 
+ 

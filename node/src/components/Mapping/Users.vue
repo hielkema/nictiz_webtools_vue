@@ -9,7 +9,8 @@
                     dense>
                     <span class="headline">Gebruiker</span>
                 </v-toolbar>
-                <v-select class="pa-1" :items="users" v-model="task.user.id" @change="changeUser(task.user.id)"></v-select>
+                    <v-select class="pa-1" :items="users" v-model="selectedUser" @change="changeUser(selectedUser)"></v-select>
+                    <strong>Huidige gebruiker:</strong> {{task.user.name}}
             </v-card>
             <v-card v-else>
                 <v-toolbar
@@ -29,13 +30,18 @@
 export default {
     data() {
         return {
-            changeUser (userid) {
-                this.$store.dispatch('MappingTasks/changeUser', userid)
-            },
+            selectedUser: null,
         }
     },
     methods: {
-        
+        changeUser (userid) {
+            if(this.comment == ''){
+                this.$store.dispatch('MappingTasks/changeUser', userid)
+            }else{
+                this.selectedUser = null
+                alert("Het commentaar is nog niet opgeslagen. Verwijder het commentaar, of sla het op voordat je de gebruiker wijzigt.")
+            }
+        },
     },
     computed: {
         users(){
@@ -43,6 +49,9 @@ export default {
         },
         task(){
             return this.$store.state.MappingTasks.selectedTask
+        },
+        comment(){
+            return this.$store.state.MappingTasks.commentDraft
         },
         loading(){
             return this.$store.state.MappingProjects.loading
@@ -52,6 +61,7 @@ export default {
         }
     },
     mounted() {
+        this.selectedUser = this.task.user.id
     }
 }
 </script>
