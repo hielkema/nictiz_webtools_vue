@@ -6,7 +6,7 @@
                     color="cyan darken-1"
                     dark
                     dense>
-                    <span class="headline">Status {{comment}}</span>
+                    <span class="headline">Status</span>
                 </v-toolbar>
                 <v-card-text align-center>
                     <span v-for="status in statuses" :key="status.id">
