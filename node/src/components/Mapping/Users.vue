@@ -9,8 +9,7 @@
                     dense>
                     <span class="headline">Gebruiker</span>
                 </v-toolbar>
-                    <v-select class="pa-1" :items="users" v-model="selectedUser" @change="changeUser(selectedUser)"></v-select>
-                    <strong>Huidige gebruiker:</strong> {{task.user.name}}
+                <v-select class="pa-1" :items="users" v-model="task.user.id" @change="changeUser(task.user.id)"></v-select>
             </v-card>
             <v-card v-else>
                 <v-toolbar
@@ -35,12 +34,10 @@ export default {
     },
     methods: {
         changeUser (userid) {
-            if(this.comment == ''){
-                this.$store.dispatch('MappingTasks/changeUser', userid)
-            }else{
-                this.selectedUser = null
-                alert("Het commentaar is nog niet opgeslagen. Verwijder het commentaar, of sla het op voordat je de gebruiker wijzigt.")
+            if(this.comment != ''){
+                alert("Je hebt de taak aan iemand anders toegewezen terwijl er nog een niet-opgeslagen commentaar aanwezig is. Vergeet niet om het commentaar op te slaan voor je verder gaat. De toewijzing is al wel doorgevoerd.")
             }
+            this.$store.dispatch('MappingTasks/changeUser', userid)
         },
     },
     computed: {
@@ -61,7 +58,6 @@ export default {
         }
     },
     mounted() {
-        this.selectedUser = this.task.user.id
     }
 }
 </script>

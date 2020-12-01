@@ -43,11 +43,10 @@ export default {
     },
     methods: {
         changeStatus (statusid) {
-            if(this.comment == ''){
-                this.$store.dispatch('MappingTasks/changeStatus', statusid)
-            }else{
-                alert("Het commentaar is nog niet opgeslagen. Verwijder het commentaar, of sla het op voordat je de status wijzigt.")
+            if(this.comment != ''){
+                alert("Het commentaar is nog niet opgeslagen. Verwijder het commentaar, of sla het op voordat je verder gaat. De status is al wel gewijzigd.")
             }
+            this.$store.dispatch('MappingTasks/changeStatus', statusid)
         },
     },
     computed: {
