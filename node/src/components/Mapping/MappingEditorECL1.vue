@@ -534,7 +534,7 @@ export default {
             this.pollTargets()
         },
         pollTargets () {
-            this.interval = setInterval(() => {
+            this.interval_targets = setInterval(() => {
                 if(this.targets.queries_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
@@ -543,19 +543,19 @@ export default {
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
-                    clearInterval(this.interval)
+                    clearInterval(this.interval_targets)
                 }
             }, 2000)
         },
         pollRules () {
-            this.interval = setInterval(() => {
+            this.interval_rules = setInterval(() => {
                 if(this.targets.mappings_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                 }else{
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
-                    clearInterval(this.interval)
+                    clearInterval(this.interval_rules)
                 }
             }, 2000)
         },
