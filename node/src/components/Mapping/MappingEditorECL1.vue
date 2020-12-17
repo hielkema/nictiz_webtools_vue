@@ -535,28 +535,48 @@ export default {
         },
         pollTargets () {
             this.interval_targets = setInterval(() => {
+                console.log("Instantie van loop pollTargets() begonnen.")
+
                 if(this.targets.queries_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
+
+                    console.log("Worden targets nog gepolld? "+this.targets.queries_unfinished)
+                    console.log("clearInterval niet - loop pollTargets() zou door moeten lopen.")
                 }else{
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
+
+                    console.log("Worden targets nog gepolld? "+this.targets.queries_unfinished)
                     clearInterval(this.interval_targets)
+                    console.log("clearInterval aangeroepen - loop pollTargets() zou nu moeten stoppen.")
                 }
+
+                console.log("Instantie van loop pollTargets() klaar.")
             }, 2000)
         },
         pollRules () {
             this.interval_rules = setInterval(() => {
+                console.log("Instantie van loop pollRules() begonnen.")
+
                 if(this.targets.mappings_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+
+                    console.log("Worden regels nog aangemaakt? "+this.targets.mappings_unfinished)
+                    console.log("clearInterval niet - loop pollRules() zou door moeten lopen.")
                 }else{
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
+
+                    console.log("Worden regels nog aangemaakt? "+this.targets.mappings_unfinished)
                     clearInterval(this.interval_rules)
+                    console.log("clearInterval aangeroepen - loop pollRules() zou nu moeten stoppen.")
                 }
+
+                console.log("Instantie van loop pollRules() klaar.")
             }, 2000)
         },
         createMappingRules() {
