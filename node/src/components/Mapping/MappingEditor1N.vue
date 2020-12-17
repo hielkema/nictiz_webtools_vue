@@ -183,7 +183,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><th>Component code</th><td>{{targetDialogNewTarget.value}}</td></tr>
+                                            <tr><th>Component code</th><td>{{targetDialogNewTarget.component.component_id}}</td></tr>
                                             <tr><th>Component titel</th><td>{{targetDialogNewTarget.text}}</td></tr>
                                             <tr><th>Codesystem</th><td>{{targetDialogNewTarget.codesystem.title}} ({{targetDialogNewTarget.codesystem.version}})</td></tr>
                                             <tr v-for="(value, key) in targetDialogNewTarget.extra" :key="key">
