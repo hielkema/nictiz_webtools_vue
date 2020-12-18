@@ -509,7 +509,8 @@ export default {
             pagination: {
                 "items-per-page-options": [25,50,100,250,500,1000,3000]
             },
-            interval : null,
+            interval_targets : null,
+            interval_rules : null,
         }
     },
     watch: {
@@ -534,6 +535,7 @@ export default {
             this.pollTargets()
         },
         pollTargets () {
+            clearInterval(this.interval_targets)
             this.interval_targets = setInterval(() => {
                 console.log("Instantie van loop pollTargets() begonnen.")
 
@@ -542,22 +544,26 @@ export default {
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
 
-                    console.log("Worden targets nog gepolld? "+this.targets.queries_unfinished)
+                    console.log("Worden er nog queries uitgevoerd? "+this.targets.queries_unfinished)
+                    console.log("interval_targets = "+this.interval_targets.toString())
                     console.log("clearInterval niet - loop pollTargets() zou door moeten lopen.")
                 }else{
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getReverseExclusions', this.selectedTask.id)
 
-                    console.log("Worden targets nog gepolld? "+this.targets.queries_unfinished)
+                    console.log("Worden er nog queries uitgevoerd? "+this.targets.queries_unfinished)
+                    console.log("interval_targets = "+this.interval_targets.toString())
                     clearInterval(this.interval_targets)
                     console.log("clearInterval aangeroepen - loop pollTargets() zou nu moeten stoppen.")
+                    console.log("interval_targets = "+this.interval_targets.toString())
                 }
 
                 console.log("Instantie van loop pollTargets() klaar.")
             }, 2000)
         },
         pollRules () {
+            clearInterval(this.interval_rules)
             this.interval_rules = setInterval(() => {
                 console.log("Instantie van loop pollRules() begonnen.")
 
@@ -567,13 +573,16 @@ export default {
 
                     console.log("Worden regels nog aangemaakt? "+this.targets.mappings_unfinished)
                     console.log("clearInterval niet - loop pollRules() zou door moeten lopen.")
+                    console.log("Interval_rules = "+this.interval_rules.toString())
                 }else{
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
                     this.$store.dispatch('MappingTasks/getMappingTargets', this.selectedTask.id)
 
                     console.log("Worden regels nog aangemaakt? "+this.targets.mappings_unfinished)
+                    console.log("Interval_rules = "+this.interval_rules.toString())
                     clearInterval(this.interval_rules)
                     console.log("clearInterval aangeroepen - loop pollRules() zou nu moeten stoppen.")
+                    console.log("Interval_rules = "+this.interval_rules.toString())
                 }
 
                 console.log("Instantie van loop pollRules() klaar.")
