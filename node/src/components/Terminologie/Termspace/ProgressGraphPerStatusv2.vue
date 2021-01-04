@@ -32,7 +32,7 @@ export default {
   props: ['title'],
   data() {
     return {
-      selection : ['Semantic review / Problem, _2019, volkert', 'Medical review, _2019, volkert', 'incomplete CAT, _2019, volkert']
+      selection : ['Semantic review / Problem, _2019/2021, volkert', 'Medical review, _2019, volkert', 'incomplete CAT, _2019, volkert']
     };
   },
   methods: {
