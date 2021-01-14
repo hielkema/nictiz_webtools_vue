@@ -299,10 +299,10 @@ export default {
     },
     watch: {
         search (val) {
-            (val.length > 2) && this.$store.dispatch('MappingTasks/TargetSearch', val)
+            (val.length > 0) && this.$store.dispatch('MappingTasks/TargetSearch', val)
         },
         searchExtra (val) {
-            (val.length > 2) && this.$store.dispatch('MappingTasks/TargetSearch', val)
+            (val.length > 0) && this.$store.dispatch('MappingTasks/TargetSearch', val)
         }
     },
     methods: {
