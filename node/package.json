@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "apexcharts": "^3.17.1",
+    "apexcharts": "^3.24.0",
     "core-js": "^3.4.3",
     "d3": "^5.15.0",
     "debounce": "^1.2.0",
