@@ -199,7 +199,6 @@ export default {
                 { text: 'Reden', value: 'reason' },
                 { text: 'Whitelist', value: 'ignore' },
                 { text: 'Sticky', value: 'sticky' },
-                { text: 'timestamp', value: 'timestamp' },
                 { text: '', value: 'acties' },
             ],
             pagination: {
