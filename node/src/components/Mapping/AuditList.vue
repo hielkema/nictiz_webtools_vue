@@ -1,8 +1,7 @@
 <template>
     <div>
-        <v-container 
-                v-if="user.groups.includes('mapping | access') && (audits_active.length > 0 || audits_whitelisted.length > 0 )"
-            >
+        <v-container
+            v-if="user.groups.includes('mapping | access')">
             <v-card>
                 <v-toolbar
                     color="cyan darken-2"
@@ -12,7 +11,7 @@
                 </v-toolbar>
                 <v-card-text>
                     <v-chip
-                        v-if="audits_active.length > 0"
+                        v-if="(audits_active.length > 0 || audits_whitelisted.length > 0 )"
                         class="ma-2"
                         color="red"
                         label
@@ -52,7 +51,9 @@
                         <v-divider/>
                     </v-chip>
                     <v-card-actions>
-                        <v-btn small @click="auditDetails = 'true'">Toon hits</v-btn>
+                        <v-btn 
+                            v-if="(audits_active.length > 0 || audits_whitelisted.length > 0 )"
+                            small @click="auditDetails = 'true'">Toon hits</v-btn>
                         <v-spacer/>
                         <v-btn small @click="triggerAudit(selectedTask.id)">Trigger audit</v-btn>
                         <v-btn small @click="getAudits(selectedTask.id)">Vernieuw QA hits</v-btn>
@@ -163,6 +164,11 @@
                                             multi-sort
                                             dense
                                         >
+                                            <template v-slot:item.reason="{ item }">
+                                                <span style="white-space: pre;">
+                                                    {{item.reason}}
+                                                </span>
+                                            </template>
                                             <template v-slot:item.acties="{ item }">
                                                 <v-btn small @click="whitelistAudit(item.id)" v-if="user.groups.includes('mapping | audit whitelist')">Whitelist</v-btn>
                                                 <v-btn small @click="removeAudit(item.id)" v-if="user.groups.includes('mapping | audit whitelist')">Remove</v-btn>

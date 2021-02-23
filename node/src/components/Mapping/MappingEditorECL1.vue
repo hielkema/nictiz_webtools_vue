@@ -282,6 +282,18 @@
                                         :headers="excludedHeaders"
                                         :items-per-page="10"
                                         :items="targets.excluded">
+                                        <template v-slot:item.excluded_by="{ item }">
+                                            <span v-if="item.exclusion_reason.length > 1">
+                                                <li v-for="(value, key) in item.exclusion_reason" :key="key">
+                                                    {{value.component.component_id}} - {{value.component.title}}
+                                                </li>
+                                            </span>
+                                            <span v-else>
+                                                {{item.exclusion_reason[0].component.component_id}}
+                                                {{item.exclusion_reason[0].component.title}}
+                                            </span>
+
+                                        </template>
                                         <template v-slot:top="{ pagination, options, updateOptions }">
                                             <v-data-footer 
                                             :pagination="pagination" 
@@ -503,6 +515,7 @@ export default {
             excludedHeaders: [
                 { text: 'ID', value: 'id', sortable: true },
                 { text: 'FSN', value: 'fsn.term', sortable: true },
+                { text: 'Reden van exclusie', value: 'excluded_by', sortable: true },
             ],
             tab: null,
             searchString: '',

@@ -79,6 +79,11 @@
                                     <!-- <v-btn small color="blue lighten-2" v-on:click="selectTask(item.task, item.project)">Open</v-btn> -->
                                     <v-btn small color="blue lighten-2" :href="'?#/mapping/Projects/'+item.project+'/Task/'+item.task" target="_blank">Open</v-btn>
                                 </template>
+                                <template v-slot:item.reason="{ item }">
+                                    <span style="white-space: pre;">
+                                        {{item.reason}}
+                                    </span>
+                                </template>
                             </v-data-table>
                         </v-card-text>
                     </v-card>
