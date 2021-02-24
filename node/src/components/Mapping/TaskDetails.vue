@@ -23,13 +23,35 @@
                                 <td v-if="value != false">{{ value }}</td>
                             </tr>
                             <tr>
-                                <th>[TEST] Gerelateerde taken</th>
+                                <th>Gerelateerde taken</th>
                                 <td>
                                     <div v-for="(task,key) in relatedTasks" :key="key" dense>
                                         <li v-if="task.id != selectedTask.id" dense>
                                             <!-- {{task}} -->
                                             {{task.project.title}} [{{task.status.title}} @ {{task.user.username}}]
                                             <v-btn text :href="`#/mapping/Projects/${task.project.id}/Task/`+task.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
+
+                                            <v-tooltip right v-if="task.comments.length > 0">
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn color="primary" dark v-on="on" icon><v-icon bottom color="black">mdi-comment-multiple-outline</v-icon></v-btn>
+                                                </template>
+                                                <v-list three-line
+                                                    style="max-height:400px; max-width:100%"
+                                                    class="overflow-y-auto overflow-x-auto">
+                                                    <template v-for="item in task.comments">
+                                                        <v-list-item
+                                                            dense
+                                                            class="white"
+                                                            :key="item.id">
+                                                            <v-list-item-content>
+                                                                <v-list-item-title><v-icon>mdi-comment-text-outline</v-icon> Commentaar (door {{item.user}})</v-list-item-title>
+                                                                <v-list-item-subtitle v-html="item.created"></v-list-item-subtitle>
+                                                                {{item.body}}
+                                                            </v-list-item-content>
+                                                        </v-list-item>
+                                                    </template>
+                                                </v-list>
+                                            </v-tooltip>
                                         </li>
                                     </div>
                                 </td>
