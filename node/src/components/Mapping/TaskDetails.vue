@@ -26,8 +26,8 @@
                                 <th>Gerelateerde taken</th>
                                 <td>
                                     <div v-for="(task,key) in relatedTasks" :key="key" dense>
-                                        <li v-if="task.id != selectedTask.id" dense>
-                                            <!-- {{task}} -->
+                                        <li v-if="task.id != selectedTask.id">
+                                            <!-- {{task.source_component.component_id}} {{task.source_component.component_title}}<br> -->
                                             {{task.project.title}} [{{task.status.title}} @ {{task.user.username}}]
                                             <v-btn text :href="`#/mapping/Projects/${task.project.id}/Task/`+task.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
 
@@ -36,7 +36,7 @@
                                                     <v-btn color="primary" dark v-on="on" icon><v-icon bottom color="black">mdi-comment-multiple-outline</v-icon></v-btn>
                                                 </template>
                                                 <v-list three-line
-                                                    style="max-height:400px; max-width:100%"
+                                                    style="max-width:100%"
                                                     class="overflow-y-auto overflow-x-auto">
                                                     <template v-for="item in task.comments">
                                                         <v-list-item
