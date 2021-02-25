@@ -25,7 +25,7 @@
                             <v-btn text v-if="mapping.codesystem.title == 'SNOMED'" :href="'https://terminologie.nictiz.nl/art-decor/snomed-ct?conceptId='+mapping.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
                             <v-btn text v-if="mapping.codesystem.title == 'Labcodeset'" :href="'https://labterminologie.nl/art-decor/labconcepts?search='+mapping.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
                             <v-btn 
-                                v-if="selectedProject.type == '1'"
+                                v-if="(selectedProject.type == '1') && (selectedTask.user.id == user.id)"
                                 text
                                 @click="addMappingFromReverse(selectedTask.id, mapping.id, mapping.codesystem.id)">
                                     <v-icon>mdi-plus-circle</v-icon>
