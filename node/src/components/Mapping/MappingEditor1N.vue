@@ -32,7 +32,7 @@
 
                                 <v-list-item-content v-else>
                                         <v-container>
-                                            <v-row  no-gutters align="center">
+                                            <v-row  no-gutters align="center" :class="(item.target.extra.Actief=='False') && 'red'">
                                                 <v-col cols=11>
                                                     <v-simple-table dense>
                                                         <template v-slot:default>
