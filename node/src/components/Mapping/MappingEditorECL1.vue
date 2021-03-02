@@ -539,6 +539,7 @@ export default {
             delete payload.allResults
             delete payload.mappings
             delete payload.excluded
+            delete payload.exclusion_list
             payload.queries.forEach(function(query){ delete query.result });
 
             // First, save exclusions
