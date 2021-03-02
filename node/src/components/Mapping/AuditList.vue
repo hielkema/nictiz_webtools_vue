@@ -87,6 +87,16 @@
                         <a @click="removeAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[remove]</a>
                     </v-alert>
             </div>
+            <v-card>
+                    <v-card-actions>
+                        <v-btn 
+                            v-if="(audits_active.length > 0 || audits_whitelisted.length > 0 )"
+                            small @click="auditDetails = 'true'">Toon hits</v-btn>
+                        <v-spacer/>
+                        <v-btn small @click="triggerAudit(selectedTask.id)">Trigger audit</v-btn>
+                        <v-btn small @click="getAudits(selectedTask.id)">Vernieuw QA hits</v-btn>
+                    </v-card-actions>
+            </v-card>
         </v-container>
 
 
