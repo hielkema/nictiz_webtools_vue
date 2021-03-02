@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-container
-            v-if="user.groups.includes('mapping | access')">
+            v-if="user.groups.includes('mapping | access') && user.groups.includes('mapping | audit_popup')">
             <v-card>
                 <v-toolbar
                     color="cyan darken-2"
@@ -61,11 +61,12 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <!-- <v-container 
-            v-if="user.groups.includes('mapping | access') && (audits_active.length > 0 || audits_whitelisted.length > 0 )"
-            fluid
-            >
-            <div style="max-height:400px; overflow:auto;">
+        <v-container 
+            v-else
+            fluid>
+            <div
+                v-if="user.groups.includes('mapping | access') && (audits_active.length > 0 || audits_whitelisted.length > 0 )" 
+                style="max-height:400px; overflow:auto;">
                 <v-alert 
                     border="left"
                     dense
@@ -86,7 +87,7 @@
                         <a @click="removeAudit(hit.id)" v-if="user.groups.includes('mapping | audit whitelist')">[remove]</a>
                     </v-alert>
             </div>
-        </v-container> -->
+        </v-container>
 
 
 
