@@ -97,15 +97,16 @@
                     <v-btn small @click="getAudits(selectedTask.id)">Vernieuw QA hits</v-btn>
                 </v-card-actions>
                 <v-card-title v-if="backgroundProcesses.active">
-                    Actieve audits in achtergrondprocessen
+                    Actieve achtergrondprocessen
                     <v-spacer/>
                     <v-progress-circular
                         indeterminate
                         color="primary"
+                        v-if="interval_process_check != null"
                         ></v-progress-circular>
                 </v-card-title>
                 <v-card-text v-if="backgroundProcesses.active">
-                    <i><strong>Herlaadt automatisch [loop tracker: {{interval_process_check}}]</strong></i>
+                    <i v-if="interval_process_check != null"><strong>Herlaadt automatisch <small>[loop tracker ID: {{interval_process_check}}]</small></strong></i>
                     <ol>
                         <li v-for="(item, key) in backgroundProcesses.list" :key="key">
                             {{item.name}} <span v-if="item.args.length > 0">[{{item.args}}]</span> <span v-if="item.kwargs.length > 0">{{item.kwargs}}</span>
@@ -269,9 +270,8 @@ export default {
            return this.hits.map(d => d[val]).sort()
         },
         pollProcesses () {
-            // clearInterval(this.interval_process_check)
+            clearInterval(this.interval_process_check)
             this.interval_process_check = setInterval(() => {
-                clearInterval(this.interval_process_check)
                 console.log("Instantie van loop pollProcesses() begonnen.")
 
                 if(this.backgroundProcesses.active == true){
@@ -281,7 +281,7 @@ export default {
                     clearInterval(this.interval_process_check)
                 }
                 console.log("Instantie van loop pollProcesses() klaar.")
-            }, 5000)
+            }, 2000)
         },
     },
     computed: {
@@ -324,6 +324,7 @@ export default {
     mounted() {
         this.$store.dispatch('MappingAudits/getAudits',this.selectedTask.id)
         this.$store.dispatch('MappingAudits/getBackgroundProcesses')
+        this.pollProcesses()
     }
 }
 </script>
