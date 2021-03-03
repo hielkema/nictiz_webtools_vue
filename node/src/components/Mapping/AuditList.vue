@@ -105,13 +105,13 @@
                         ></v-progress-circular>
                 </v-card-title>
                 <v-card-text v-if="backgroundProcesses.active">
-                    
-                    <i><strong>Herlaadt automatisch</strong></i>
+                    <i><strong>Herlaadt automatisch [loop tracker: {{interval_process_check}}]</strong></i>
                     <ol>
                         <li v-for="(item, key) in backgroundProcesses.list" :key="key">
                             {{item.name}} <span v-if="item.args.length > 0">[{{item.args}}]</span> <span v-if="item.kwargs.length > 0">{{item.kwargs}}</span>
                         </li>
                     </ol>
+                    
                 </v-card-text>
             </v-card>
         </v-container>
@@ -242,7 +242,8 @@ export default {
                 status: [],
                 ignore: [],
                 type: [],
-            }
+            },
+            interval_process_check: null,
         }
     },
     methods: {
@@ -270,6 +271,7 @@ export default {
         pollProcesses () {
             // clearInterval(this.interval_process_check)
             this.interval_process_check = setInterval(() => {
+                clearInterval(this.interval_process_check)
                 console.log("Instantie van loop pollProcesses() begonnen.")
 
                 if(this.backgroundProcesses.active == true){
@@ -279,7 +281,7 @@ export default {
                     clearInterval(this.interval_process_check)
                 }
                 console.log("Instantie van loop pollProcesses() klaar.")
-            }, 2000)
+            }, 5000)
         },
     },
     computed: {
