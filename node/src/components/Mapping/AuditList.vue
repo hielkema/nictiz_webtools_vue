@@ -88,17 +88,33 @@
                     </v-alert>
             </div>
             <v-card>
-                    <v-card-actions>
-                        <v-btn 
-                            v-if="(audits_active.length > 0 || audits_whitelisted.length > 0 )"
-                            small @click="auditDetails = 'true'">Toon hits</v-btn>
-                        <v-spacer/>
-                        <v-btn small @click="triggerAudit(selectedTask.id)">Trigger audit</v-btn>
-                        <v-btn small @click="getAudits(selectedTask.id)">Vernieuw QA hits</v-btn>
-                    </v-card-actions>
+                <v-card-actions>
+                    <v-btn 
+                        v-if="(audits_active.length > 0 || audits_whitelisted.length > 0 )"
+                        small @click="auditDetails = 'true'">Toon hits</v-btn>
+                    <v-spacer/>
+                    <v-btn small @click="triggerAudit(selectedTask.id)">Trigger audit</v-btn>
+                    <v-btn small @click="getAudits(selectedTask.id)">Vernieuw QA hits</v-btn>
+                </v-card-actions>
+                <v-card-title v-if="backgroundProcesses.active">
+                    Actieve audits in achtergrondprocessen
+                    <v-spacer/>
+                    <v-progress-circular
+                        indeterminate
+                        color="primary"
+                        ></v-progress-circular>
+                </v-card-title>
+                <v-card-text v-if="backgroundProcesses.active">
+                    
+                    <i><strong>Herlaadt automatisch</strong></i>
+                    <ol>
+                        <li v-for="(item, key) in backgroundProcesses.list" :key="key">
+                            {{item.name}} <span v-if="item.args.length > 0">[{{item.args}}]</span> <span v-if="item.kwargs.length > 0">{{item.kwargs}}</span>
+                        </li>
+                    </ol>
+                </v-card-text>
             </v-card>
         </v-container>
-
 
 
         <!-- Modal for editing target -->
@@ -241,14 +257,30 @@ export default {
         },
         triggerAudit(id){
             this.$store.dispatch('MappingAudits/trigger', id)
+            this.getAudits(id)
         },
         getAudits(id){
             this.$store.dispatch('MappingAudits/getAudits', id)
+            this.$store.dispatch('MappingAudits/getBackgroundProcesses')
+            this.pollProcesses()
         },
         columnValueList(val) {
            return this.hits.map(d => d[val]).sort()
         },
+        pollProcesses () {
+            // clearInterval(this.interval_process_check)
+            this.interval_process_check = setInterval(() => {
+                console.log("Instantie van loop pollProcesses() begonnen.")
 
+                if(this.backgroundProcesses.active == true){
+                    this.$store.dispatch('MappingAudits/getBackgroundProcesses')
+                }else{
+                    // this.$store.dispatch('MappingAudits/getBackgroundProcesses')
+                    clearInterval(this.interval_process_check)
+                }
+                console.log("Instantie van loop pollProcesses() klaar.")
+            }, 2000)
+        },
     },
     computed: {
         selectedTask(){
@@ -256,6 +288,9 @@ export default {
         },
         audits(){
             return this.$store.state.MappingAudits.audits
+        },
+        backgroundProcesses(){
+            return this.$store.state.MappingAudits.backgroundProcesses
         },
         audits_active(){
             return this.audits.filter(function(item){
@@ -286,6 +321,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('MappingAudits/getAudits',this.selectedTask.id)
+        this.$store.dispatch('MappingAudits/getBackgroundProcesses')
     }
 }
 </script>

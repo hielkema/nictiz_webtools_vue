@@ -5,12 +5,16 @@ const state = {
     loading: false,
     audits: [],
     auditsPerProject: [],
+    backgroundProcesses: {},
   }
 
   //// ---- Mutations
   const mutations = {
     setAudits: (state, payload) => {
       state.audits = payload
+    },
+    setBackgroundProcesses: (state, payload) => {
+      state.backgroundProcesses = payload
     },
     setAuditsProject: (state, payload) => {
       state.auditsPerProject = payload
@@ -32,6 +36,18 @@ const state = {
           console.log(response.data)
           context.commit('setAudits',response.data)
           context.state.loading = false
+          return true;
+      })
+    },
+    getBackgroundProcesses: (context) => {
+      // context.state.RcRules = {}
+      context.state.loading = true
+      context.audits = []
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/audit_status/')
+      .then((response) => {
+          console.log(response.data)
+          context.commit('setBackgroundProcesses',response.data)
           return true;
       })
     },

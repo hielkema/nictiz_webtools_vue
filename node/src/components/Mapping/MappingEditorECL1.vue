@@ -574,7 +574,7 @@ export default {
                 }
 
                 console.log("Instantie van loop pollTargets() klaar.")
-            }, 2000)
+            }, 1000)
         },
         pollRules () {
             clearInterval(this.interval_rules)
