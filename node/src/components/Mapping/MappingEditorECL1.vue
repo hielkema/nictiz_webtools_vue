@@ -574,7 +574,7 @@ export default {
                 }
 
                 console.log("Instantie van loop pollTargets() klaar.")
-            }, 1000)
+            }, 5000)
         },
         pollRules () {
             clearInterval(this.interval_rules)
@@ -600,7 +600,7 @@ export default {
                 }
 
                 console.log("Instantie van loop pollRules() klaar.")
-            }, 2000)
+            }, 5000)
         },
         createMappingRules() {
             this.$store.dispatch('MappingTasks/mappingsEclToRules',this.selectedTask.id)
