@@ -281,7 +281,7 @@ export default {
                     clearInterval(this.interval_process_check)
                 }
                 console.log("Instantie van loop pollProcesses() klaar.")
-            }, 2000)
+            }, 4000)
         },
     },
     computed: {
