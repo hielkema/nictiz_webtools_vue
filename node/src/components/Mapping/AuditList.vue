@@ -278,6 +278,7 @@ export default {
                     this.$store.dispatch('MappingAudits/getBackgroundProcesses')
                 }else{
                     // this.$store.dispatch('MappingAudits/getBackgroundProcesses')
+                    this.$store.dispatch('MappingAudits/getAudits',this.selectedTask.id)
                     clearInterval(this.interval_process_check)
                 }
                 console.log("Instantie van loop pollProcesses() klaar.")
