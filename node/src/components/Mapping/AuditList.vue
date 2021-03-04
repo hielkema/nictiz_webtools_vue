@@ -276,13 +276,14 @@ export default {
 
                 if(this.backgroundProcesses.active == true){
                     this.$store.dispatch('MappingAudits/getBackgroundProcesses')
+                    this.$store.dispatch('MappingAudits/getAudits',this.selectedTask.id)
                 }else{
                     // this.$store.dispatch('MappingAudits/getBackgroundProcesses')
                     this.$store.dispatch('MappingAudits/getAudits',this.selectedTask.id)
                     clearInterval(this.interval_process_check)
                 }
                 console.log("Instantie van loop pollProcesses() klaar.")
-            }, 4000)
+            }, 5000)
         },
     },
     computed: {
