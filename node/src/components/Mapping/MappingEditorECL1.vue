@@ -38,7 +38,6 @@
                         </v-tab>
                 </v-tabs>
             </v-card>
-
             <v-card
                 class="mx-auto"
                 :loading="loading"
@@ -60,7 +59,6 @@
                         <v-alert 
                             dense
                             color="red lighten-2"
-                            type="warning"
                             v-if="targets.queries_unfinished">
                             Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
                         </v-alert>
@@ -69,14 +67,12 @@
                         <v-alert 
                             dense
                             color="red lighten-2"
-                            type="warning"
-                            v-if="listDuplicatesInEcl">
+                            v-if="targets.duplicates_in_ecl.length > 0">
                             Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                             <br>
-                            <span v-for="(value, key) in duplicatesInEcl" :key="key">
-                                <li v-if="value.duplicate">
-                                    {{value.id}}
-                                    {{value.pt.term}}
+                            <span v-for="(value, key) in targets.duplicates_in_ecl" :key="key">
+                                <li v-if="value">
+                                    {{value}}
                                 </li>
                             </span>
                         </v-alert>
@@ -100,20 +96,17 @@
                                                         <v-alert 
                                                             dense
                                                             color="red lighten-2"
-                                                            type="alert"
                                                             v-if="item.failed">
                                                             Query is mislukt: {{item.error}}
                                                         </v-alert>
                                                         <v-alert 
                                                             dense
                                                             color="red lighten-2"
-                                                            type="alert"
                                                             v-if="!item.finished">
                                                             Query loopt nog, of is overleden zonder foutmelding.
                                                         </v-alert>
                                                         <!-- <v-alert 
                                                             dense
-                                                            type="success"
                                                             v-else>
                                                             Query is klaar.
                                                         </v-alert> -->
@@ -170,7 +163,7 @@
                                                         label="Correlation *"></v-select>
                                                 </v-col>
                                                 <v-col cols=4 v-if="item.id != 'extra'">
-                                                    Aantal concepten in resultaat: {{item.result.numResults}}
+                                                    Aantal concepten in resultaat: {{item.numResults}}
                                                 </v-col>
                                                 <v-col cols=4 v-if="item.id != 'extra'">
                                                     <v-checkbox
@@ -203,7 +196,6 @@
                     <v-alert 
                         dense
                         color="red lighten-2"
-                        type="warning"
                         v-if="targets.queries_unfinished">
                         Nog niet alle requests zijn klaar! Het scherm ververst automatisch.
                     </v-alert>
@@ -275,33 +267,39 @@
                                     <strong>Herkende codes:</strong><br>
                                     <pre>{{selectedTask.exclusions.recognized}}</pre>
                                     <br>
-                                    Op basis van dit veld zijn <strong>{{targets.excluded.length}}</strong> concepten geëxcludeerd.
+                                    
+                                        Op basis van dit veld zijn <strong>{{targets.excluded.length}}</strong> concepten geëxcludeerd.
+                                    
+                                    <div v-if="loadExclusions">
+                                        <v-data-table
+                                            multi-sort
+                                            :headers="excludedHeaders"
+                                            :items-per-page="10"
+                                            :items="targets.excluded">
+                                            <template v-slot:item.excluded_by="{ item }">
+                                                <span v-if="item.exclusion_reason.length > 1">
+                                                    <li v-for="(value, key) in item.exclusion_reason" :key="key">
+                                                        {{value.component.component_id}} - {{value.component.title}}
+                                                    </li>
+                                                </span>
+                                                <span v-else>
+                                                    {{item.exclusion_reason[0].component.component_id}}
+                                                    {{item.exclusion_reason[0].component.title}}
+                                                </span>
 
-                                    <v-data-table
-                                        multi-sort
-                                        :headers="excludedHeaders"
-                                        :items-per-page="10"
-                                        :items="targets.excluded">
-                                        <template v-slot:item.excluded_by="{ item }">
-                                            <span v-if="item.exclusion_reason.length > 1">
-                                                <li v-for="(value, key) in item.exclusion_reason" :key="key">
-                                                    {{value.component.component_id}} - {{value.component.title}}
-                                                </li>
-                                            </span>
-                                            <span v-else>
-                                                {{item.exclusion_reason[0].component.component_id}}
-                                                {{item.exclusion_reason[0].component.title}}
-                                            </span>
-
-                                        </template>
-                                        <template v-slot:top="{ pagination, options, updateOptions }">
-                                            <v-data-footer 
-                                            :pagination="pagination" 
-                                            :options="options"
-                                            @update:options="updateOptions"
-                                            items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
-                                        </template>
-                                    </v-data-table>
+                                            </template>
+                                            <template v-slot:top="{ pagination, options, updateOptions }">
+                                                <v-data-footer 
+                                                :pagination="pagination" 
+                                                :options="options"
+                                                @update:options="updateOptions"
+                                                items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+                                            </template>
+                                        </v-data-table>
+                                    </div>
+                                    <div v-else>
+                                        <v-btn color="blue darken-1" text @click="loadExclusions = true">Toon exclusies</v-btn>
+                                    </div>
                             </v-card-text>
                             
                             <v-card-actions>
@@ -324,14 +322,12 @@
                             <v-alert 
                                 dense
                                 color="red lighten-2"
-                                type="warning"
-                                v-if="listDuplicatesInEcl">
+                                v-if="targets.duplicates_in_ecl.length > 0">
                                 Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                                 <br>
-                                <span v-for="(value, key) in duplicatesInEcl" :key="key">
-                                    <li v-if="value.duplicate">
-                                        {{value.id}}
-                                        {{value.pt.term}}
+                                <span v-for="(value, key) in targets.duplicates_in_ecl" :key="key">
+                                    <li v-if="value">
+                                        {{value}}
                                     </li>
                                 </span>
                             </v-alert>
@@ -339,7 +335,6 @@
                                 <v-alert 
                                     dense
                                     color="red lighten-2"
-                                    type="warning"
                                     v-if="targets.queries_unfinished">
                                     Nog niet alle queries zijn klaar!
                                 </v-alert>
@@ -435,7 +430,6 @@
                             <v-alert 
                                 dense
                                 color="red lighten-2"
-                                type="warning"
                                 v-if="targets.mappings_unfinished">
                                 Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
                             </v-alert>
@@ -443,15 +437,12 @@
                             <v-alert 
                                 dense
                                 color="red lighten-2"
-                                type="warning"
-                                v-if="listDuplicatesInEcl">
+                                v-if="targets.duplicates_in_ecl.length > 0">
                                 Er zijn concepten die in de resultaten van meerdere ECL queries voorkomen. Deze fout moet gecorrigeerd worden.
                                 <br>
-                                <h4>Let op: Bij dubbele regels wordt alleen degene in de laatst verwerkte query naar een regel geëxporteerd.</h4>
-                                <span v-for="(value, key) in duplicatesInEcl" :key="key">
-                                    <li v-if="value.duplicate">
-                                        {{value.id}}
-                                        {{value.pt.term}}
+                                <span v-for="(value, key) in targets.duplicates_in_ecl" :key="key">
+                                    <li v-if="value">
+                                        {{value}}
                                     </li>
                                 </span>
                             </v-alert>
@@ -465,7 +456,7 @@
                                 :items="targets.mappings">
                                 <template v-slot:top="{ pagination, options, updateOptions }">
                                     <v-data-footer 
-                                    :pagination="pagination" 
+                                    :items-per-page-options="pagination" 
                                     :options="options"
                                     @update:options="updateOptions"
                                     items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
@@ -500,6 +491,7 @@ export default {
             targetDialogOldTarget: {},
             targetDialogNewTarget: false,
             remoteExclusion: null,
+            loadExclusions: false,
             resultsHeaders: [
                 { text: 'Query', value: 'query', sortable: false },
                 // { text: 'QueryID', value: 'queryId' },
@@ -527,6 +519,10 @@ export default {
         }
     },
     watch: {
+        selectedTask (newCount, oldCount) {
+            console.log(`TaskID changed from ${oldCount.id} to ${newCount.id}. Resetting some values.`)
+            this.loadExclusions = false
+        }
     },
     methods: {
         loadTargets () {
@@ -552,6 +548,7 @@ export default {
             clearInterval(this.interval_targets)
             this.interval_targets = setInterval(() => {
                 console.log("Instantie van loop pollTargets() begonnen.")
+                this.loadExclusions = false
 
                 if(this.targets.queries_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
@@ -580,6 +577,7 @@ export default {
             clearInterval(this.interval_rules)
             this.interval_rules = setInterval(() => {
                 console.log("Instantie van loop pollRules() begonnen.")
+                this.loadExclusions = false
 
                 if(this.targets.mappings_unfinished == true){
                     this.$store.dispatch('MappingTasks/getTaskDetails',this.selectedTask.id)
@@ -610,46 +608,6 @@ export default {
             this.$store.dispatch('MappingTasks/removeMappingRules',this.selectedTask.id)
             this.pollRules()
         },
-        find_duplicate_components(propertyName, inputArray) {
-            // var seenDuplicate = false
-            var testObject = {}
-
-            inputArray.map(function(item) {
-                var itemPropertyName = item[propertyName];
-                if (itemPropertyName in testObject) {
-                    testObject[itemPropertyName].duplicate = true;
-                    item.duplicate = true;
-                    // seenDuplicate = true;
-                }
-                else {
-                    testObject[itemPropertyName] = item;
-                    delete item.duplicate;
-                }
-            });
-
-            return testObject;
-            // return seenDuplicate;
-        },
-        list_duplicate_components(propertyName, inputArray) {
-            var seenDuplicate = false
-            var testObject = {}
-
-            inputArray.map(function(item) {
-                var itemPropertyName = item[propertyName];
-                if (itemPropertyName in testObject) {
-                    testObject[itemPropertyName].duplicate = true;
-                    item.duplicate = true;
-                    seenDuplicate = true;
-                }
-                else {
-                    testObject[itemPropertyName] = item;
-                    delete item.duplicate;
-                }
-            });
-
-            // return testObject;
-            return seenDuplicate;
-        },
         formDisabled(){
             if((this.user.id == this.selectedTask.user.id) && (this.user.groups.includes('mapping | edit mapping'))){
                 return false
@@ -664,12 +622,6 @@ export default {
         },
     },
     computed: {
-        duplicatesInEcl(){
-            return this.find_duplicate_components("id", Object.values(this.targets.allResults))
-        },
-        listDuplicatesInEcl(){
-            return this.list_duplicate_components("id", Object.values(this.targets.allResults))
-        },
         project(){
             return this.$store.state.MappingProjects.selectedProject
         },
