@@ -456,7 +456,7 @@
                                 :items="targets.mappings">
                                 <template v-slot:top="{ pagination, options, updateOptions }">
                                     <v-data-footer 
-                                    :items-per-page-options="pagination" 
+                                    :pagination="pagination" 
                                     :options="options"
                                     @update:options="updateOptions"
                                     items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
