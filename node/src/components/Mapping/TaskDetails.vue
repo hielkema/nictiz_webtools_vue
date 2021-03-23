@@ -28,7 +28,7 @@
                                     <div v-for="(task,key) in relatedTasks" :key="key" dense>
                                         <li v-if="task.id != selectedTask.id">
                                             <!-- {{task.source_component.component_id}} {{task.source_component.component_title}}<br> -->
-                                            {{task.project.title}} [{{task.status.title}} @ {{task.user.username}}] - {{task.source_component.component_id}} |{{task.source_component.component_title}}|
+                                            {{task.project.title}} [{{task.status.title}} @ {{task.user.username}}] <br\> {{task.source_component.codesystem_title}} #{{task.source_component.component_id}} |{{task.source_component.component_title}}|
                                             <v-btn text :href="`#/mapping/Projects/${task.project.id}/Task/`+task.id" target="_blank"><v-icon>mdi-link</v-icon></v-btn>
 
                                             <v-tooltip right v-if="task.comments.length > 0">
