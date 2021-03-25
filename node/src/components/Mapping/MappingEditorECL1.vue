@@ -275,18 +275,17 @@
                                             multi-sort
                                             :headers="excludedHeaders"
                                             :items-per-page="10"
-                                            :items="targets.excluded">
-                                            <template v-slot:item.excluded_by="{ item }">
-                                                <span v-if="item.exclusion_reason.length > 1">
-                                                    <li v-for="(value, key) in item.exclusion_reason" :key="key">
-                                                        {{value.component.component_id}} - {{value.component.title}}
-                                                    </li>
+                                            :items="targets.excluded"
+                                            group-by="reason.component_id">
+                                            <template v-slot:item.reason="{ item }">
+                                                <span>
+                                                    {{item.reason.component_id}} - {{item.reason.title}}
                                                 </span>
-                                                <span v-else>
-                                                    {{item.exclusion_reason[0].component.component_id}}
-                                                    {{item.exclusion_reason[0].component.title}}
+                                            </template>
+                                            <template v-slot:item.component="{ item }">
+                                                <span>
+                                                    {{item.component.id}} - {{item.component.fsn}}
                                                 </span>
-
                                             </template>
                                             <template v-slot:top="{ pagination, options, updateOptions }">
                                                 <v-data-footer 
@@ -505,9 +504,8 @@ export default {
                 { text: 'Correlatie', value: 'correlation', sortable: true },
             ],
             excludedHeaders: [
-                { text: 'ID', value: 'id', sortable: true },
-                { text: 'FSN', value: 'fsn.term', sortable: true },
-                { text: 'Reden van exclusie', value: 'excluded_by', sortable: true },
+                { text: 'Reden van exclusie', value: 'reason', sortable: true },
+                { text: 'SCTID', value: 'component', sortable: true },
             ],
             tab: null,
             searchString: '',
