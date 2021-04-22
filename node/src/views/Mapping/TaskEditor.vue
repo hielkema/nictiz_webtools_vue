@@ -36,6 +36,11 @@
                         </v-row>
                         <v-row no-gutters>
                             <v-col cols=12>
+                                <Automap />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
                                 <TaskDetails />
                             </v-col>
                         </v-row>
@@ -94,6 +99,11 @@
                         </v-row>
                         <v-row no-gutters>
                             <v-col cols=12>
+                                <Automap />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
                                 <MappingEditorECL1 />
                             </v-col>
                         </v-row>
@@ -138,6 +148,7 @@
 </template>
 
 <script>
+import Automap from '@/components/Mapping/Automap';
 import TaskList from '@/components/Mapping/TaskList';
 import TaskDetails from '@/components/Mapping/TaskDetails';
 import AuditList from '@/components/Mapping/AuditList';
@@ -152,6 +163,7 @@ import ReverseMappings from '@/components/Mapping/ReverseMappings';
 
 export default {
     components: {
+        Automap,
         TaskList,
         CommentsList,
         CommentsForm,
@@ -173,6 +185,7 @@ export default {
             this.$store.dispatch('MappingProjects/getProjectUsers',this.$route.params.projectid)
         }
         if(this.$route.params.taskid){
+            this.$store.dispatch('MappingTasks/getAutomap', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getTaskDetails', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getComments', this.$route.params.taskid)
             this.$store.dispatch('MappingTasks/getReverse', this.$route.params.taskid)

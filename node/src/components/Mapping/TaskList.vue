@@ -138,6 +138,7 @@ export default {
     methods: {
         selectTask(taskid){
             this.$router.push({ path: `/mapping/Projects/${this.$route.params.projectid}/Task/`+taskid });
+            this.$store.dispatch('MappingTasks/getAutomap', taskid)
             this.$store.dispatch('MappingAudits/getAudits',taskid)
             this.$store.dispatch('MappingTasks/getTaskDetails',taskid)
             this.$store.dispatch('MappingTasks/getMappingTargets',taskid)

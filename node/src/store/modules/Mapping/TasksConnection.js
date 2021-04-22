@@ -14,6 +14,7 @@ const state = {
       'reverse' : false,
       'eclToRules' : false,
       'reverseExclusions' : false,
+      'automap' : false,
     },
     tasks: [],
     selectedTask: {},
@@ -29,6 +30,7 @@ const state = {
     eclQueries: [],
     reverse: [],
     reverseExclusions: [],
+    automap: [],
   }
 
   //// ---- Mutations
@@ -79,6 +81,9 @@ const state = {
     },
     setDraftComment: (state, payload) => {
       state.commentDraft = payload
+    },
+    setAutomap: (state, payload) => {
+      state.automap = payload
     }
   }
 
@@ -87,6 +92,17 @@ const state = {
     saveDraftComment: (context, comment) => {
       context.commit('setDraftComment', comment)
     },
+    getAutomap: (context, taskid) => {
+      context.state.loading.automap = true
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/automap/'+taskid+'/')
+      .then((response) => {
+          console.log(response.data)
+          context.commit('setAutomap',response.data)
+          context.state.loading.automap = false
+          return true;
+      })
+    },   
     getTasks: (context, projectid) => {
       context.state.loading.tasklist = true
       axios
