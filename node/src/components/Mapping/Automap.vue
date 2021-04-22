@@ -13,7 +13,7 @@
                 </v-toolbar>
                 <v-card-text>
                     <li v-for="(value, key) in automap" :key="key">
-                        [{{value.equivalence}}] {{value.concept.system}} - {{value.concept.code}} |{{value.concept.display}}|
+                        [{{value.equivalence}}] {{value.concept.system}} - {{value.concept.code}} - {{value.concept.display}}{{value.concept.semantic_tag}}
                     </li>
                 </v-card-text>
             </v-card>

@@ -78,6 +78,7 @@ const state = {
       state.reverse = false
       state.selectedTaskComments = false
       state.mappingTargets = false
+      state.automap = []
     },
     setDraftComment: (state, payload) => {
       state.commentDraft = payload
