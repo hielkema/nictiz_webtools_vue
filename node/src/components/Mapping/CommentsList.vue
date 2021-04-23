@@ -111,6 +111,20 @@
                             </v-list-item-content>
                         </v-list-item>
                         
+                        <v-list-item
+                            v-else-if="item.type == 'task_manager' && showEvents == true"
+                            dense
+                            class="yellow lighten-4"
+                            :key="item.id">
+                            <v-list-item-content class="yellow lighten-5">
+                                <v-list-item-title>
+                                    <v-icon>mdi-account-arrow-right</v-icon> Wijziging via Task Manager (door {{item.action_user.name}})
+                                </v-list-item-title>
+                                <v-list-item-subtitle v-html="item.created"></v-list-item-subtitle>
+                                {{item.text}}
+                            </v-list-item-content>
+                        </v-list-item>
+
                         <v-divider :key="item.timestamp"></v-divider>
                     </template>
                 </v-list>
