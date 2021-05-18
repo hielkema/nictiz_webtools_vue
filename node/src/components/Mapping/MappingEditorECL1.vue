@@ -204,14 +204,6 @@
                     </v-tab-item>
 
                     <!-- Tab queries -->
-                    <!-- General warning -->
-                    <v-alert 
-                        dense
-                        color="red lighten-2"
-                        v-if="targets.queries_unfinished">
-                        Nog niet alle requests zijn klaar! Het scherm ververst automatisch.
-                    </v-alert>
-
                     <v-tab-item key="exclusions" >
 
                         <!-- Add reverse exclusion to remote task -->
