@@ -20,7 +20,7 @@ const state = {
     selectedTask: {},
     selectedTaskComments: false,
     relatedTasks: [],
-    mappingTargets: false,
+    mappingTargets: {},
     commentDraft: '',
     searchResults: [],
     searchByComponentResults: [],
