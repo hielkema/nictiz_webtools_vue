@@ -42,6 +42,25 @@
                 class="mx-auto"
                 :loading="loading"
             >
+                <!-- Display any general errors that the backend might want to display -->
+                <div 
+                    v-if="targets.errors.length > 0">
+                    <v-alert 
+                        dense
+                        color="red lighten-2"
+                        v-for="(error, key) in targets.errors" :key="key">
+                        {{error}}
+                    </v-alert>
+                </div>
+
+                <!-- General warning -->
+                <v-alert 
+                    dense
+                    color="blue lighten-2"
+                    v-if="targets.queries_unfinished">
+                    Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
+                </v-alert>
+
                 <v-tabs-items v-model="tab"
                     :loading="loading">
                     
@@ -55,13 +74,6 @@
                             </v-card-actions>
                         </v-card>
 
-                        <!-- General warning -->
-                        <v-alert 
-                            dense
-                            color="red lighten-2"
-                            v-if="targets.queries_unfinished">
-                            Nog niet alle queries zijn klaar! Het scherm ververst automatisch.
-                        </v-alert>
 
                         <!-- Warning against duplicates in ECL results -->
                         <v-alert 
@@ -313,6 +325,7 @@
                     <!-- Tab results -->
                     <v-tab-item key="preview"
                         :loading="loading">
+
                         <v-card ma-1>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
