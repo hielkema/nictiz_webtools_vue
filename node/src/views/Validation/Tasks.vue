@@ -20,7 +20,7 @@
 
 <script>
 import TaskCounter from '@/components/Validation/TaskCounter';
-import AnwerForm from '@/components/Validation/AnwerForm';
+import AnwerForm from '@/components/Validation/AnwerForm_may2021';
 import TaskDetails from '@/components/Validation/taskDetails';
 
 export default {
