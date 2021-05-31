@@ -32,11 +32,11 @@
                                     <th 
                                         v-if="filters.hasOwnProperty(header.value)"
                                         align="left">
-                                    {{header.text}} 
+                                        {{header.text}} 
                                     </th>
                                     <td v-if="filters.hasOwnProperty(header.value)" class="text-left">
-                                    <v-select flat dense hide-details small multiple clearable :items="columnValueList(header.value)" v-model="filters[header.value]">     
-                                    </v-select>
+                                        <v-select flat dense hide-details small multiple clearable :items="columnValueList(header.value)" v-model="filters[header.value]">     
+                                        </v-select>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -271,6 +271,7 @@ export default {
                 { text: 'Audit', value: 'audit' },
                 { text: 'Audit hits', value: 'audit_present', align: ' d-none' },
                 { text: 'Source', value: 'source.title' },
+                { text: 'Prioriteit', value: 'task_category' },
                 { text: 'Groep', value: 'group' },
                 // { text: 'Status', value: 'status' },
                 { text: 'Rules', value: 'rules' },
@@ -300,6 +301,7 @@ export default {
                 rejected: [],
                 status: [],
                 audit_present: [],
+                task_category: [],
                 accepted_me: [],
                 rejected_me: [],
                 accepted_nictiz: [],
