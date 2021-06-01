@@ -270,7 +270,7 @@ export default {
                 { text: 'Code', value: 'source.identifier' },
                 { text: 'Audit', value: 'audit' },
                 { text: 'Audit hits', value: 'audit_present', align: ' d-none' },
-                { text: 'Source', value: 'source.title' },
+                { text: 'Source', value: 'source_title' },
                 { text: 'Prioriteit', value: 'task_category', align: ' d-none' },
                 { text: 'Groep', value: 'group', align: ' d-none' },
                 { text: 'Klasse', value: 'class', align: ' d-none' },
