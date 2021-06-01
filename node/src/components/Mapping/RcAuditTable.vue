@@ -273,6 +273,7 @@ export default {
                 { text: 'Source', value: 'source.title' },
                 { text: 'Prioriteit', value: 'task_category' },
                 { text: 'Groep', value: 'group' },
+                { text: 'Klasse', value: 'class' },
                 // { text: 'Status', value: 'status' },
                 { text: 'Rules', value: 'rules' },
                 { text: 'Actions', value: 'actions' },
@@ -298,6 +299,7 @@ export default {
             filters: {
                 project: [],
                 group: [],
+                class: [],
                 rejected: [],
                 status: [],
                 audit_present: [],
