@@ -33,7 +33,6 @@
                                         v-if="(filters.hasOwnProperty(header.value) && (valuesPresent(header.value)))"
                                         align="left">
                                         {{header.text}} 
-                                        {{ valuesPresent(header.value) }}
                                     </th>
                                     <td v-if="filters.hasOwnProperty(header.value) && (valuesPresent(header.value))" class="text-left">
                                         <v-select flat dense hide-details small multiple clearable :items="columnValueList(header.value)" v-model="filters[header.value]">     
