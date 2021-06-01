@@ -30,11 +30,12 @@
                                     v-for="header in headers"
                                     :key="header.text">
                                     <th 
-                                        v-if="filters.hasOwnProperty(header.value)"
+                                        v-if="(filters.hasOwnProperty(header.value) && (valuesPresent(header.value)))"
                                         align="left">
                                         {{header.text}} 
+                                        {{ valuesPresent(header.value) }}
                                     </th>
-                                    <td v-if="filters.hasOwnProperty(header.value)" class="text-left">
+                                    <td v-if="filters.hasOwnProperty(header.value) && (valuesPresent(header.value))" class="text-left">
                                         <v-select flat dense hide-details small multiple clearable :items="columnValueList(header.value)" v-model="filters[header.value]">     
                                         </v-select>
                                     </td>
@@ -271,9 +272,9 @@ export default {
                 { text: 'Audit', value: 'audit' },
                 { text: 'Audit hits', value: 'audit_present', align: ' d-none' },
                 { text: 'Source', value: 'source.title' },
-                { text: 'Prioriteit', value: 'task_category' },
-                { text: 'Groep', value: 'group' },
-                { text: 'Klasse', value: 'class' },
+                { text: 'Prioriteit', value: 'task_category', align: ' d-none' },
+                { text: 'Groep', value: 'group', align: ' d-none' },
+                { text: 'Klasse', value: 'class', align: ' d-none' },
                 // { text: 'Status', value: 'status' },
                 { text: 'Rules', value: 'rules' },
                 { text: 'Actions', value: 'actions' },
@@ -338,6 +339,16 @@ export default {
         },
         columnValueList(val) {
            return this.$store.state.RcAuditConnection.RcRules.rules.map(d => d[val]).sort()
+        },
+        valuesPresent(val) {
+            var values = this.$store.state.RcAuditConnection.RcRules.rules.map(d => d[val]).sort()
+            var unique = [...new Set(values)]
+
+            if((unique.length == 1) && (unique[0] == null)){
+                return false
+            }else{
+                return true
+            }
         },
         createCacheSelectedRc: function() {
             this.$store.dispatch('RcAuditConnection/createCacheSelectedRc', this.selectedRc)
