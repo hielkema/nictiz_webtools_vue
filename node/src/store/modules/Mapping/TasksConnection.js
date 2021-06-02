@@ -322,6 +322,15 @@ const state = {
           return true;
       })
     },
+    mappingsEclToRulesEntireProject: (context, projectid) => {
+      context.state.loading.eclToRules = true
+      axios
+      .post(context.rootState.baseUrl+'mapping/api/1.0/mappings_ecl_to_rules/', {'id' : projectid})
+      .then((response) => {
+          console.log(response.data)
+          return true;
+      })
+    },
 
     removeMappingRules: (context, taskid) => {
       context.state.loading.eclToRules = true

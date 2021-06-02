@@ -29,6 +29,7 @@
                                 <v-btn v-if="user.groups.includes('mapping | taskmanager')" v-on:click="openTaskManager()">Taskmanager</v-btn>
                                 <v-btn v-if="user.groups.includes('mapping | create tasks')" v-on:click="openTaskCreator()">Taken aanmaken</v-btn>
                                 <v-btn v-if="user.groups.includes('mapping | audit')" @click="triggerAudit(projectDetails.id)">Trigger audit voor hele project</v-btn>
+                                <v-btn v-if="(user.groups.includes('mapping | audit') && (projectDetails.type == '4'))" @click="triggerCreateRulesForProject(projectDetails.id)">Maak regels voor hele project</v-btn>
                             </v-card-actions>
                         </v-card-text>
                     </v-card>
@@ -62,6 +63,9 @@ export default {
         triggerAudit(id){
             this.$store.dispatch('MappingAudits/triggerProject', id)
         },
+        triggerCreateRulesForProject(id){
+            this.$store.dispatch('MappingTasks/mappingsEclToRulesEntireProject', id)
+        }
     },
     computed: {
         projectDetails(){
