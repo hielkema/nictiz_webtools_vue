@@ -323,9 +323,14 @@ const state = {
       })
     },
     mappingsEclToRulesEntireProject: (context, projectid) => {
-      context.state.loading.eclToRules = true
+      const auth = {
+        headers: {'X-CSRFToken' : Vue.$cookies.get('csrftoken')},
+        withCredentials: true
+      }
       axios
-      .post(context.rootState.baseUrl+'mapping/api/1.0/mappings_ecl_to_rules/', {'id' : projectid})
+      .post(context.rootState.baseUrl+'mapping/api/1.0/mappings_ecl_to_rules/', {
+        'id' : projectid
+      }, auth)
       .then((response) => {
           console.log(response.data)
           return true;
