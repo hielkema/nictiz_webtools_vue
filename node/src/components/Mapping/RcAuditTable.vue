@@ -152,7 +152,7 @@
                                     
                                 </template>
 
-                                <template v-slot:item.source.title="{ item }">
+                                <template v-slot:item.source_title="{ item }">
                                     <v-tooltip right>
                                         <template v-slot:activator="{ on }">
                                             <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
@@ -169,8 +169,7 @@
                                             </table>
                                         </span>
                                     </v-tooltip>
-                                    {{item.source.title}} 
-
+                                    {{item.source.title}}
                                 </template>
 
                                 <template v-slot:item.rules="{ item }">
@@ -185,7 +184,27 @@
                                             <td>{{rule.mapgroup}}</td>
                                             <td>{{rule.mappriority}}</td>
                                             <td>
+                                                
+                                                <v-tooltip right>
+                                                    <template v-slot:activator="{ on }">
+                                                        <v-btn color="primary" dark v-on="on" icon><v-icon right color="grey">mdi-information-outline</v-icon></v-btn>
+                                                    </template>
+                                                    <span>
+                                                        <table>
+                                                            <tr v-for="(value, key) in rule.target.extra" :key="key">
+                                                                <th align=left>{{ key }}</th>
+                                                                <td v-if="key == 'Materialen'">
+                                                                    <li v-for="value in value" :key="value.SCTID">{{value.SCTID}} {{value.FSN}}</li>
+                                                                </td>
+                                                                <td v-else>{{ value }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </span>
+                                                </v-tooltip>
+                                                
                                                 {{rule.target.identifier}} - {{rule.target.title}}
+
+
                                                 <li v-for="rule in rule.mapspecifies" v-bind:key="rule.id"><!-- {{rule.id}} - -->{{rule.title}}</li>
                                             </td>
                                             <td width=10>{{rule.mapcorrelation}}</td>
