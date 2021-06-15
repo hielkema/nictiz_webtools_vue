@@ -9,13 +9,13 @@
                         </v-card>
                     </v-col>
                 </v-row>
-                <v-row v-if="user.groups.includes('groepen | nictiz')">
+                <!-- <v-row v-if="user.groups.includes('groepen | nictiz')">
                     <v-col cols=12>
                         <v-alert type="warning">
                             Geniet, maar map met mate. <i>©Michael Verbeek, 2020</i>
                         </v-alert>
                     </v-col>
-                </v-row>
+                </v-row> -->
                 <!-- Interface 1-N mapping -->
                 <v-row no-gutters v-if="selectedProject && (selectedProject.type == '1')">
                     <v-col cols=3>
