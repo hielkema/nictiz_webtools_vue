@@ -94,6 +94,11 @@
                     <v-col cols=5>
                         <v-row no-gutters>
                             <v-col cols=12>
+                                <ResetTask />
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols=12>
                                 <ReverseMappings />
                             </v-col>
                         </v-row>
@@ -160,6 +165,7 @@ import Users from '@/components/Mapping/Users';
 import BackToProjects from '@/components/Mapping/BackToProjects';
 import CommentsForm from '@/components/Mapping/CommentsForm';
 import ReverseMappings from '@/components/Mapping/ReverseMappings';
+import ResetTask from '@/components/Mapping/ResetTask'
 
 export default {
     components: {
@@ -175,6 +181,7 @@ export default {
         AuditList,
         MappingEditor1N,
         MappingEditorECL1,
+        ResetTask,
     },
     created(){
         

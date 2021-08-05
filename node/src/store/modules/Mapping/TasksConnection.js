@@ -115,6 +115,14 @@ const state = {
           return true;
       })
     },   
+    resetTask: (context, task_id) => {
+      axios
+      .get(context.rootState.baseUrl+'mapping/api/1.0/mapping_reset_task/'+task_id+'/')
+      .then((response) => {
+          console.log(response.data)
+          return true;
+      })
+    },   
     getRelatedTasks: (context, componentid) => {
       axios
       .get(context.rootState.baseUrl+'mapping/api/1.0/related_tasks/'+componentid+'/')
