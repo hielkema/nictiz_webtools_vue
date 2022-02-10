@@ -14,7 +14,7 @@
     "debounce": "^1.2.0",
     "fibers": "^4.0.2",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "vue": "^2.6.10",
     "vue-apexcharts": "^1.5.2",
     "vue-d3-charts": "^0.2.8",
